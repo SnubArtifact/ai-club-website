@@ -11,10 +11,28 @@
   }
 }
 
-html, body, #root {
-  height: 100vh;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+  height: 100%;
+}
+
+body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#root {
+  height: 100%;
+}
+
+.section-container {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
   overflow: hidden;
 }
 

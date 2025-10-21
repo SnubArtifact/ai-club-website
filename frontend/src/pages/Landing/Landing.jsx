@@ -5,7 +5,7 @@ const Landing = () => {
   return (
     <>
       <Navbar />
-      <div className="h-[100vh] w-full relative overflow-hidden">
+      <div id="home" className="h-[100vh] w-full relative overflow-hidden">
         <img 
           className="w-full h-full object-cover"
           src="images/landingimg.png" 

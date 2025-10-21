@@ -3,14 +3,21 @@ import React, { useState } from 'react'
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   const navItems = [
-    { title: 'Home', path: '/' },
-    { title: 'About Us', path: '/about' },
-    { title: 'Team', path: '/team' },
-    { title: 'Projects', path: '/projects' },
-    { title: 'Resources', path: '/resources' },
-    { title: 'Contact Us', path: '/contact' },
-    { title: 'Blogs', path: '/blogs' }
+    { title: 'Home', id: 'home' },
+    { title: 'About Us', id: 'about' },
+    { title: 'Team', id: 'team' },
+    { title: 'Projects', id: 'projects' },
+    { title: 'Resources', id: 'resources' },
+    { title: 'Contact Us', id: 'contact' },
+    { title: 'Blogs', id: 'blogs' }
   ]
 
   return (
@@ -28,13 +35,13 @@ const Navbar = () => {
             <div className="hidden md:block">
               <div className="ml-10 flex items-center space-x-1">
                 {navItems.map((item) => (
-                  <a
+                  <button
                     key={item.title}
-                    href={item.path}
-                    className="text-white/90 hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium tracking-wide transition-all duration-200 "
+                    onClick={() => scrollToSection(item.id)}
+                    className="text-white/80 hover:text-white px-3 py-2 text-sm font-mont font-medium tracking-wide transition-all duration-200 bg-transparent"
                   >
                     {item.title}
-                  </a>
+                  </button>
                 ))}
               </div>
             </div>
@@ -66,14 +73,16 @@ const Navbar = () => {
         <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl border border-white border-opacity-20 shadow-lg p-4">
           <div className="space-y-2">
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.title}
-                href={item.path}
-                className="text-gray-200 hover:text-white block px-4 py-3 text-base font-medium transition-all duration-200 rounded-lg hover:bg-white hover:bg-opacity-10"
-                onClick={() => setIsMenuOpen(false)}
+                className="text-gray-200 hover:text-white block px-4 py-3 text-base font-medium transition-all duration-200 rounded-lg bg-transparent w-full text-left"
+                onClick={() => {
+                  scrollToSection(item.id);
+                  setIsMenuOpen(false);
+                }}
               >
                 {item.title}
-              </a>
+              </button>
             ))}
           </div>
         </div>
