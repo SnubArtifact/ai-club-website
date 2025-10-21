@@ -172,24 +172,7 @@ const Team = () => {
               </p>
             </div>
 
-            {/* Stats Section */}
-            <div className="animate-on-scroll opacity-0 mb-16" style={{ animationDelay: '0.2s' }}>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {teamStats.map((stat, index) => (
-                  <div 
-                    key={index}
-                    className="bg-white/5 backdrop-blur-sm rounded-xl p-6 text-center transform hover:scale-105 transition-all duration-300 hover:bg-white/10 hover:shadow-indigo-500/10"
-                  >
-                    <div className="text-3xl md:text-4xl font-bold text-indigo-300 font-playfair mb-2">
-                      {stat.number}
-                    </div>
-                    <div className="text-white/80 font-mont text-sm">
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+           
 
             {/* Team Grid */}
             <div className="animate-on-scroll opacity-0" style={{ animationDelay: '0.4s' }}>
@@ -213,24 +196,7 @@ const Team = () => {
               </div>
             </div>
 
-            {/* Join Team CTA */}
-            <div className="animate-on-scroll opacity-0 text-center mt-16" style={{ animationDelay: '1.2s' }}>
-              <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-sm rounded-2xl p-8 border border-indigo-500/30 transform hover:scale-105 transition-all duration-300">
-                <h3 className="text-2xl text-white font-playfair italic font-semibold mb-4">
-                  Want to Join Our Team?
-                </h3>
-                <p className="text-white/80 font-mont mb-6 max-w-2xl mx-auto">
-                  We're always looking for passionate individuals who want to make a difference in the world of AI. 
-                  Bring your skills and ideas to our growing community.
-                </p>
-                <button className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-8 py-3 rounded-full font-mont font-semibold hover:scale-105 transform transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/30 mr-4">
-                  Apply Now
-                </button>
-                <button className="bg-white/10 backdrop-blur-sm text-white px-8 py-3 rounded-full font-mont font-semibold hover:scale-105 transform transition-all duration-300 hover:bg-white/20 border border-white/20">
-                  Learn More
-                </button>
-              </div>
-            </div>
+           
           </div>
         </div>
       </div>

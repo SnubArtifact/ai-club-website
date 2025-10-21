@@ -191,28 +191,7 @@ const Blogs = () => {
               </div>
             </div>
 
-            {/* Newsletter CTA */}
-            <div className="animate-on-scroll opacity-0 text-center mt-16" style={{ animationDelay: '1s' }}>
-              <div className="bg-gradient-to-r from-rose-500/20 to-pink-500/20 backdrop-blur-sm rounded-2xl p-8 border border-rose-500/30 transform hover:scale-105 transition-all duration-300">
-                <h3 className="text-2xl text-white font-playfair italic font-semibold mb-4">
-                  Never Miss a Post
-                </h3>
-                <p className="text-white/80 font-mont mb-6 max-w-2xl mx-auto">
-                  Subscribe to our newsletter and get the latest AI insights, tutorials, 
-                  and research papers delivered directly to your inbox.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-                  <input 
-                    type="email" 
-                    placeholder="Enter your email"
-                    className="flex-1 px-4 py-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white font-mont placeholder-white/50 focus:outline-none focus:border-rose-500 transition-colors duration-300"
-                  />
-                  <button className="bg-gradient-to-r from-rose-500 to-pink-600 text-white px-8 py-3 rounded-full font-mont font-semibold hover:scale-105 transform transition-all duration-300 hover:shadow-lg hover:shadow-rose-500/30 whitespace-nowrap">
-                    Subscribe
-                  </button>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>

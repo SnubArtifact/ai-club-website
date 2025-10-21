@@ -95,21 +95,7 @@ const Landing = () => {
                 </a>
               </div>
 
-              {/* Stats with counter animation */}
-              <div className="grid grid-cols-3 gap-8 mt-16 max-w-3xl animate-fadeIn opacity-0" style={{ animationDelay: '1s', animationFillMode: 'forwards' }}>
-                <div className="text-center transform hover:scale-110 transition-transform duration-300">
-                  <h3 className="text-4xl font-playfair text-white font-bold">50+</h3>
-                  <p className="text-white/70 font-mont text-sm mt-2">Active Members</p>
-                </div>
-                <div className="text-center transform hover:scale-110 transition-transform duration-300">
-                  <h3 className="text-4xl font-playfair text-white font-bold">15+</h3>
-                  <p className="text-white/70 font-mont text-sm mt-2">Projects Completed</p>
-                </div>
-                <div className="text-center transform hover:scale-110 transition-transform duration-300">
-                  <h3 className="text-4xl font-playfair text-white font-bold">8+</h3>
-                  <p className="text-white/70 font-mont text-sm mt-2">Events per Month</p>
-                </div>
-              </div>
+            
             </div>
           </div>
         </div>
