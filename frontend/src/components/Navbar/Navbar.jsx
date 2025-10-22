@@ -38,7 +38,7 @@ const Navbar = () => {
                   <button
                     key={item.title}
                     onClick={() => scrollToSection(item.id)}
-                    className="text-white/80 hover:text-white px-3 py-2 text-sm font-mont font-medium tracking-wide transition-all duration-200 bg-transparent"
+                    className="text-white/80 hover:text-white  border-none px-5 py-2 text-sm font-mont font-medium tracking-wide transition-all duration-400 bg-transparent"
                   >
                     {item.title}
                   </button>
