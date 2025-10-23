@@ -5,13 +5,8 @@
 # Ensure we're in the correct directory
 cd "$(dirname "$0")"
 
-# Activate virtual environment if it exists
-if [ -d "../venv" ]; then
-    source ../venv/bin/activate
-    echo "Virtual environment activated."
-else
-    echo "Warning: Virtual environment not found. Using system Python."
-fi
+# Note: virtualenv should already be activated by entrypoint_windows.sh
+# If running standalone, the system Python will be used
 
 # Run migrations first to ensure schema is up to date
 echo "Running migrations..."

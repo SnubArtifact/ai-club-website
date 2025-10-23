@@ -149,9 +149,7 @@ def train_model(data, labels):
                 linkedin_link="https://linkedin.com/company/ai-club",
                 github_link="https://github.com/ai-club",
                 views_count=random.randint(10, 500),
-                is_featured=i < 2,  # First couple of blogs are featured
-                is_published=True,
-                tags=self.generate_tags(title)
+                is_published=True
             )
             
             # Add 1-3 random members as co-authors
@@ -164,163 +162,81 @@ def train_model(data, labels):
         
         return blogs
     
-    def create_projects(self, count):
-        self.stdout.write(self.style.NOTICE(f'Creating {count} projects...'))
+    def create_projects(self):
+        projects = []
         
-        if not Member.objects.exists():
-            self.stdout.write(self.style.ERROR('No members found! Create members first.'))
-            return
-        
-        members = list(Member.objects.all())
-        
-        project_names = [
-            "AI Image Generator",
-            "Sentiment Analysis Tool",
-            "Smart Chatbot",
-            "Object Detection System",
-            "Music Recommendation Engine",
-            "Automated Essay Grader",
-            "Stock Price Predictor"
+        project_data = [
+            {
+                "name": "AI Image Generator",
+                "description": "A generative AI system that creates images from text descriptions using advanced deep learning techniques.",
+                "tech_stack": "Python, TensorFlow, GANs, Flask, React",
+                "status": "completed"
+            },
+            {
+                "name": "Sentiment Analysis Tool",
+                "description": "Natural language processing tool for analyzing sentiment in social media posts and customer reviews.",
+                "tech_stack": "Python, PyTorch, BERT, Django, Vue.js",
+                "status": "ongoing"
+            },
+            {
+                "name": "Smart Chatbot",
+                "description": "Intelligent conversational AI assistant powered by transformer models and fine-tuned for domain-specific queries.",
+                "tech_stack": "Python, OpenAI API, LangChain, FastAPI, Next.js",
+                "status": "ongoing"
+            },
+            {
+                "name": "Object Detection System",
+                "description": "Real-time object detection and tracking system for autonomous vehicles and security applications.",
+                "tech_stack": "Python, YOLOv8, OpenCV, TensorFlow, Streamlit",
+                "status": "completed"
+            },
+            {
+                "name": "Music Recommendation Engine",
+                "description": "Personalized music recommendation system using collaborative filtering and deep learning.",
+                "tech_stack": "Python, scikit-learn, Spotify API, MongoDB, React",
+                "status": "planned"
+            },
+            {
+                "name": "Automated Essay Grader",
+                "description": "AI-powered essay grading system that provides detailed feedback on grammar, structure, and content.",
+                "tech_stack": "Python, spaCy, GPT-4, FastAPI, Angular",
+                "status": "ongoing"
+            },
+            {
+                "name": "Stock Price Predictor",
+                "description": "Machine learning model for predicting stock prices using historical data and sentiment analysis.",
+                "tech_stack": "Python, LSTM, pandas, yfinance, Plotly, Dash",
+                "status": "completed"
+            }
         ]
         
-        statuses = ['ongoing', 'completed', 'planned']
-        
-        tech_stacks = [
-            "Python, TensorFlow, Flask, React",
-            "Python, PyTorch, Django, Next.js",
-            "JavaScript, Node.js, Express, MongoDB",
-            "Python, scikit-learn, Streamlit",
-            "Python, Keras, FastAPI, Vue.js"
-        ]
-        
-        for i in range(count):
-            project_name = project_names[i % len(project_names)]
-            status = statuses[i % len(statuses)]
-            tech_stack = tech_stacks[i % len(tech_stacks)]
+        for i, data in enumerate(project_data):
+            start_date = timezone.now().date() - timedelta(days=random.randint(60, 365))
+            end_date = None
             
-            start_date = timezone.now() - timedelta(days=random.randint(30, 180))
-            end_date = None if status == 'ongoing' else start_date + timedelta(days=random.randint(30, 90))
+            if data["status"] == "completed":
+                end_date = start_date + timedelta(days=random.randint(60, 180))
             
             project = Project.objects.create(
-                name=project_name,
-                short_description=f"A project to build {project_name.lower()}",
-                description=self.generate_project_description(project_name),
-                tagline=f"Next-generation {project_name.lower()} for everyone",
-                technologies_used=tech_stack.replace(", ", ","),
-                tech_stack=tech_stack,
+                name=data["name"],
+                slug=slugify(data["name"]),
+                short_description=data["description"][:200],
+                description=data["description"],
+                tagline=f"Innovative AI solution for {data['name'].lower()}",
+                technologies_used=data["tech_stack"].replace(", ", ","),
+                tech_stack=data["tech_stack"],
                 hero_section_image_link=f"https://picsum.photos/id/{i+200}/1200/600",
-                image_1_link=f"https://picsum.photos/id/{i+205}/800/600",
+                image_1_link=f"https://picsum.photos/id/{i+210}/800/600",
                 website_link="https://aiclub-project.example.com",
-                github_link="https://github.com/ai-club/project",
-                demo_link="https://demo.aiclub-project.example.com",
-                team_lead=random.choice(members).name,
-                date=f"{start_date.strftime('%b %Y')} - {'Present' if status == 'ongoing' else end_date.strftime('%b %Y')}",
+                github_link=f"https://github.com/ai-club/{slugify(data['name'])}",
+                demo_link=f"https://demo.{slugify(data['name'])}.aiclub.org",
+                documentation_link=f"https://docs.{slugify(data['name'])}.aiclub.org",
                 start_date=start_date,
                 end_date=end_date,
-                status=status,
-                text_1=self.generate_project_text("Overview"),
-                text_2=self.generate_project_text("Implementation"),
-                features=self.generate_features(),
-                challenges=self.generate_challenges(),
-                learnings=self.generate_learnings(),
-                is_featured=i < 2,  # First couple of projects are featured
-                is_published=True,
-                order=i,
-                category="AI" if i % 2 == 0 else "ML",
-                tags=f"AI,ML,{'deep-learning' if i % 2 == 0 else 'machine-learning'}"
+                status=data["status"]
             )
             
-            # Add 2-5 random members to the project
-            team_count = random.randint(2, 5)
-            team_members = random.sample(members, team_count)
-            project.team_members.add(*team_members)
-            
-            self.stdout.write(f"Created project: {project.name}")
+            projects.append(project)
+            self.stdout.write(f"Created project: {project.name} ({project.status})")
         
         return projects
-    
-    def generate_blog_content(self, topic):
-        paragraphs = []
-        paragraphs.append(f"# {topic}\n\n")
-        paragraphs.append(f"## Introduction\n\nThis blog post will explore {topic.lower()} and its applications in modern AI systems. We'll cover the basics and dive into more advanced techniques.\n\n")
-        paragraphs.append(f"## What is {topic}?\n\n{topic} is an important area in artificial intelligence that focuses on developing algorithms capable of learning patterns from data. The goal is to create systems that can make decisions or predictions without being explicitly programmed.\n\n")
-        paragraphs.append("## Key Concepts\n\n- Concept 1: Lorem ipsum dolor sit amet\n- Concept 2: Consectetur adipiscing elit\n- Concept 3: Sed do eiusmod tempor incididunt\n\n")
-        paragraphs.append("## Implementation\n\n```python\n# Sample code\nimport tensorflow as tf\nimport numpy as np\n\ndef build_model():\n    model = tf.keras.Sequential([\n        tf.keras.layers.Dense(128, activation='relu'),\n        tf.keras.layers.Dense(64, activation='relu'),\n        tf.keras.layers.Dense(10, activation='softmax')\n    ])\n    return model\n```\n\n")
-        paragraphs.append("## Results\n\nOur experiments show promising results with an accuracy of 95% on the test set. The model performs well on most categories, with some room for improvement in edge cases.\n\n")
-        paragraphs.append("## Conclusion\n\nIn this post, we've explored the fundamentals of the topic and demonstrated a working implementation. The field is rapidly evolving, and we're excited to see what new advances will emerge in the coming years.\n\n")
-        
-        return "\n".join(paragraphs)
-    
-    def generate_project_description(self, name):
-        return f"""
-        # {name}
-        
-        {name} is a state-of-the-art AI project developed by our club members. It uses cutting-edge machine learning techniques to solve real-world problems.
-        
-        ## Project Goals
-        
-        1. Develop a robust AI system that can handle complex inputs
-        2. Create an intuitive user interface for non-technical users
-        3. Achieve high accuracy and performance on benchmark datasets
-        4. Deploy the system in a scalable, cloud-based environment
-        
-        ## Technical Approach
-        
-        We're using a combination of deep learning, computer vision, and natural language processing techniques to build this system. The architecture is modular and extensible, allowing for easy updates and improvements.
-        """
-    
-    def generate_project_text(self, section):
-        if section == "Overview":
-            return "This project aims to build an advanced AI system that can process and analyze data in real-time. We've focused on creating a scalable architecture that can handle diverse inputs and provide accurate outputs."
-        elif section == "Implementation":
-            return "The implementation uses a combination of TensorFlow for the machine learning components and React for the frontend. We've deployed the system on AWS using Docker containers for easy scaling and maintenance."
-        return "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    
-    def generate_features(self):
-        features = [
-            "Real-time processing",
-            "Adaptive learning capabilities",
-            "Intuitive user interface",
-            "Scalable architecture",
-            "Comprehensive analytics dashboard",
-            "Multi-platform support"
-        ]
-        return "\n".join([f"- {feature}" for feature in features])
-    
-    def generate_challenges(self):
-        challenges = [
-            "Handling large datasets efficiently",
-            "Optimizing model performance for edge devices",
-            "Ensuring privacy and security of user data",
-            "Maintaining consistent accuracy across diverse inputs"
-        ]
-        return "\n".join([f"- {challenge}" for challenge in challenges])
-    
-    def generate_learnings(self):
-        learnings = [
-            "Effective team collaboration strategies",
-            "Balancing model complexity with performance requirements",
-            "Importance of user feedback in the development cycle",
-            "Testing methodologies for AI systems"
-        ]
-        return "\n".join([f"- {learning}" for learning in learnings])
-    
-    def generate_tags(self, topic):
-        base_tags = ["AI", "machine learning", "data science"]
-        
-        if "Machine Learning" in topic:
-            extra_tags = ["supervised learning", "algorithms"]
-        elif "Deep Learning" in topic:
-            extra_tags = ["neural networks", "tensorflow", "pytorch"]
-        elif "Vision" in topic:
-            extra_tags = ["computer vision", "image processing", "CNN"]
-        elif "Language" in topic:
-            extra_tags = ["NLP", "transformers", "BERT"]
-        else:
-            extra_tags = ["research", "technology"]
-            
-        # Combine and select 3-5 tags
-        all_tags = base_tags + extra_tags
-        selected_tags = random.sample(all_tags, min(len(all_tags), random.randint(3, 5)))
-        
-        return ",".join(selected_tags)
