@@ -11,12 +11,12 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-indigo-900 text-white">
+    <footer className="bg-[#8B50CD] text-white">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Club Info */}
           <div className="space-y-4">
-            <h3 className="text-xl font-playfair italic font-bold">AI Club-BITS Pilani</h3>
+            <h3 className="text-xl font-sora font-bold">AI Club-BITS Pilani</h3>
             <p className="font-mont text-sm text-gray-300">
               Exploring the frontiers of artificial intelligence through collaboration and innovation.
             </p>
@@ -24,7 +24,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-xl font-playfair italic font-bold">Quick Links</h3>
+            <h3 className="text-xl font-mont font-bold">Quick Links</h3>
             <ul className="space-y-2 font-mont">
               <li>
                 <span 
@@ -90,7 +90,7 @@ const Footer = () => {
 
           {/* Social Links */}
           <div className="space-y-4">
-            <h3 className="text-xl font-playfair italic font-bold">Follow Us</h3>
+            <h3 className="text-xl font-mont font-bold">Follow Us</h3>
             <div className="flex space-x-4">
               <a href="https://github.com/your-github" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300 transition-colors">
                 <i className="fab fa-github text-2xl"></i>

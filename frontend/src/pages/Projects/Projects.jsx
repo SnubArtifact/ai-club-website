@@ -14,7 +14,7 @@ const ProjectCard = ({ title, description, tags, delay }) => {
     >
       <div>
         {/* Project Title */}
-        <h3 className="text-xl text-white font-playfair font-semibold mb-2 group-hover:text-cyan-200 transition-colors duration-300">
+        <h3 className="text-xl text-white font-young font-semibold mb-2 group-hover:text-cyan-200 transition-colors duration-300">
           {title}
         </h3>
         {/* Project Description */}
@@ -89,7 +89,7 @@ const Projects = () => {
           title: project.name,
           description: project.short_description || project.description || (project.full_description?.substring(0, 150) + '...' || 'No description provided.'), 
           // image: project.image_url || project.image, // Removed image
-          tags: project.technologies || project.tags || [],
+          tags: project.slug || project.tags || [],
         }));
         
         setProjects(formattedProjects);
@@ -172,7 +172,7 @@ const Projects = () => {
               key={project.title || index} 
               title={project.title}
               description={project.description}
-              tags={project.tags}
+              tags={project.slug}
               delay={`${0.1 + index * 0.05}s`} // Faster staggered delay for more cards
             />
           ))}
@@ -211,7 +211,7 @@ const Projects = () => {
   return (
     <div id="projects" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden w-full">
       {/* Background and floating elements (unchanged) */}
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,hsla(266,63%,9%,1)_0%,hsla(269,100%,23%,1)_100%)] z-0"></div>
+      <div className="absolute inset-0 bg-[#733CA9] z-0"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-500/10 via-transparent to-transparent animate-pulse"></div>
       <img
         className="w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s]"
@@ -231,7 +231,7 @@ const Projects = () => {
           <div className="max-w-6xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center mb-12">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-200 font-playfair italic font-bold mb-8 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-200 font-young font-bold mb-8 hover:scale-105 transition-transform duration-300">
                 Our Projects
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-2xl mx-auto">

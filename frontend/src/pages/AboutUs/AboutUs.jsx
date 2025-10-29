@@ -24,7 +24,7 @@ const AboutUs = () => {
   return (
     <div id="about" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
       {/* Background with parallax effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/90 to-indigo-900/90 z-0"></div>
+      <div className="absolute inset-0 bg-[#553281] z-0"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-500/10 via-transparent to-transparent animate-pulse"></div>
       <img 
         className="w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s]"
@@ -45,7 +45,7 @@ const AboutUs = () => {
           <div className="max-w-4xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-200 font-playfair italic font-bold mb-8 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-200 font-young font-bold mb-8 hover:scale-105 transition-transform duration-300">
                 About Us
               </h1>
             </div>
@@ -54,7 +54,7 @@ const AboutUs = () => {
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20 transform hover:scale-[1.02] transition-all duration-500 hover:shadow-purple-500/20">
               {/* Mission Statement */}
               <div className="animate-on-scroll opacity-0 text-center" style={{ animationDelay: '0.2s' }}>
-                <h2 className="text-3xl text-white font-playfair italic font-semibold mb-6">
+                <h2 className="text-3xl text-white font-young italic font-semibold mb-6">
                   Our Mission
                 </h2>
                 <p className="text-white/90 text-lg font-mont leading-relaxed mb-8 max-w-2xl mx-auto">
@@ -64,12 +64,12 @@ const AboutUs = () => {
 
               {/* What We Do Section */}
               <div className="animate-on-scroll opacity-0 text-center" style={{ animationDelay: '0.4s' }}>
-                <h2 className="text-3xl text-white font-playfair italic font-semibold mb-6">
+                <h2 className="text-3xl text-white font-young font-semibold mb-6">
                   What We Do
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-white/5 rounded-xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-                    <h3 className="text-xl text-white font-playfair italic font-semibold mb-3 flex items-center justify-center">
+                    <h3 className="text-xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
                       <i className="fas fa-chalkboard-teacher mr-3 text-purple-300"></i>
                       Workshops & Training
                     </h3>
@@ -78,7 +78,7 @@ const AboutUs = () => {
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-                    <h3 className="text-xl text-white font-playfair italic font-semibold mb-3 flex items-center justify-center">
+                    <h3 className="text-xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
                       <i className="fas fa-project-diagram mr-3 text-purple-300"></i>
                       Project Development
                     </h3>
@@ -87,7 +87,7 @@ const AboutUs = () => {
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-                    <h3 className="text-xl text-white font-playfair italic font-semibold mb-3 flex items-center justify-center">
+                    <h3 className="text-xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
                       <i className="fas fa-microscope mr-3 text-purple-300"></i>
                       Research & Innovation
                     </h3>
@@ -96,7 +96,7 @@ const AboutUs = () => {
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-                    <h3 className="text-xl text-white font-playfair italic font-semibold mb-3 flex items-center justify-center">
+                    <h3 className="text-xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
                       <i className="fas fa-users mr-3 text-purple-300"></i>
                       Community Building
                     </h3>

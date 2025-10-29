@@ -24,7 +24,7 @@ const TeamMemberCard = ({ name, position, image, socials, delay, description }) 
           alt={name}
           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className="absolute inset-0 bg-[#653A97] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
         {/* Social Links on Hover */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 flex gap-3">
@@ -45,7 +45,7 @@ const TeamMemberCard = ({ name, position, image, socials, delay, description }) 
 
       {/* Member Info */}
       <div className="text-center">
-        <h3 className="text-2xl text-white font-playfair font-semibold mb-2 group-hover:text-indigo-200 transition-colors duration-300">
+        <h3 className="text-2xl text-white font-young font-semibold mb-2 group-hover:text-indigo-200 transition-colors duration-300">
           {name}
         </h3>
         <p className="text-indigo-300 font-mont font-medium mb-3 text-lg">
@@ -203,7 +203,7 @@ const Team = () => {
   return (
     <section id="team" ref={containerRef} className="min-h-screen w-full relative bg-black overflow-hidden">
       {/* Background elements remain the same */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/90 to-purple-600/90 z-0"></div>
+      <div className="absolute inset-0 bg-[#653A97] z-0"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent animate-pulse"></div>
       <img
         className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s]"
@@ -225,7 +225,7 @@ const Team = () => {
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center mb-16">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-playfair italic font-bold mb-8 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-young font-bold mb-8 hover:scale-105 transition-transform duration-300">
                 Our Team
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">

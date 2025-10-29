@@ -10,7 +10,12 @@ export default {
         'sans': ['Montserrat', 'system-ui', 'sans-serif'],
         'mont': ['Montserrat', 'sans-serif'],
         'playfair': ['Playfair Display', 'serif'],
-        'ultra': ['Ultra', 'Montserrat']
+        'ultra': ['Ultra', 'Montserrat'],
+        'bitcount': ['Bitcount Grid Single', 'sans-serif'],
+        'press': ['Press Start 2P', 'Ultra'],
+        'tiny': ['Tiny5', 'sans-serif'],
+        'nata': ['Nata Sans', 'sans-serif'],
+        'young': ['Young Serif', 'serif'],
       }
     },
   },

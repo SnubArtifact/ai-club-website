@@ -225,7 +225,7 @@ const fetchBlogPosts = async () => {
   return (
     <div id="blogs" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
       {/* Background elements remain the same */}
-      <div className="absolute inset-0 bg-[linear-gradient(349deg,rgba(35,8,69,0.79)_0%,rgba(23,0,107,1)_40%,rgba(90,50,128,1)_100%)] z-0"></div>
+      <div className="absolute inset-0 bg-[#9458D0] z-0"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-rose-500/10 via-transparent to-transparent animate-pulse"></div>
       <img
         className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s]"
@@ -247,7 +247,7 @@ const fetchBlogPosts = async () => {
           <div className="max-w-6xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center mb-16">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-rose-200 font-playfair italic font-bold mb-8 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-rose-200 font-young font-bold mb-8 hover:scale-105 transition-transform duration-300">
                 Blogs
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">

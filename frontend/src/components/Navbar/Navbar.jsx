@@ -28,7 +28,10 @@ const Navbar = () => {
           <div className="flex items-center justify-center gap-30 h-16 px-6">
           
             <div className="flex-shrink-0">
-              <span className="text-white font-semibold text-xl tracking-wide">AI Club</span>
+              <img
+                className="h-10 w-10 cursor-pointer"
+                src="images/aiclublogo.png"
+                alt="Logo"/>
             </div>
 
          

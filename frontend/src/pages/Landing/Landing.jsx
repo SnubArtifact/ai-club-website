@@ -54,14 +54,14 @@ const Landing = () => {
             <div className="max-w-4xl ml-20 space-y-8">
               {/* Main heading with enhanced gradient text */}
               <div className="animate-fadeIn opacity-0" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
-                <h1 className="text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-indigo-200 font-ultra font-bold drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)] select-none hover:scale-105 transition-transform duration-300">
+                <h1 className="text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-indigo-200 font-young font-bold drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)] select-none hover:scale-105 transition-transform duration-300">
                   AI Club
                 </h1>
               </div>
 
               {/* Institution name with slide-in animation */}
               <div className="animate-slideRight opacity-0" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
-                <h2 className="text-3xl text-white/90 font-mont font-bold tracking-wide">
+                <h2 className="text-3xl text-white/90 font-ultra font-bold tracking-wide">
                   BITS PILANI
                 </h2>
               </div>
