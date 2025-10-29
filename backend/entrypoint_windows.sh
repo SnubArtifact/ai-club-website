@@ -103,4 +103,5 @@ fi
 DJANGO_BIND="${DJANGO_BIND-0.0.0.0:8000}"
 
 echo "[entrypoint] Starting Django development server at $DJANGO_BIND"
+
 python "$DJANGO_MANAGE" runserver "$DJANGO_BIND"
