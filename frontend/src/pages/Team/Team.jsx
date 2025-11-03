@@ -1,161 +1,257 @@
-import React, { useEffect, useRef, useState } from 'react';
-// Assuming the CSS for 'animate-on-scroll' and 'animate-fadeIn' exists elsewhere (e.g., in a global CSS file or via a utility class injection for Tailwind)
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 
 const API_BASE_URL = 'http://localhost:8000/api';
 
 /**
- * Renders a single Team Member Card.
- * This component remains a presentational component.
+ * Team Member Card for Carousel
  */
-const TeamMemberCard = ({ name, position, image, socials, delay, description }) => {
+const TeamMemberCard = ({ name, position, image, socials, description, isActive }) => {
   return (
     <div
-      className="animate-on-scroll opacity-0 bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-500 transform hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/10 group"
-      // Note: The IntersectionObserver in Team component will handle the main animation, 
-      // but 'delay' can still be used for staggered opacity reveal with a specific CSS class.
-      // For the IntersectionObserver approach used below, we'll keep the delay prop but acknowledge 
-      // the primary animation is controlled by the JS observer.
-      style={{ animationDelay: delay }} 
+      className={`flex-shrink-0 w-80 mx-4 transition-all duration-500 transform ${
+        isActive 
+          ? 'scale-105 opacity-100' 
+          : 'scale-95 opacity-60'
+      }`}
     >
-      {/* Member Image with Hover Effect */}
-      <div className="relative aspect-square rounded-xl overflow-hidden mb-6">
-        <img
-          src={image || "images/team-placeholder.jpg"}
-          alt={name}
-          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-        />
-        <div className="absolute inset-0 bg-[#653A97] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-500 group">
+        {/* Member Image with Hover Effect */}
+        <div className="relative aspect-square rounded-xl overflow-hidden mb-6">
+          <img
+            src={image || "images/team-placeholder.jpg"}
+            alt={name}
+            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-[#653A97] opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
 
-        {/* Social Links on Hover */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 flex gap-3">
-          {socials?.map((social, index) => (
-            <a
-              key={index}
-              href={social.url}
-              className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-indigo-500 hover:scale-110 transition-all duration-300"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {/* Assuming the 'icon' prop contains the necessary class string (e.g., "fab fa-linkedin-in") */}
-              <i className={`${social.icon} text-white text-sm`}></i> 
-            </a>
-          ))}
+          {/* Social Links on Hover */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 flex gap-3">
+            {socials?.map((social, index) => (
+              <a
+                key={index}
+                href={social.url}
+                className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-indigo-500 hover:scale-110 transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className={`${social.icon} text-white text-sm`}></i>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Member Info */}
+        <div className="text-center">
+          <h3 className="text-2xl text-white font-young font-semibold mb-2 group-hover:text-indigo-200 transition-colors duration-300">
+            {name}
+          </h3>
+          <p className="text-indigo-300 font-mont font-medium mb-3 text-lg">
+            {position}
+          </p>
+          <p className="text-white/70 font-mont text-sm leading-relaxed line-clamp-3">
+            {description || "Passionate about advancing AI technology and building innovative solutions for real-world challenges."}
+          </p>
         </div>
       </div>
-
-      {/* Member Info */}
-      <div className="text-center">
-        <h3 className="text-2xl text-white font-young font-semibold mb-2 group-hover:text-indigo-200 transition-colors duration-300">
-          {name}
-        </h3>
-        <p className="text-indigo-300 font-mont font-medium mb-3 text-lg">
-          {position}
-        </p>
-        <p className="text-white/70 font-mont text-sm leading-relaxed">
-          {description || "Passionate about advancing AI technology and building innovative solutions for real-world challenges."}
-        </p>
-      </div>
     </div>
-  )
-}
+  );
+};
 
 /**
- * Team component fetches data from the API and manages the Intersection Observer.
+ * Carousel Team Component
  */
 const Team = () => {
   const containerRef = useRef(null);
+  const carouselRef = useRef(null);
   const [teamMembers, setTeamMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // Effect for Data Fetching
-  useEffect(() => {
-    const fetchTeamMembers = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        // Fetching members who hold a Position of Responsibility (POR holders) as assumed for the leadership section
-        const response = await fetch(`${API_BASE_URL}/members/por_holders/`); 
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        // Map API response structure to component prop structure
-        // Assuming API returns an array of objects like: 
-        // { id, name, designation, image_url, bio, social_links: [{ platform, url, icon_class }] }
-        const formattedMembers = data.map(member => ({
-          name: member.name,
-          position: member.designation, // Assuming 'designation' from API maps to 'position'
-          description: member.bio,     // Assuming 'bio' from API maps to 'description'
-          image: member.image_url,     // Assuming 'image_url' from API maps to 'image'
-          socials: member.social_links?.map(social => ({ // Assuming 'social_links' is an array
-            icon: social.icon_class, // Needs to match the Font Awesome class
-            url: social.url
-          })) || [],
-        }));
-        
-        setTeamMembers(formattedMembers);
-      } catch (e) {
-        console.error("Failed to fetch team members:", e);
-        setError("Failed to load team data. Please try again later.");
-        // Fallback or a clear message could be handled here
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTeamMembers();
-  }, []); // Empty dependency array means this runs once on mount
-
-  // Effect for Intersection Observer
-  useEffect(() => {
-    // Only run this observer setup after the component has mounted AND 
-    // we have the elements loaded (which happens after fetching data and re-render)
-    if (!containerRef.current || loading) return; 
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fadeIn');
-            // We can optionally stop observing once animated
-            // observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    // Select all elements that need the scroll animation
-    const elements = containerRef.current.querySelectorAll('.animate-on-scroll');
-    elements.forEach((el) => observer.observe(el));
-
-    // Cleanup function
-    return () => observer.disconnect();
-
-  // Re-run observer setup if teamMembers or loading state changes, ensuring new cards are observed
-  }, [teamMembers, loading]); 
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [autoPlay, setAutoPlay] = useState(true);
   
-  // Note: I've kept the original hardcoded stats for presentation, but they could also be fetched from an API.
+  // Filters state
+  const [filters, setFilters] = useState({
+    active: 'all', // 'true', 'false', or 'all'
+    por_holders: 'all', // 'true', 'false', or 'all'
+    batch: '',
+    search: '',
+    designation: '',
+    ordering: 'name',
+  });
+
+  // Auto-play interval
+  useEffect(() => {
+    if (!autoPlay || teamMembers.length === 0) return;
+    
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => 
+        prevIndex === teamMembers.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [autoPlay, teamMembers.length]);
+
+  // Build API URL based on filters
+  const buildApiUrl = (currentFilters) => {
+    const params = new URLSearchParams();
+    
+    // Handle special endpoints
+    if (currentFilters.por_holders === 'true' && 
+        currentFilters.active === 'all' && 
+        !currentFilters.batch && 
+        !currentFilters.search && 
+        !currentFilters.designation) {
+      return `${API_BASE_URL}/members/por_holders/`;
+    }
+    
+    // Add filter parameters
+    if (currentFilters.active !== 'all') {
+      params.append('active', currentFilters.active);
+    }
+    if (currentFilters.por_holders !== 'all') {
+      params.append('por_holders', currentFilters.por_holders);
+    }
+    if (currentFilters.batch) {
+      params.append('batch', currentFilters.batch);
+    }
+    if (currentFilters.designation) {
+      params.append('designation', currentFilters.designation);
+    }
+    if (currentFilters.search) {
+      params.append('search', currentFilters.search);
+    }
+    if (currentFilters.ordering) {
+      params.append('ordering', currentFilters.ordering);
+    }
+    
+    const queryString = params.toString();
+    return `${API_BASE_URL}/members/${queryString ? `?${queryString}` : ''}`;
+  };
+
+  // Fetch team members
+  const fetchTeamMembers = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    
+    const apiURL = buildApiUrl(filters);
+    
+    try {
+      console.log('Fetching from:', apiURL); // For debugging
+      
+      const response = await fetch(apiURL); 
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      // Handle different response formats
+      let membersData = data;
+      if (Array.isArray(data.results)) {
+        membersData = data.results; // Handle paginated responses
+      } else if (Array.isArray(data.members)) {
+        membersData = data.members; // Handle nested responses
+      }
+      
+      const formattedMembers = membersData.map(member => ({
+        id: member.id,
+        name: member.name,
+        position: member.designation, 
+        description: member.bio || member.description,    
+        image: member.image_url || member.image,    
+        socials: member.social_links?.map(social => ({ 
+          icon: social.icon_class || social.icon, 
+          url: social.url
+        })) || [],
+        batch: member.batch,
+        joined_date: member.joined_date,
+        active: member.active
+      }));
+      
+      setTeamMembers(formattedMembers);
+      setCurrentIndex(0); // Reset to first slide when filters change
+    } catch (e) {
+      console.error("Failed to fetch team members:", e);
+      setError("Failed to load team data. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  }, [filters]);
+
+  useEffect(() => {
+    fetchTeamMembers();
+  }, [fetchTeamMembers]);
+
+  // Navigation functions
+  const nextSlide = () => {
+    setCurrentIndex(currentIndex === teamMembers.length - 1 ? 0 : currentIndex + 1);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex(currentIndex === 0 ? teamMembers.length - 1 : currentIndex - 1);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
+
+  // Filter handlers
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Clear all filters
+  const clearFilters = () => {
+    setFilters({
+      active: 'all',
+      por_holders: 'all',
+      batch: '',
+      search: '',
+      designation: '',
+      ordering: 'name',
+    });
+  };
+
+  // Team stats
   const teamStats = [
-    { number: "50+", label: "Active Members" },
+    { number: "20+", label: "Active Members" },
     { number: "15+", label: "Projects Completed" },
     { number: "10+", label: "Research Papers" },
     { number: "25+", label: "Workshops Hosted" }
   ];
 
+  // Calculate visible cards (show 3 cards at a time)
+  const getVisibleCards = () => {
+    if (teamMembers.length === 0) return [];
+    
+    const cards = [];
+    const totalCards = teamMembers.length;
+    
+    // Show 3 cards: previous, current, next
+    for (let i = -1; i <= 1; i++) {
+      const index = (currentIndex + i + totalCards) % totalCards;
+      cards.push({
+        ...teamMembers[index],
+        isActive: i === 0 // Center card is active
+      });
+    }
+    
+    return cards;
+  };
 
-  // --- Render Logic ---
+  // Get batch options from current members
+  const batchOptions = [...new Set(teamMembers.map(member => member.batch).filter(Batch => Batch))].sort();
+
+  // Render content based on state
   let content;
 
   if (loading) {
     content = (
       <div className="text-center py-20">
         <p className="text-white text-xl">Loading team data...</p>
-        {/* Simple Spinner Placeholder */}
         <div className="mt-4 w-8 h-8 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
       </div>
     );
@@ -163,97 +259,225 @@ const Team = () => {
     content = (
       <div className="text-center py-20">
         <p className="text-red-400 text-xl font-bold">{error}</p>
-        <p className="text-white/70 mt-2">Could not fetch leadership team data.</p>
+        <button 
+          onClick={fetchTeamMembers}
+          className="mt-4 px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors duration-300"
+        >
+          Retry
+        </button>
       </div>
     );
   } else if (teamMembers.length === 0) {
     content = (
       <div className="text-center py-20">
-        <p className="text-indigo-300 text-xl">No leadership members found.</p>
+        <p className="text-indigo-300 text-xl mb-4">No members found matching the criteria.</p>
+        <button 
+          onClick={clearFilters}
+          className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20 transition-colors duration-300"
+        >
+          Clear Filters
+        </button>
       </div>
     );
   } else {
-    // The main team grid rendering
+    const visibleCards = getVisibleCards();
+    
     content = (
-      <div className="animate-on-scroll opacity-0" style={{ animationDelay: '0.4s' }}>
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20 transform hover:scale-[1.01] transition-all duration-500 hover:shadow-indigo-500/20">
-          <h2 className="text-4xl text-white font-playfair italic font-semibold mb-12 text-center">
-            Leadership Team
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <TeamMemberCard
-                key={member.name || index} // Use a unique ID from API if available, otherwise name/index
-                name={member.name}
-                position={member.position}
-                image={member.image}
-                socials={member.socials}
-                description={member.description}
-                // Staggered delay for animation (adjust as needed with the observer logic)
-                delay={`${0.6 + index * 0.1}s`} 
+      <div className="relative">
+       
+
+        {/* Carousel Navigation */}
+        <div className="flex items-center justify-center mb-8">
+          <button
+            onClick={prevSlide}
+            onMouseEnter={() => setAutoPlay(false)}
+            onMouseLeave={() => setAutoPlay(true)}
+            className="p-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white transition-all duration-300 mr-4 hover:scale-110"
+            disabled={teamMembers.length <= 1}
+          >
+            <i className="fas fa-chevron-left"></i>
+          </button>
+          
+          <button
+            onClick={nextSlide}
+            onMouseEnter={() => setAutoPlay(false)}
+            onMouseLeave={() => setAutoPlay(true)}
+            className="p-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white transition-all duration-300 hover:scale-110"
+            disabled={teamMembers.length <= 1}
+          >
+            <i className="fas fa-chevron-right"></i>
+          </button>
+        </div>
+
+        {/* Carousel */}
+        <div 
+          ref={carouselRef}
+          className="flex items-center justify-center transition-transform duration-500 ease-out"
+        >
+          {visibleCards.map((member, index) => (
+            <TeamMemberCard
+              key={`${member.id}-${index}`}
+              {...member}
+            />
+          ))}
+        </div>
+
+        {/* Carousel Indicators */}
+        {teamMembers.length > 1 && (
+          <div className="flex justify-center mt-8 space-x-2">
+            {teamMembers.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                onMouseEnter={() => setAutoPlay(false)}
+                onMouseLeave={() => setAutoPlay(true)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentIndex 
+                    ? 'bg-indigo-400 w-8' 
+                    : 'bg-white/30 hover:bg-white/50'
+                }`}
               />
             ))}
           </div>
+        )}
+
+        {/* Current Member Info */}
+        <div className="text-center mt-8">
+          <h3 className="text-2xl text-white font-bold">
+            {teamMembers[currentIndex]?.name}
+          </h3>
+          <p className="text-indigo-300 mt-2">
+            {teamMembers[currentIndex]?.position}
+          </p>
+          {teamMembers[currentIndex]?.batch && (
+            <p className="text-white/50 text-sm mt-1">
+              Batch: {teamMembers[currentIndex]?.batch}
+            </p>
+          )}
+          <p className="text-white/70 mt-4 max-w-2xl mx-auto leading-relaxed">
+            {teamMembers[currentIndex]?.description}
+          </p>
         </div>
       </div>
     );
   }
 
-  // --- Main Return JSX ---
   return (
     <section id="team" ref={containerRef} className="min-h-screen w-full relative bg-black overflow-hidden">
-      {/* Background elements remain the same */}
-      <div className="absolute inset-0 bg-[#653A97] z-0"></div>
+      {/* Background elements */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle,#14103d,#141640,#141b43,#162045,#182547,#1c274b,#20284f,#242a53,#2e2859,#3b245d,#491e5f,#58135e)] z-0"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent animate-pulse"></div>
       <img
-        className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s]"
+        className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
         src="images/landingimg.png"
         alt="Team Background"
         loading="lazy"
       />
-
-      {/* Floating decorative elements - indigo/purple */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="floating-element w-32 h-32 absolute top-1/4 left-1/4 opacity-10 bg-indigo-500 rounded-full blur-3xl"></div>
-        <div className="floating-element w-40 h-40 absolute bottom-1/3 right-1/4 opacity-10 bg-purple-500 rounded-full blur-3xl delay-1000"></div>
-        <div className="floating-element w-28 h-28 absolute top-1/2 left-1/3 opacity-10 bg-violet-500 rounded-full blur-3xl delay-500"></div>
-      </div>
 
       {/* Content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
-            <div className="animate-on-scroll opacity-0 text-center mb-16">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-young font-bold mb-8 hover:scale-105 transition-transform duration-300">
+            <div className="text-center mb-16">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-young font-bold mb-8">
                 Our Team
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">
-                Meet the passionate minds driving innovation in artificial intelligence. Our diverse team of researchers,
-                developers, and visionaries is committed to pushing the boundaries of what's possible with AI.
+                Meet the passionate minds driving innovation in artificial intelligence
               </p>
             </div>
+            
+            {/* Filter Controls */}
+            <div className="mb-12 bg-white/5 p-6 rounded-lg border border-white/10">
+              <div className="flex flex-wrap gap-4 justify-center mb-4">
+               
 
-            {/* Team Grid (Dynamic Content) */}
-            {content}
+                
 
-            {/* Team Stats (Optional: Can be kept or removed/made dynamic) */}
-            <div className="mt-20 py-12 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm animate-on-scroll opacity-0" style={{ animationDelay: '1.2s' }}>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                    {teamStats.map((stat, index) => (
-                        <div key={index} className="px-4">
-                            <p className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 font-playfair mb-1">{stat.number}</p>
-                            <p className="text-lg text-white/90 font-mont font-medium uppercase tracking-wider">{stat.label}</p>
-                        </div>
-                    ))}
-                </div>
+                {/* Batch Filter */}
+                <select 
+                  name="batch" 
+                  value={filters.batch} 
+                  onChange={handleFilterChange}
+                  className="p-2 rounded bg-white/10 text-white border border-indigo-400/50 hover:bg-white/20 transition duration-300"
+                >
+                  <option value="">All Batches</option>
+                  {batchOptions.map(batch => (
+                    <option key={batch} value={batch}>Batch {batch}</option>
+                  ))}
+                </select>
+
+                {/* Ordering */}
+                <select 
+                  name="ordering" 
+                  value={filters.ordering} 
+                  onChange={handleFilterChange}
+                  className="p-2 rounded bg-white/10 text-white border border-indigo-400/50 hover:bg-white/20 transition duration-300"
+                >
+                  <option value="name">Name A-Z</option>
+                  <option value="-name">Name Z-A</option>
+                  <option value="batch">Batch (Oldest)</option>
+                  <option value="-batch">Batch (Newest)</option>
+                 
+                </select>
+              </div>
+
+              {/* Search and Designation Row */}
+              <div className="flex flex-wrap gap-4 justify-center">
+                <input 
+                  type="text" 
+                  name="search" 
+                  value={filters.search} 
+                  onChange={handleFilterChange} 
+                  placeholder="Search names, positions, bio..."
+                  className="p-2 rounded bg-white/10 text-white placeholder-white/50 border border-indigo-400/50 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300 min-w-64"
+                />
+
+                <input 
+                  type="text" 
+                  name="designation" 
+                  value={filters.designation} 
+                  onChange={handleFilterChange} 
+                  placeholder="Filter by designation..."
+                  className="p-2 rounded bg-white/10 text-white placeholder-white/50 border border-indigo-400/50 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300 min-w-64"
+                />
+
+                {/* Clear Filters Button */}
+                <button
+                  onClick={clearFilters}
+                  className="p-2 px-4 rounded bg-white/10 hover:bg-white/20 text-white border border-white/20 transition duration-300"
+                >
+                  Clear Filters
+                </button>
+              </div>
             </div>
 
+            {/* Carousel Content */}
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20 min-h-96">
+              {content}
+            </div>
+
+            {/* Team Stats */}
+            <div className="mt-20 py-12 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                {teamStats.map((stat, index) => (
+                  <div key={index} className="px-4">
+                    <p className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 font-playfair mb-1">
+                      {stat.number}
+                    </p>
+                    <p className="text-lg text-white/90 font-mont font-medium uppercase tracking-wider">
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Team
+export default Team;

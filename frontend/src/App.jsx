@@ -18,8 +18,9 @@ function App() {
       <Team />
       <Projects />
       <Resources />
-      <ContactUs />
+     
       <Blogs />
+       <ContactUs />
     </main>
     <Footer />
     </>
