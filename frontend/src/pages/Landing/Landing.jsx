@@ -6,12 +6,7 @@ const Landing = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Hide arrow when user scrolls down more than 100px
-      if (window.scrollY > 100) {
-        setShowArrow(false);
-      } else {
-        setShowArrow(true);
-      }
+      setShowArrow(window.scrollY <= 100);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -19,83 +14,115 @@ const Landing = () => {
   }, []);
 
   const scrollToAbout = () => {
-    const element = document.getElementById('about');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <>
       <Navbar />
       <div id="home" className="h-[100vh] w-full relative overflow-hidden bg-black">
-        {/* Background image with overlay */}
+        {/* Main background image */}
         <img 
-          className="w-full h-full object-cover opacity-70"
+          className="w-full h-full object-cover opacity-40"
           src="images/landingimg.png" 
-          alt="Landing" 
+          alt="AI Innovation" 
           loading="eager"
         />
         
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 to-indigo-900/30"></div>
+        {/* Animated Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/50 via-indigo-900/30 to-black/60 animate-gradient-flow"></div>
 
-        {/* Floating elements with more variety */}
+        {/* Floating Glow Orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 right-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-float-slow"></div>
+          <div className="absolute bottom-20 left-20 w-96 h-96 bg-indigo-500/8 rounded-full blur-3xl animate-float-medium delay-2000"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/5 rounded-full blur-2xl animate-float-fast delay-1000"></div>
+        </div>
+
+        {/* Animated Grid Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div 
+            className="w-full h-full"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.3) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px',
+              animation: 'gridMove 20s linear infinite'
+            }}
+          ></div>
+        </div>
+
+        {/* Subtle Particle Effects */}
         <div className="absolute inset-0">
-          <div className="floating-element w-32 h-32 absolute top-1/4 right-1/4 opacity-20 bg-purple-500 rounded-full blur-3xl animate-pulse"></div>
-          <div className="floating-element w-40 h-40 absolute bottom-1/3 left-1/4 opacity-20 bg-indigo-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="floating-element w-24 h-24 absolute top-1/3 left-1/3 opacity-10 bg-blue-500 rounded-full blur-2xl animate-pulse delay-500"></div>
-          <div className="floating-element w-36 h-36 absolute bottom-1/4 right-1/3 opacity-15 bg-violet-500 rounded-full blur-3xl animate-pulse delay-1500"></div>
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 bg-cyan-400/30 rounded-full animate-particle-float"
+              style={{
+                top: `${20 + Math.random() * 60}%`,
+                left: `${10 + Math.random() * 80}%`,
+                animationDelay: `${i * 1.5}s`,
+                animationDuration: `${8 + Math.random() * 4}s`
+              }}
+            ></div>
+          ))}
         </div>
 
         {/* Main content */}
         <div className="absolute inset-0 flex items-center">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl ml-20 space-y-8">
-              {/* Main heading with enhanced gradient text */}
-              <div className="animate-fadeIn opacity-0" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
-                <h1 className="text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-indigo-200 font-playfair italic font-bold drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)] select-none hover:scale-105 transition-transform duration-300">
-                  AI CLUB
+              
+              {/* Main heading */}
+              <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.2s' }}>
+                <h1 className="text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-cyan-200 font-young font-bold hover:scale-105 transition-transform duration-500">
+                  AI Club
                 </h1>
               </div>
 
-              {/* Institution name with slide-in animation */}
-              <div className="animate-slideRight opacity-0" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
-                <h2 className="text-3xl text-white/90 font-sora font-bold tracking-wide">
+              {/* Institution name */}
+              <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.4s' }}>
+                <h2 className="text-4xl text-white/90 font-young font-bold tracking-wide">
                   BITS PILANI
                 </h2>
               </div>
 
-              {/* Description with fade-in animation */}
-              <div className="animate-fadeIn opacity-0" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
-                <p className="text-xl text-white/80 font-mont max-w-2xl leading-relaxed">
+              {/* Description */}
+              <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.6s' }}>
+                <p className="text-2xl text-white/85 font-mont max-w-2xl leading-relaxed">
                   Pioneering the future of artificial intelligence through innovation, 
-                  collaboration, and cutting-edge research. Join us in shaping tomorrow's 
-                  technology today.
+                  collaboration, and cutting-edge research.
                 </p>
               </div>
 
-              {/* Call to action buttons with pop-up animation */}
-              <div className="flex gap-6 mt-8 animate-slideUp opacity-0" style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}>
+              {/* CTA Buttons */}
+              <div className="flex gap-6 mt-12 animate-fadeInUp opacity-0" style={{ animationDelay: '0.8s' }}>
                 <button
                   onClick={scrollToAbout}
-                  className="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-mont rounded-full 
+                  className="px-10 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-mont font-semibold rounded-xl 
                            hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 
-                           shadow-lg hover:shadow-purple-500/20 hover:-translate-y-0.5 hover:scale-105"
+                           shadow-2xl hover:shadow-purple-500/30 hover:-translate-y-1 hover:scale-105
+                           flex items-center gap-3 group"
                 >
-                  Discover More
+                  <i className="fas fa-rocket group-hover:rotate-12 transition-transform duration-300"></i>
+                  Explore More
                 </button>
+
                 <a
                   href="#contact"
-                  className="px-8 py-3 border-2 border-white/30 text-white font-mont rounded-full
-                           hover:bg-white/10 transition-all duration-300
-                           shadow-lg hover:shadow-white/20 hover:-translate-y-0.5 hover:scale-105"
+                  className="px-10 py-4 bg-white/10 backdrop-blur-sm text-white font-mont font-semibold rounded-xl
+                           border border-white/20 hover:bg-white/20 transition-all duration-300
+                           shadow-2xl hover:shadow-white/20 hover:-translate-y-1 hover:scale-105
+                           flex items-center gap-3 group"
                 >
-                  Join Us
+                  <i className="fas fa-users group-hover:scale-110 transition-transform duration-300"></i>
+                  Join Now
                 </a>
               </div>
 
-            
+              
             </div>
           </div>
         </div>
@@ -103,25 +130,111 @@ const Landing = () => {
         {/* Animated Arrow */}
         <div 
           className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-500 ${
-            showArrow ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            showArrow ? 'opacity-100' : 'opacity-0'
           }`}
           onClick={scrollToAbout}
         >
           <div className="cursor-pointer group">
-            <div className="flex flex-col items-center">
-              <i className="fas fa-chevron-down text-white/70 text-3xl animate-bounce group-hover:text-purple-400 transition-colors"></i>
-              <span className="text-white/50 text-sm font-mont mt-2 group-hover:text-purple-400 transition-colors">
-                
+            <div className="flex flex-col items-center space-y-2">
+              <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:bg-purple-500/30 group-hover:scale-110 transition-all duration-300">
+                <i className="fas fa-chevron-down text-white text-lg animate-bounce"></i>
+              </div>
+              <span className="text-white/60 text-xs font-mont tracking-widest">
+                SCROLL
               </span>
             </div>
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .animate-fadeInUp {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-gradient-flow {
+          background-size: 200% 200%;
+          animation: gradientFlow 8s ease infinite;
+        }
+
+        @keyframes gradientFlow {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+
+        .animate-float-slow {
+          animation: float 12s ease-in-out infinite;
+        }
+
+        .animate-float-medium {
+          animation: float 8s ease-in-out infinite;
+        }
+
+        .animate-float-fast {
+          animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px) scale(1);
+          }
+          33% {
+            transform: translateY(-20px) scale(1.05);
+          }
+          66% {
+            transform: translateY(10px) scale(0.95);
+          }
+        }
+
+        .animate-particle-float {
+          animation: particleFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes particleFloat {
+          0%, 100% {
+            transform: translateY(0px) translateX(0px) scale(1);
+            opacity: 0.3;
+          }
+          25% {
+            transform: translateY(-40px) translateX(10px) scale(1.2);
+            opacity: 0.6;
+          }
+          50% {
+            transform: translateY(-20px) translateX(-10px) scale(0.8);
+            opacity: 0.4;
+          }
+          75% {
+            transform: translateY(-30px) translateX(5px) scale(1.1);
+            opacity: 0.5;
+          }
+        }
+
+        @keyframes gridMove {
+          0% {
+            transform: translateX(0px) translateY(0px);
+          }
+          100% {
+            transform: translateX(-60px) translateY(-60px);
+          }
+        }
+      `}</style>
     </>
   )
 }
 
 export default Landing
-  
-
-

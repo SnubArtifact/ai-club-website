@@ -41,7 +41,7 @@ const ContactUs = () => {
   return (
     <div id="contact" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(349deg,rgba(35,8,69,0.79)_0%,rgba(24,0,51,1)_40%,rgba(49,9,64,1)_100%)] z-0"></div>
+      <div className="absolute inset-0 bg-[#8B50CD] z-0"></div>
       <img 
         className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
         src="images/landingimg.png" 
@@ -54,7 +54,7 @@ const ContactUs = () => {
           <div className="max-w-4xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center mb-12">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200 font-playfair italic font-bold mb-8">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200 font-young font-bold mb-8">
                 Contact Us
               </h1>
               <p className="text-white/80 text-xl font-mont">
@@ -103,7 +103,7 @@ const ContactUs = () => {
                     </div>
                     <button 
                       type="submit"
-                      className="w-full bg-gradient-to-r from-violet-600 to-purple-700 text-white font-mont font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105"
+                      className="w-full bg-gradient-to-r from-violet-600 to-purple-700 text-white font-young font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105"
                     >
                       Send Message
                     </button>
@@ -112,7 +112,7 @@ const ContactUs = () => {
 
                 {/* Contact Info */}
                 <div>
-                  <h3 className="text-2xl text-white font-playfair font-semibold mb-6">Contact Info</h3>
+                  <h3 className="text-2xl text-white font-young font-semibold mb-6">Contact Info</h3>
                   <div className="space-y-4">
                     <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
                       <div className="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center">

@@ -28,7 +28,10 @@ const Navbar = () => {
           <div className="flex items-center justify-center gap-30 h-16 px-6">
           
             <div className="flex-shrink-0">
-              <span className="text-white font-semibold text-xl tracking-wide">AI Club</span>
+              <img
+                className="h-10 w-10 cursor-pointer"
+                src="images/aiclublogo.png"
+                alt="Logo"/>
             </div>
 
          
@@ -38,7 +41,7 @@ const Navbar = () => {
                   <button
                     key={item.title}
                     onClick={() => scrollToSection(item.id)}
-                    className="text-white/80 hover:text-white px-3 py-2 text-sm font-mont font-medium tracking-wide transition-all duration-200 bg-transparent"
+                    className="text-white/80 hover:text-white  border-none px-5 py-2 text-sm font-mont font-medium tracking-wide transition-all duration-400 bg-transparent"
                   >
                     {item.title}
                   </button>
