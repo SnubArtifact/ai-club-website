@@ -17,21 +17,21 @@ const Navbar = () => {
     { title: 'Projects', id: 'projects' },
     { title: 'Resources', id: 'resources' },
     
-    { title: 'Blogs', id: 'blogs' },
+    // { title: 'Blogs', id: 'blogs' }, // Blogs section is currently commented out due to unavailability of blogs
     { title: 'Contact Us', id: 'contact' },
   ]
 
   return (
     <nav className="fixed top-4 left-4 right-4 z-50">
-      <div className="max-w-5xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
     
         <div className="bg-gray-500 bg-opacity-5 backdrop-blur-lg rounded-full shadow-lg">   
-          <div className="flex items-center justify-center gap-30 h-16 px-6">
+          <div className="flex items-center justify-center gap-30 h-20 px-6">
           
             <div className="flex-shrink-0">
               <img
-                className="h-10 w-10 cursor-pointer"
-                src="images/aiclublogo.png"
+                className="h-12 w-12 cursor-pointer"
+                src="images/logo1.svg"
                 alt="Logo"
                 />
                 
@@ -44,7 +44,7 @@ const Navbar = () => {
                   <button
                     key={item.title}
                     onClick={() => scrollToSection(item.id)}
-                    className="text-white/80 hover:text-white  border-none px-5 py-2 text-sm font-mont font-medium tracking-wide transition-all duration-400 bg-transparent"
+                    className="text-white/80 hover:text-white  border-none px-5 py-2 text-lg font-mont font-medium tracking-wide transition-all duration-400 bg-transparent"
                   >
                     {item.title}
                   </button>

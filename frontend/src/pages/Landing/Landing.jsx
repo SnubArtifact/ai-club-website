@@ -77,15 +77,15 @@ const Landing = () => {
               
               {/* Main heading */}
               <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.2s' }}>
-                <h1 className="text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-cyan-200 font-young font-bold hover:scale-105 transition-transform duration-500">
+                <h1 className="text-9xl text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-cyan-200 font-archivo hover:scale-105 transition-transform duration-500">
                   AI Club
                 </h1>
               </div>
 
               {/* Institution name */}
               <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.4s' }}>
-                <h2 className="text-4xl text-white/90 font-young font-bold tracking-wide">
-                  BITS PILANI
+                <h2 className="text-4xl text-white/90 font-mont  tracking-wide">
+                  BITS Pilani, Pilani Campus
                 </h2>
               </div>
 
