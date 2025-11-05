@@ -16,8 +16,9 @@ const Navbar = () => {
     { title: 'Team', id: 'team' },
     { title: 'Projects', id: 'projects' },
     { title: 'Resources', id: 'resources' },
+    
+    { title: 'Blogs', id: 'blogs' },
     { title: 'Contact Us', id: 'contact' },
-    { title: 'Blogs', id: 'blogs' }
   ]
 
   return (
@@ -31,7 +32,9 @@ const Navbar = () => {
               <img
                 className="h-10 w-10 cursor-pointer"
                 src="images/aiclublogo.png"
-                alt="Logo"/>
+                alt="Logo"
+                />
+                
             </div>
 
          

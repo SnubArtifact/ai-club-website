@@ -225,7 +225,7 @@ const fetchBlogPosts = async () => {
   return (
     <div id="blogs" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
       {/* Background elements remain the same */}
-      <div className="absolute inset-0 bg-[#9458D0] z-0"></div>
+      <div className="absolute inset-0 bg-[#180a40] z-0"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-rose-500/10 via-transparent to-transparent animate-pulse"></div>
       <img
         className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s]"

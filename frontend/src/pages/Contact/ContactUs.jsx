@@ -41,7 +41,7 @@ const ContactUs = () => {
   return (
     <div id="contact" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-[#8B50CD] z-0"></div>
+      <div className="absolute inset-0 bg-[#31157a] z-0"></div>
       <img 
         className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
         src="images/landingimg.png" 
@@ -130,7 +130,7 @@ const ContactUs = () => {
                       </div>
                       <div>
                         <p className="text-white font-mont font-medium">Email</p>
-                        <p className="text-white/80 font-mont text-sm">aiclub@pilani.bits-pilani.ac.in</p>
+                        <p className="text-white/80 font-mont text-sm">aiclub.bitsp@gmail.com</p>
                       </div>
                     </div>
 

@@ -170,10 +170,10 @@ const Resources = () => {
       title: "Learning Paths",
       description: "Structured learning materials from beginner to advanced levels",
       resources: [
-        { name: "AI Fundamentals Crash Course", icon: "fas fa-play", link: "#" },
-        { name: "Machine Learning Mastery", icon: "fas fa-chart-line", link: "#" },
-        { name: "Deep Learning Specialization", icon: "fas fa-brain", link: "#" },
-        { name: "NLP Learning Path", icon: "fas fa-language", link: "#" }
+        { name: "Multimodal RAG", icon: "fas fa-play", link: "https://youtube.com/playlist?list=PLvo3m1r7r2piPyQy_pur-mwqSr6b7pWtL&si=3X_ToIrRKd3AulUC" },
+        { name: "Machine Learning Mastery", icon: "fas fa-chart-line", link: "https://www.youtube.com/watch?v=r67SfaiYaDI&pp=ygUKTUwgbWFzdGVyeQ%3D%3D" },
+        { name: "Reinforcement Learning", icon: "fas fa-brain", link: "https://www.youtube.com/playlist?list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ" },
+        { name: "RAG Resources", icon: "fas fa-language", link: "https://youtube.com/playlist?list=PLvo3m1r7r2pgMUp8Yr4iKupdD40UklPeH&si=MaQkTnbXadMWNjZD" }
       ]
     },
     {
@@ -183,7 +183,7 @@ const Resources = () => {
         { name: "Python Data Science Stack", icon: "fab fa-python", link: "#" },
         { name: "Jupyter Notebook Tutorials", icon: "fas fa-book", link: "#" },
         { name: "Cloud AI Platforms", icon: "fas fa-cloud", link: "#" },
-        { name: "Version Control for ML", icon: "fab fa-git-alt", link: "#" }
+        { name: "Version Control for ML", icon: "fab fa-git-alt", link: "https://www.youtube.com/watch?v=Ez8F0nW6S-w&pp=ygUPdmVyc2lvbiBjb250cm9s" }
       ]
     },
    
@@ -193,7 +193,7 @@ const Resources = () => {
   return (
     <div id="resources" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
       {/* Background with parallax effect */}
-      <div className="absolute inset-0 bg-[#8243C1] z-0"></div>
+      <div className="absolute inset-0 bg-[#331e6b] z-0"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent animate-pulse"></div>
       <img 
         className="w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s]"
