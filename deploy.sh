@@ -12,15 +12,15 @@ cd ..
 
 # Deploy with Docker
 echo "🐳 Starting Docker services..."
-docker-compose down
-docker-compose up -d --build
+docker compose down
+docker compose up -d --build
 
 # Wait for services to start
 echo "⏳ Waiting for services..."
 sleep 10
 
 # Check status
-docker-compose ps
+docker compose ps
 
 echo "✅ Deployment complete!"
 echo "🌐 Visit: http://aiclub-bitsp (HTTPS after SSL setup)"
