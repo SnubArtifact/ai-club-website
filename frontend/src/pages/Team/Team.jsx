@@ -42,7 +42,7 @@ const TeamMemberCard = ({ name, position, image, socials, description, isActive 
 
         {/* Member Info */}
         <div className="text-center">
-          <h3 className="text-2xl text-white font-young font-semibold mb-2 group-hover:text-indigo-200 transition-colors duration-300">
+          <h3 className="text-2xl text-white font-mont  mb-2 group-hover:text-indigo-200 transition-colors duration-300">
             {name}
           </h3>
           <p className="text-indigo-300 font-mont font-medium mb-3 text-lg">
@@ -380,7 +380,7 @@ const Team = () => {
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
             <div className="text-center mb-16">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-young font-bold mb-8">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-mont font-semibold mb-8">
                 Our Team
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">

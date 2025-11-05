@@ -19,6 +19,8 @@ export default {
         'plex': ['IBM Plex Serif', 'serif'],
         'instrument': ['Instrument Serif', 'serif'],
         'archivo': ['Archivo Black', 'sans-serif'],
+        'nabla': ['Nabla', 'serif'],
+        'geist': ['Geist', 'sans-serif'],
       }
     },
   },

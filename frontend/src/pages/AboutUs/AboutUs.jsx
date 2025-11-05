@@ -45,7 +45,7 @@ const AboutUs = () => {
           <div className="max-w-4xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-200 font-young font-bold mb-8 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-200 font-mont font-semibold -translate-y-12 mb-12 hover:scale-105 transition-transform duration-300">
                 About Us
               </h1>
             </div>
@@ -54,53 +54,53 @@ const AboutUs = () => {
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20 transform hover:scale-[1.02] transition-all duration-500 hover:shadow-purple-500/20">
               {/* Mission Statement */}
               <div className="animate-on-scroll opacity-0 text-center" style={{ animationDelay: '0.2s' }}>
-                <h2 className="text-3xl text-white font-young italic font-semibold mb-6">
+                <h2 className="text-4xl text-white font-mont   mb-12">
                   Our Mission
                 </h2>
-                <p className="text-white/90 text-lg font-mont leading-relaxed mb-8 max-w-2xl mx-auto">
+                <p className="text-white/90 text-2xl font-mont leading-relaxed mb-12 max-w-2xl mx-auto">
                   We are dedicated to exploring and advancing the frontiers of artificial intelligence through collaborative learning, innovative projects, and knowledge sharing.
                 </p>
               </div>
 
               {/* What We Do Section */}
               <div className="animate-on-scroll opacity-0 text-center" style={{ animationDelay: '0.4s' }}>
-                <h2 className="text-3xl text-white font-young font-semibold mb-6">
+                <h2 className="text-4xl text-white font-mont  mb-12">
                   What We Do
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-white/5 rounded-xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-                    <h3 className="text-xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
+                    <h3 className="text-2xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
                       <i className="fas fa-chalkboard-teacher mr-3 text-purple-300"></i>
                       Workshops & Training
                     </h3>
-                    <p className="text-white/80 font-mont text-center">
+                    <p className="text-white/80 font-mont text-lg text-center">
                       Regular workshops and hands-on training sessions on AI/ML technologies and tools.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-                    <h3 className="text-xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
+                    <h3 className="text-2xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
                       <i className="fas fa-project-diagram mr-3 text-purple-300"></i>
                       Project Development
                     </h3>
-                    <p className="text-white/80 font-mont text-center">
+                    <p className="text-white/80 font-mont text-lg text-center">
                       Collaborative projects focusing on real-world AI applications and solutions.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-                    <h3 className="text-xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
+                    <h3 className="text-2xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
                       <i className="fas fa-microscope mr-3 text-purple-300"></i>
                       Research & Innovation
                     </h3>
-                    <p className="text-white/80 font-mont text-center">
+                    <p className="text-white/80 font-mont text-lg text-center">
                       Exploring cutting-edge AI research and implementing innovative solutions.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-                    <h3 className="text-xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
+                    <h3 className="text-2xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
                       <i className="fas fa-users mr-3 text-purple-300"></i>
                       Community Building
                     </h3>
-                    <p className="text-white/80 font-mont text-center">
+                    <p className="text-white/80 font-mont text-lg text-center">
                       Creating a vibrant community of AI enthusiasts and practitioners.
                     </p>
                   </div>

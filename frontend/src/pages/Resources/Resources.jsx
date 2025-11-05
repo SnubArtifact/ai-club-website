@@ -215,7 +215,7 @@ const Resources = () => {
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center mb-16">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-200 font-young font-bold mb-8 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-200 font-mont font-semibold mb-8 hover:scale-105 transition-transform duration-300">
                 Resources
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">
@@ -228,7 +228,7 @@ const Resources = () => {
 
             {/* Resource Categories */}
             <div className="animate-on-scroll opacity-0" style={{ animationDelay: '0.6s' }}>
-              <h2 className="text-4xl text-white font-young font-semibold mb-8 text-center">
+              <h2 className="text-4xl text-white font-mont  mb-8 text-center">
                 Resource Categories
               </h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
