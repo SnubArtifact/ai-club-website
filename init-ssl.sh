@@ -1,17 +1,17 @@
 #!/bin/bash
 set -e
 
-echo "🔒 Setting up SSL for aiclub-bitp..."
+echo "🔒 Setting up SSL for aiclub-bitsp..."
 
 # Get SSL certificate
 docker-compose run --rm certbot certonly \
     --webroot \
     --webroot-path=/var/www/certbot \
-    --email admin@aiclub-bitp \
+    --email admin@aiclub-bitsp \
     --agree-tos \
     --no-eff-email \
-    -d aiclub-bitp \
-    -d www.aiclub-bitp
+    -d aiclub-bitsp \
+    -d www.aiclub-bitsp
 
 echo "✅ SSL certificate obtained!"
 echo "📝 Now edit nginx/nginx.conf:"

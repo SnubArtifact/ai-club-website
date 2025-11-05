@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "🚀 Deploying to aiclub-bitp..."
+echo "🚀 Deploying to aiclub-bitsp..."
 
 # Build frontend
 echo "📦 Building frontend..."
@@ -23,5 +23,5 @@ sleep 10
 docker-compose ps
 
 echo "✅ Deployment complete!"
-echo "🌐 Visit: http://aiclub-bitp (HTTPS after SSL setup)"
+echo "🌐 Visit: http://aiclub-bitsp (HTTPS after SSL setup)"
 echo "📊 Logs: docker-compose logs -f"
