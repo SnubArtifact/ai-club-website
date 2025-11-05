@@ -1,22 +1,27 @@
 #!/bin/bash
 set -e
 
-echo "Deploying AI Club Website..."
+echo "🚀 Deploying to aiclub-bitp..."
 
-# Build frontend first
-echo "Building frontend..."
+# Build frontend
+echo "📦 Building frontend..."
 cd frontend
 npm install
 npm run build
 cd ..
 
-# Start containers
-echo "Starting Docker containers..."
-docker compose up -d --build
+# Deploy with Docker
+echo "🐳 Starting Docker services..."
+docker-compose down
+docker-compose up -d --build
 
-echo ""
-echo "Done! Website running at:"
-echo "   http://localhost"
-echo "   Admin: http://localhost/admin (admin/admin123)"
-echo ""
-echo "View logs: docker compose logs -f"
+# Wait for services to start
+echo "⏳ Waiting for services..."
+sleep 10
+
+# Check status
+docker-compose ps
+
+echo "✅ Deployment complete!"
+echo "🌐 Visit: http://aiclub-bitp (HTTPS after SSL setup)"
+echo "📊 Logs: docker-compose logs -f"
