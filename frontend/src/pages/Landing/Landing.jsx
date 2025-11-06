@@ -106,7 +106,7 @@ const Landing = () => {
         </div>
         
         {/* Professional Events Carousel - UPDATED WITH ADDITIONAL INFO */}
-        <div className="absolute top-1/2 left-1/2 transform translate-x-1/4 -translate-y-1/2 z-40 w-full max-w-md  px-4">
+        <div className="absolute top-1/2 left-1/2 transform translate-x-1/2 -translate-y-[45%] z-40 w-full max-w-md  px-4">
           <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '1s' }}>
             {/* VIBRANT ACCENT CARD */}
             <div className="event-card-attention rounded-xl overflow-hidden 
