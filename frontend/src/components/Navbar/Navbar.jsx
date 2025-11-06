@@ -15,7 +15,9 @@ const Navbar = () => {
     { title: 'About Us', id: 'about' },
     { title: 'Team', id: 'team' },
     { title: 'Projects', id: 'projects' },
+    
     { title: 'Resources', id: 'resources' },
+    {title: 'Gallery', id: 'gallery' },
     
     // { title: 'Blogs', id: 'blogs' }, // Blogs section is currently commented out due to unavailability of blogs
     { title: 'Contact Us', id: 'contact' },

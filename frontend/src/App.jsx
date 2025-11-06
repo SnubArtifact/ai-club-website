@@ -7,6 +7,7 @@ import Resources from './pages/Resources/Resources'
 import ContactUs from './pages/Contact/ContactUs'
 import Blogs from './pages/Blogs/Blogs'
 import Footer from './components/Footer/Footer'
+import Gallery from './pages/Gallery/Gallery'
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Team />
       <Projects />
       <Resources />
+      <Gallery />
      
       {/* <Blogs />*/} {/* Blogs section is currently commented out due to unavailability of blogs */}
        <ContactUs />

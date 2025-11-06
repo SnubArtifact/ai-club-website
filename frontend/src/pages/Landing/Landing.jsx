@@ -205,9 +205,9 @@ const Landing = () => {
                     <button
                       key={index}
                       onClick={() => goToEvent(index)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      className={`w-1 h-1 rounded-full transition-all duration-300 ${
                         index === currentEventIndex 
-                          ? 'bg-red-500 scale-125 shadow-md shadow-red-500/50' // Highlighted dot
+                          ? 'bg-purple-500 scale-100 shadow-md shadow-red-500/50' // Highlighted dot
                           : 'bg-gray-400 hover:bg-gray-500'
                       }`}
                     />
