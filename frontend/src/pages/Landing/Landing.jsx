@@ -3,7 +3,6 @@ import Navbar from '../../components/Navbar/Navbar'
 
 const Landing = () => {
   const [showArrow, setShowArrow] = useState(true);
-  const [showEvents, setShowEvents] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,98 +98,80 @@ const Landing = () => {
           ))}
         </div>
 
-        {/* Events Hover Button */}
-        <div 
-          className="fixed top-1/2 right-8 -translate-y-1/2 z-40"
-          onMouseEnter={() => setShowEvents(true)}
-          onMouseLeave={() => setShowEvents(false)}
-        >
-          {/* Events Panel */}
-          <div className={`relative transition-all duration-500 ease-out ${
-            showEvents ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
-          }`}>
-            <div className="w-80 bg-black/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6 ml-4">
-              {/* Events Header */}
+        {/* Fixed Events Section */}
+        <div className="fixed top-1/2 right-8 -translate-y-1/2 z-40">
+          <div className="w-80 bg-black/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6">
+            {/* Events Header */}
+            <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '1s' }}>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-2 h-8 bg-gradient-to-b from-purple-500 to-cyan-500 rounded-full"></div>
                 <h3 className="text-2xl font-bold text-white font-mont">
                   Upcoming Events
                 </h3>
               </div>
+            </div>
 
-              {/* Events List */}
-              <div className="space-y-4 max-h-96 overflow-y-auto">
-                {upcomingEvents.map((event) => (
-                  <div
-                    key={event.id}
-                    className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 
-                             hover:bg-white/10 hover:border-purple-500/30 transition-all duration-300 group cursor-pointer"
-                  >
-                    {/* Event Type Badge */}
-                    <div className="flex justify-between items-start mb-2">
-                      <span className={`px-2 py-1 rounded-full text-xs font-semibold font-mont ${
-                        event.type === 'Workshop' 
-                          ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                          : event.type === 'Competition'
-                          ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
-                          : 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
-                      }`}>
-                        {event.type}
-                      </span>
-                      <i className="fas fa-arrow-up-right-from-square text-white/40 group-hover:text-purple-400 transition-colors duration-300 text-sm"></i>
+            {/* Events List */}
+            <div className="space-y-4 max-h-96 overflow-y-auto">
+              {upcomingEvents.map((event, index) => (
+                <div
+                  key={event.id}
+                  className="animate-fadeInUp opacity-0 bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 
+                           hover:bg-white/10 hover:border-purple-500/30 transition-all duration-300 group cursor-pointer"
+                  style={{ animationDelay: `${1.2 + index * 0.1}s` }}
+                >
+                  {/* Event Type Badge */}
+                  <div className="flex justify-between items-start mb-2">
+                    <span className={`px-2 py-1 rounded-full text-xs font-semibold font-mont ${
+                      event.type === 'Workshop' 
+                        ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
+                        : event.type === 'Competition'
+                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                        : 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
+                    }`}>
+                      {event.type}
+                    </span>
+                    <i className="fas fa-arrow-up-right-from-square text-white/40 group-hover:text-purple-400 transition-colors duration-300 text-sm"></i>
+                  </div>
+
+                  {/* Event Title */}
+                  <h4 className="text-lg font-bold text-white font-mont mb-3 group-hover:text-cyan-200 transition-colors duration-300">
+                    {event.title}
+                  </h4>
+
+                  {/* Event Details */}
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-white/70">
+                      <i className="fas fa-calendar text-purple-400 w-4 text-sm"></i>
+                      <span className="text-sm font-mont">{event.date}</span>
                     </div>
-
-                    {/* Event Title */}
-                    <h4 className="text-lg font-bold text-white font-mont mb-3 group-hover:text-cyan-200 transition-colors duration-300">
-                      {event.title}
-                    </h4>
-
-                    {/* Event Details */}
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-white/70">
-                        <i className="fas fa-calendar text-purple-400 w-4 text-sm"></i>
-                        <span className="text-sm font-mont">{event.date}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-white/70">
-                        <i className="fas fa-clock text-cyan-400 w-4 text-sm"></i>
-                        <span className="text-sm font-mont">{event.time}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-white/70">
-                        <i className="fas fa-location-dot text-indigo-400 w-4 text-sm"></i>
-                        <span className="text-sm font-mont">{event.location}</span>
-                      </div>
+                    <div className="flex items-center gap-2 text-white/70">
+                      <i className="fas fa-clock text-cyan-400 w-4 text-sm"></i>
+                      <span className="text-sm font-mont">{event.time}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-white/70">
+                      <i className="fas fa-location-dot text-indigo-400 w-4 text-sm"></i>
+                      <span className="text-sm font-mont">{event.location}</span>
                     </div>
                   </div>
-                ))}
-              </div>
 
-              {/* View All Button */}
-              <button className="w-full mt-4 py-3 bg-gradient-to-r from-purple-600/20 to-cyan-600/20 text-white font-mont font-semibold rounded-xl
-                        border border-white/10 hover:border-purple-500/50 transition-all duration-300
-                        hover:from-purple-600/30 hover:to-cyan-600/30 group">
+                  {/* Hover Effect Line */}
+                  <div className="w-0 h-0.5 bg-gradient-to-r from-purple-500 to-cyan-500 mt-3 group-hover:w-full transition-all duration-300"></div>
+                </div>
+              ))}
+            </div>
+
+            {/* View All Events Button */}
+            <div className="animate-fadeInUp opacity-0 pt-4 border-t border-white/10 mt-4" style={{ animationDelay: '1.5s' }}>
+              <button className="w-full py-3 bg-gradient-to-r from-purple-600/20 to-cyan-600/20 text-white font-mont font-semibold rounded-xl
+                          border border-white/10 hover:border-purple-500/50 transition-all duration-300
+                          hover:from-purple-600/30 hover:to-cyan-600/30 group">
                 <div className="flex items-center justify-center gap-2">
                   <span>View All Events</span>
                   <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
                 </div>
               </button>
             </div>
-          </div>
-
-          {/* Events Toggle Button */}
-          <div className="absolute top-1/2 right-0 -translate-y-1/2">
-            <button
-              className={`w-12 h-12 rounded-full backdrop-blur-sm border flex items-center justify-center transition-all duration-500 group ${
-                showEvents 
-                  ? 'bg-purple-600/30 border-purple-500/50 shadow-lg shadow-purple-500/20' 
-                  : 'bg-white/10 border-white/20 hover:bg-purple-500/30 hover:border-purple-400'
-              }`}
-            >
-              <i className={`fas fa-calendar text-white transition-all duration-500 ${
-                showEvents ? 'text-purple-200' : 'group-hover:text-purple-200'
-              }`}></i>
-              {/* Notification Dot */}
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-cyan-400 rounded-full animate-pulse"></div>
-            </button>
           </div>
         </div>
 
