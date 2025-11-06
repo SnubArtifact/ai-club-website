@@ -45,7 +45,7 @@ const AboutUs = () => {
           <div className="max-w-4xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-200 font-mont font-semibold -translate-y-6 mb-12 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-200 font-mont font-semibold  mb-12 hover:scale-105 transition-transform duration-300">
                 About Us
               </h1>
             </div>
@@ -69,7 +69,7 @@ const AboutUs = () => {
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-white/5 rounded-xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-                    <h3 className="text-xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
+                    <h3 className="text-xl text-white font-nata font-semibold mb-3 flex items-center justify-center">
                       <i className="fas fa-chalkboard-teacher mr-3 text-purple-300"></i>
                       Workshops & Training
                     </h3>
@@ -78,7 +78,7 @@ const AboutUs = () => {
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-                    <h3 className="text-2xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
+                    <h3 className="text-xl text-white font-nata font-semibold mb-3 flex items-center justify-center">
                       <i className="fas fa-project-diagram mr-3 text-purple-300"></i>
                       Project Development
                     </h3>
@@ -87,7 +87,7 @@ const AboutUs = () => {
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-                    <h3 className="text-2xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
+                    <h3 className="text-xl text-white font-nata font-semibold mb-3 flex items-center justify-center">
                       <i className="fas fa-microscope mr-3 text-purple-300"></i>
                       Research & Innovation
                     </h3>
@@ -96,7 +96,7 @@ const AboutUs = () => {
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-                    <h3 className="text-2xl text-white font-tiny font-semibold mb-3 flex items-center justify-center">
+                    <h3 className="text-xl text-white font-nata font-semibold mb-3 flex items-center justify-center">
                       <i className="fas fa-users mr-3 text-purple-300"></i>
                       Community Building
                     </h3>

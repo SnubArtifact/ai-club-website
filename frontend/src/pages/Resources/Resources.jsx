@@ -61,7 +61,7 @@ const ResourceSection = ({ title, description, resources, delay }) => {
   return (
     <div className="animate-on-scroll opacity-0" style={{ animationDelay: delay }}>
       <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
-        <h3 className="text-3xl text-white font-tiny font-semibold mb-3">
+        <h3 className="text-2xl text-white font-nata font-semibold mb-3">
           {title}
         </h3>
         <p className="text-white/70 font-mont mb-6 leading-relaxed">
@@ -177,8 +177,8 @@ const Resources = () => {
       ]
     },
     {
-      title: "Development Tools",
-      description: "Essential software and libraries for AI development",
+      title: "Learning Sessions",
+      description: "Essential learning materials for AI development",
       resources: [
         { name: "Python Data Science Stack", icon: "fab fa-python", link: "https://www.youtube.com/watch?v=7eh4d6sabA0&pp=ygUUbGVhcm4gcHl0aG9ubSBmb3IgbWw%3D" },
         { name: "Jupyter Notebook Tutorials", icon: "fas fa-book", link: "https://www.youtube.com/watch?v=5pf0_bpNbkw&pp=ygUZanVweXRlciBub3RlYm9vayB0dXRvcmlhbA%3D%3D" },
@@ -215,7 +215,7 @@ const Resources = () => {
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center mb-16">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-200 font-mont font-semibold mb-8 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-7xl text-white bg-clip-text bg-gradient-to-r from-white to-amber-200 font-mont font-semibold mb-8 hover:scale-105 transition-transform duration-300">
                 Resources
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">

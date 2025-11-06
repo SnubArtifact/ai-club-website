@@ -141,15 +141,16 @@ const ContactUs = () => {
                       <div>
                         <p className="text-white font-mont font-medium">Social Media</p>
                         <div className="flex gap-3 mt-1">
-                          <a href="#" className="text-white/80 hover:text-white transition-colors">
+                          <a href="https://www.linkedin.com/company/ai-club-bitsp/" className="text-white/80 hover:text-white transition-colors">
                             <i className="fab fa-linkedin text-lg"></i>
                           </a>
-                          <a href="#" className="text-white/80 hover:text-white transition-colors">
+                          <a href="https://www.instagram.com/aiclub.bitsp/" className="text-white/80 hover:text-white transition-colors">
                             <i className="fab fa-instagram text-lg"></i>
                           </a>
-                          <a href="#" className="text-white/80 hover:text-white transition-colors">
+                          {/* <a href="#" className="text-white/80 hover:text-white transition-colors">
                             <i className="fab fa-github text-lg"></i>
-                          </a>
+                          </a> */} 
+                          {/* Waiting for official github */}
                         </div>
                       </div>
                     </div>

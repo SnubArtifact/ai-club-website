@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Club Info */}
           <div className="text-center md:text-left mb-4 md:mb-0">
-            <h3 className="text-lg font-semibold font-mont">AI Club BITS Pilani</h3>
+            <h3 className="text-lg font-semibold font-mont">AI Club, BITS Pilani</h3>
             <p className="text-gray-400 text-sm font-mont mt-1">
               Pioneering AI innovation and research
             </p>
@@ -16,12 +16,12 @@ const Footer = () => {
           {/* Social Links */}
           <div className="flex space-x-6">
             <a 
-              href="https://github.com/your-github" 
+              href="https://www.instagram.com/aiclub.bitsp/" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-gray-400 hover:text-white transition-colors"
             >
-              <i className="fab fa-github text-xl"></i>
+              <i className="fab fa-instagram text-xl"></i>
             </a>
             <a 
               href="https://www.linkedin.com/company/ai-club-bitsp/" 

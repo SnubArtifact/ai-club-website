@@ -49,15 +49,15 @@ const Landing = () => {
     //   type: "Competition",
     //   icon: "fas fa-laptop-code",
     // },
-    // {
-    //   id: 3,
-    //   title: "Guest Lecture: ML in Healthcare",
-    //   date: "Jan 5, 2025",
-    //   time: "2:00 PM - 4:00 PM",
-    //   location: "Main Auditorium",
-    //   type: "Guest Lecture",
-    //   icon: "fas fa-comment-alt",
-    // }
+    //  {
+    //    id: 3,
+    //    title: "Guest Lecture: ML in Healthcare",
+    //    date: "Jan 5, 2025",
+    //    time: "2:00 PM - 4:00 PM",
+    //    location: "Main Auditorium",
+    //    type: "Guest Lecture",
+    //    icon: "fas fa-comment-alt",
+    //  }
   ];
 
   const nextEvent = () => {
