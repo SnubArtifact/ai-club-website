@@ -328,7 +328,7 @@ const Projects = () => {
           <div className="max-w-6xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center mb-14">
-              <h1 className="text-7xl text-white  py-2 bg-clip-text bg-gradient-to-r from-white to-cyan-200 font-mont -translate-y-4 font-semibold mb-8 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-7xl text-white  hover:scale-105 transition-all duration-300 py-2 bg-clip-text bg-gradient-to-r from-white to-cyan-200 font-mont -translate-y-4 font-semibold mb-8 hover:scale-105 transition-transform duration-300">
                 Our Projects
               </h1>
               <p className="text-white/80 text-xl font-mont translate-y-2 max-w-2xl mx-auto">

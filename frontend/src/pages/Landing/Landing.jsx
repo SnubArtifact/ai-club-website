@@ -6,11 +6,13 @@ const Landing = () => {
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
   // ⭐ NEW STATE: To track cursor position
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 }); 
+  
 
   useEffect(() => {
     const handleScroll = () => {
       setShowArrow(window.scrollY <= 100);
     };
+    
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -102,7 +104,7 @@ const Landing = () => {
           >
             {/* VIBRANT ACCENT CARD */}
             <div className="event-card-attention rounded-xl overflow-hidden 
-                          transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 transform hover:-translate-y-2 hover:scale-[1.03]">
+                          transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 transform hover:-translate-y-3 hover:scale-[1.03]">
               
               {/* Event Card Content (left untouched) */}
               <div className="bg-gray-700 px-5 py-4 border-b border-purple-700">
@@ -151,7 +153,7 @@ const Landing = () => {
                   
                   {/* Date & Time */}
                   <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
-                    <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors mt-0.5">
+                    <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors mt-0.5">
                       <i className="fas fa-clock text-black text-xs"></i>
                     </div>
                     <div>
@@ -162,21 +164,22 @@ const Landing = () => {
                   
                   {/* Location */}
                   <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
-                    <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors mt-0.5">
+                    <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors mt-0.5">
                       <i className="fas fa-map-marker-alt text-black text-xs"></i>
                     </div>
+                    <div className='column'>
                     <div className="text-sm text-gray-800 font-mont font-semibold">{currentEvent.location}</div>
-                  </div>
-
-                  {/* Comments */}
-                  <div>
-                    <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
-                      <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors mt-0.5">
-                        <i className="fas fa-comment text-black text-xs"></i>
-                      </div>
-                      <div className="text-sm text-gray-800 font-mont font-semibold">{currentEvent.comments}</div>
+                    <div className="text-sm text-gray-600 font-mont ">{currentEvent.comments}</div>
                     </div>
                   </div>
+
+                 
+                  
+                    
+                       
+                     
+                      
+                  
 
                   {/* Prizes Section */}
                   <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
@@ -191,7 +194,7 @@ const Landing = () => {
 
                   {/* Eligibility Section */}
                   <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
-                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-blue-200 transition-colors mt-0.5">
+                    <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-blue-200 transition-colors mt-0.5">
                       <i className="fas fa-user-graduate text-black text-xs"></i>
                     </div>
                     <div>

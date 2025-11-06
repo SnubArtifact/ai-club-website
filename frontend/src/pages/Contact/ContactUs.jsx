@@ -54,8 +54,8 @@ const ContactUs = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             {/* Main Title */}
-            <div className="animate-on-scroll opacity-0 text-center mb-12">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200 font-mont font-semibold mb-8">
+            <div className="animate-on-scroll opacity-0  text-center mb-12">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200  hover:scale-105 transition-all duration-300 font-mont  font-semibold mb-8">
                 Contact Us
               </h1>
               <p className="text-white/80 text-xl font-mont">

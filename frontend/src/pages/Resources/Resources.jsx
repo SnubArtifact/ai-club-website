@@ -171,20 +171,23 @@ const Resources = () => {
       description: "Structured learning materials from beginner to advanced levels",
       resources: [
         { name: "Multimodal RAG", icon: "fas fa-play", link: "https://youtube.com/playlist?list=PLvo3m1r7r2piPyQy_pur-mwqSr6b7pWtL&si=3X_ToIrRKd3AulUC" },
-        { name: "Machine Learning Mastery", icon: "fas fa-chart-line", link: "https://www.youtube.com/watch?v=r67SfaiYaDI&pp=ygUKTUwgbWFzdGVyeQ%3D%3D" },
+       
         { name: "Reinforcement Learning", icon: "fas fa-brain", link: "https://www.youtube.com/playlist?list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ" },
-        { name: "RAG Resources", icon: "fas fa-language", link: "https://youtube.com/playlist?list=PLvo3m1r7r2pgMUp8Yr4iKupdD40UklPeH&si=MaQkTnbXadMWNjZD" }
+        { name: "Retrieval-Augmented Generation", icon: "fas fa-language", link: "https://youtube.com/playlist?list=PLvo3m1r7r2pgMUp8Yr4iKupdD40UklPeH&si=MaQkTnbXadMWNjZD" },
+        { name: "Python for AI/ML Roadmap", icon: "fab fa-python", link: "https://docs.google.com/document/d/18xY_Su1sw1tooIgOVwi5iXS8ffdDrATTzSXTHfLyjPU/edit?usp=sharing"},
       ]
     },
     {
       title: "Learning Sessions",
       description: "Essential learning materials for AI development",
       resources: [
-        { name: "LS-1: Building Blocks of LLMs(Slides)", icon: "fas fa-book", link: "https://docs.google.com/document/d/18xY_Su1sw1tooIgOVwi5iXS8ffdDrATTzSXTHfLyjPU/edit?usp=sharing" },
-        { name: "LS-1: Building Blocks of LLMs(Resources)", icon: "fas fa-cloud", link: "https://drive.google.com/drive/folders/1djArs-5V0HGa5Hpfd5vFBn9Y1XSM6Ae2" },
-        { name: "Python for AI/ML Roadmap", icon: "fab fa-python", link: "https://docs.google.com/document/d/18xY_Su1sw1tooIgOVwi5iXS8ffdDrATTzSXTHfLyjPU/edit?usp=sharing"},
+        { name: "LS-1: Building Blocks of LLMs(Resources)", icon: "fas fa-book", link: "https://docs.google.com/document/d/18xY_Su1sw1tooIgOVwi5iXS8ffdDrATTzSXTHfLyjPU/edit?usp=sharing" },
+        { name: "LS-1: Building Blocks of LLMs(Slides)", icon: "fas fa-book", link: "https://drive.google.com/drive/folders/1djArs-5V0HGa5Hpfd5vFBn9Y1XSM6Ae2" },
+         { name: "Transformers cheatsheet", icon: "fas fa-book", link: "https://drive.google.com/drive/folders/1djArs-5V0HGa5Hpfd5vFBn9Y1XSM6Ae2" },
         
-        { name: "Temperature in LLMs", icon: "fab fa-git-alt", link: "https://drive.google.com/drive/folders/1djArs-5V0HGa5Hpfd5vFBn9Y1XSM6Ae2" }
+        
+        
+        
       ]
     },
    
