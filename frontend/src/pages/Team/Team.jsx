@@ -368,7 +368,8 @@ const Team = () => {
     <section id="team" ref={containerRef} className="min-h-screen w-full relative bg-black overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 bg-[#0e0e0eff] z-0"></div>
-      <div className="absolute inset-0  animate-pulse"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent animate-pulse"></div>
+
       <img
         className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
         src="images/landingimg.png"

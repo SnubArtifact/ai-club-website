@@ -42,6 +42,7 @@ const ContactUs = () => {
     <div id="contact" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-[#0e0e0eff] z-0"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent animate-pulse"></div>
       <img 
         className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
         src="images/landingimg.png" 
