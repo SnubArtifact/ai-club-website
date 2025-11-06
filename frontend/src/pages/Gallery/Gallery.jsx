@@ -7,15 +7,15 @@ const Gallery = () => {
   // Sample images - replace with your actual images
   const images = [
     {
-      src: "/images/gallery1.jpg",
+      src: "/images/gallery2.png",
       title: "Oasis Snaps",
       description: "AI Club snapped at Oasis 2025 - BITS Pilani's annual cultural fest",
      
     },
     {
-      src: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
-      title: "Neural Network Architecture",
-      description: "Complex neural network visualization showing deep learning layers",
+      src: "/images/gallery2.jpg",
+      title: "Learning Session",
+      description: "Learning session on AI and Machine Learning conducted by AI Club",
       
     },
     
@@ -156,7 +156,7 @@ const Gallery = () => {
                       key={index}
                       className={`w-0.8 h-0.8 rounded-full transition-all duration-300 ${
                         index === currentIndex 
-                          ? 'bg-amber-400 scale-105 shadow-lg' 
+                          ? 'bg-gray-600 scale-105 shadow-lg' 
                           : 'bg-white/50 hover:bg-white/80'
                       }`}
                       onClick={() => goToSlide(index)}

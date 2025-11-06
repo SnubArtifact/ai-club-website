@@ -180,10 +180,11 @@ const Resources = () => {
       title: "Learning Sessions",
       description: "Essential learning materials for AI development",
       resources: [
-        { name: "Python Data Science Stack", icon: "fab fa-python", link: "https://www.youtube.com/watch?v=7eh4d6sabA0&pp=ygUUbGVhcm4gcHl0aG9ubSBmb3IgbWw%3D" },
-        { name: "Jupyter Notebook Tutorials", icon: "fas fa-book", link: "https://www.youtube.com/watch?v=5pf0_bpNbkw&pp=ygUZanVweXRlciBub3RlYm9vayB0dXRvcmlhbA%3D%3D" },
-        { name: "Gen AI", icon: "fas fa-cloud", link: "https://www.youtube.com/watch?v=d4yCWBGFCEs&pp=ygUGZ2VuIGFp0gcJCQMKAYcqIYzv" },
-        { name: "Version Control for ML", icon: "fab fa-git-alt", link: "https://www.youtube.com/watch?v=Ez8F0nW6S-w&pp=ygUPdmVyc2lvbiBjb250cm9s" }
+        { name: "LS-1: Building Blocks of LLMs(Slides)", icon: "fas fa-book", link: "https://docs.google.com/document/d/18xY_Su1sw1tooIgOVwi5iXS8ffdDrATTzSXTHfLyjPU/edit?usp=sharing" },
+        { name: "LS-1: Building Blocks of LLMs(Resources)", icon: "fas fa-cloud", link: "https://drive.google.com/drive/folders/1djArs-5V0HGa5Hpfd5vFBn9Y1XSM6Ae2" },
+        { name: "Python for AI/ML Roadmap", icon: "fab fa-python", link: "https://docs.google.com/document/d/18xY_Su1sw1tooIgOVwi5iXS8ffdDrATTzSXTHfLyjPU/edit?usp=sharing"},
+        
+        { name: "Temperature in LLMs", icon: "fab fa-git-alt", link: "https://drive.google.com/drive/folders/1djArs-5V0HGa5Hpfd5vFBn9Y1XSM6Ae2" }
       ]
     },
    
