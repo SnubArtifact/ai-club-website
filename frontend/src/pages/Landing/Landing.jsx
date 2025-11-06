@@ -144,9 +144,9 @@ const Landing = () => {
                 {/* Event Title */}
                 {/* NetApp Logo */}
                 <div className='flex gap-4'>
-                    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center p-1">
+                    <div className="w-11 h-11 bg-white rounded-lg -translate-y-1 flex items-center justify-center p-1">
                       <img 
-                        src="images/netapp1.svg"
+                        src="images/netapp2.svg"
                         alt="NetApp Logo" 
                         className="w-full h-full object-contain"
                       />
