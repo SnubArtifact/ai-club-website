@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar/Navbar'
 
 const Landing = () => {
   const [showArrow, setShowArrow] = useState(true);
+  const [showEvents, setShowEvents] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +17,34 @@ const Landing = () => {
   const scrollToAbout = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  // Sample events data
+  const upcomingEvents = [
+    {
+      id: 1,
+      title: "AI Workshop Series",
+      date: "Dec 15, 2024",
+      time: "3:00 PM",
+      location: "CS Department",
+      type: "Workshop"
+    },
+    {
+      id: 2,
+      title: "Hackathon 2024",
+      date: "Dec 20, 2024",
+      time: "10:00 AM",
+      location: "Tech Park",
+      type: "Competition"
+    },
+    {
+      id: 3,
+      title: "Guest Lecture: ML in Healthcare",
+      date: "Jan 5, 2025",
+      time: "2:00 PM",
+      location: "Auditorium",
+      type: "Lecture"
+    }
+  ];
 
   return (
     <>
@@ -70,6 +99,101 @@ const Landing = () => {
           ))}
         </div>
 
+        {/* Events Hover Button */}
+        <div 
+          className="fixed top-1/2 right-8 -translate-y-1/2 z-40"
+          onMouseEnter={() => setShowEvents(true)}
+          onMouseLeave={() => setShowEvents(false)}
+        >
+          {/* Events Panel */}
+          <div className={`relative transition-all duration-500 ease-out ${
+            showEvents ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
+          }`}>
+            <div className="w-80 bg-black/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6 ml-4">
+              {/* Events Header */}
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-2 h-8 bg-gradient-to-b from-purple-500 to-cyan-500 rounded-full"></div>
+                <h3 className="text-2xl font-bold text-white font-mont">
+                  Upcoming Events
+                </h3>
+              </div>
+
+              {/* Events List */}
+              <div className="space-y-4 max-h-96 overflow-y-auto">
+                {upcomingEvents.map((event) => (
+                  <div
+                    key={event.id}
+                    className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 
+                             hover:bg-white/10 hover:border-purple-500/30 transition-all duration-300 group cursor-pointer"
+                  >
+                    {/* Event Type Badge */}
+                    <div className="flex justify-between items-start mb-2">
+                      <span className={`px-2 py-1 rounded-full text-xs font-semibold font-mont ${
+                        event.type === 'Workshop' 
+                          ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
+                          : event.type === 'Competition'
+                          ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                          : 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
+                      }`}>
+                        {event.type}
+                      </span>
+                      <i className="fas fa-arrow-up-right-from-square text-white/40 group-hover:text-purple-400 transition-colors duration-300 text-sm"></i>
+                    </div>
+
+                    {/* Event Title */}
+                    <h4 className="text-lg font-bold text-white font-mont mb-3 group-hover:text-cyan-200 transition-colors duration-300">
+                      {event.title}
+                    </h4>
+
+                    {/* Event Details */}
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 text-white/70">
+                        <i className="fas fa-calendar text-purple-400 w-4 text-sm"></i>
+                        <span className="text-sm font-mont">{event.date}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-white/70">
+                        <i className="fas fa-clock text-cyan-400 w-4 text-sm"></i>
+                        <span className="text-sm font-mont">{event.time}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-white/70">
+                        <i className="fas fa-location-dot text-indigo-400 w-4 text-sm"></i>
+                        <span className="text-sm font-mont">{event.location}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* View All Button */}
+              <button className="w-full mt-4 py-3 bg-gradient-to-r from-purple-600/20 to-cyan-600/20 text-white font-mont font-semibold rounded-xl
+                        border border-white/10 hover:border-purple-500/50 transition-all duration-300
+                        hover:from-purple-600/30 hover:to-cyan-600/30 group">
+                <div className="flex items-center justify-center gap-2">
+                  <span>View All Events</span>
+                  <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          {/* Events Toggle Button */}
+          <div className="absolute top-1/2 right-0 -translate-y-1/2">
+            <button
+              className={`w-12 h-12 rounded-full backdrop-blur-sm border flex items-center justify-center transition-all duration-500 group ${
+                showEvents 
+                  ? 'bg-purple-600/30 border-purple-500/50 shadow-lg shadow-purple-500/20' 
+                  : 'bg-white/10 border-white/20 hover:bg-purple-500/30 hover:border-purple-400'
+              }`}
+            >
+              <i className={`fas fa-calendar text-white transition-all duration-500 ${
+                showEvents ? 'text-purple-200' : 'group-hover:text-purple-200'
+              }`}></i>
+              {/* Notification Dot */}
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-cyan-400 rounded-full animate-pulse"></div>
+            </button>
+          </div>
+        </div>
+
         {/* Main content */}
         <div className="absolute inset-0 flex items-center">
           <div className="container mx-auto px-4">
@@ -77,15 +201,15 @@ const Landing = () => {
               
               {/* Main heading */}
               <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.2s' }}>
-                <h1 className="text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-cyan-200 font-young font-bold hover:scale-105 transition-transform duration-500">
+                <h1 className="text-9xl text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-cyan-200 font-archivo hover:scale-105 transition-transform duration-500">
                   AI Club
                 </h1>
               </div>
 
               {/* Institution name */}
               <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.4s' }}>
-                <h2 className="text-4xl text-white/90 font-young font-bold tracking-wide">
-                  BITS PILANI
+                <h2 className="text-4xl text-white/90 font-mont tracking-wide">
+                  BITS Pilani, Pilani Campus
                 </h2>
               </div>
 
@@ -121,8 +245,6 @@ const Landing = () => {
                   Join Now
                 </a>
               </div>
-
-              
             </div>
           </div>
         </div>

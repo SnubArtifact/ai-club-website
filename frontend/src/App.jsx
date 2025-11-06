@@ -19,7 +19,7 @@ function App() {
       <Projects />
       <Resources />
      
-      <Blogs />
+      {/* <Blogs />*/} {/* Blogs section is currently commented out due to unavailability of blogs */}
        <ContactUs />
     </main>
     <Footer />

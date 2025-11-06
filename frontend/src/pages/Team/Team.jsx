@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'http://aiclub-bitsp.dev/api';
 
 /**
  * Team Member Card for Carousel
@@ -42,7 +42,7 @@ const TeamMemberCard = ({ name, position, image, socials, description, isActive 
 
         {/* Member Info */}
         <div className="text-center">
-          <h3 className="text-2xl text-white font-young font-semibold mb-2 group-hover:text-indigo-200 transition-colors duration-300">
+          <h3 className="text-2xl text-white font-mont  mb-2 group-hover:text-indigo-200 transition-colors duration-300">
             {name}
           </h3>
           <p className="text-indigo-300 font-mont font-medium mb-3 text-lg">
@@ -365,13 +365,13 @@ const Team = () => {
   return (
     <section id="team" ref={containerRef} className="min-h-screen w-full relative bg-black overflow-hidden">
       {/* Background elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle,#14103d,#141640,#141b43,#162045,#182547,#1c274b,#20284f,#242a53,#2e2859,#3b245d,#491e5f,#58135e)] z-0"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent animate-pulse"></div>
+      <div className="absolute inset-0 bg-[#3b2770] z-0"></div>
+      <div className="absolute inset-0  animate-pulse"></div>
       <img
         className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
         src="images/landingimg.png"
         alt="Team Background"
-        loading="lazy"
+      
       />
 
       {/* Content */}
@@ -380,7 +380,7 @@ const Team = () => {
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
             <div className="text-center mb-16">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-young font-bold mb-8">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-mont font-semibold mb-8">
                 Our Team
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">
@@ -458,21 +458,7 @@ const Team = () => {
               {content}
             </div>
 
-            {/* Team Stats */}
-            <div className="mt-20 py-12 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                {teamStats.map((stat, index) => (
-                  <div key={index} className="px-4">
-                    <p className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 font-playfair mb-1">
-                      {stat.number}
-                    </p>
-                    <p className="text-lg text-white/90 font-mont font-medium uppercase tracking-wider">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+          
           </div>
         </div>
       </div>

@@ -16,6 +16,11 @@ export default {
         'tiny': ['Tiny5', 'sans-serif'],
         'nata': ['Nata Sans', 'sans-serif'],
         'young': ['Young Serif', 'serif'],
+        'plex': ['IBM Plex Serif', 'serif'],
+        'instrument': ['Instrument Serif', 'serif'],
+        'archivo': ['Archivo Black', 'sans-serif'],
+        'nabla': ['Nabla', 'serif'],
+        'geist': ['Geist', 'sans-serif'],
       }
     },
   },
