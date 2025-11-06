@@ -98,9 +98,9 @@ const Footer = () => {
               <a href="https://www.linkedin.com/company/ai-club-bitsp/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300 transition-colors">
                 <i className="fab fa-linkedin text-2xl"></i>
               </a>
-              <a href="https://discord.gg/your-discord" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300 transition-colors">
+              {/* <a href="https://discord.gg/your-discord" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300 transition-colors">
                 <i className="fab fa-discord text-2xl"></i>
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

@@ -180,9 +180,9 @@ const Resources = () => {
       title: "Development Tools",
       description: "Essential software and libraries for AI development",
       resources: [
-        { name: "Python Data Science Stack", icon: "fab fa-python", link: "#" },
-        { name: "Jupyter Notebook Tutorials", icon: "fas fa-book", link: "#" },
-        { name: "Cloud AI Platforms", icon: "fas fa-cloud", link: "#" },
+        { name: "Python Data Science Stack", icon: "fab fa-python", link: "https://www.youtube.com/watch?v=7eh4d6sabA0&pp=ygUUbGVhcm4gcHl0aG9ubSBmb3IgbWw%3D" },
+        { name: "Jupyter Notebook Tutorials", icon: "fas fa-book", link: "https://www.youtube.com/watch?v=5pf0_bpNbkw&pp=ygUZanVweXRlciBub3RlYm9vayB0dXRvcmlhbA%3D%3D" },
+        { name: "Gen AI", icon: "fas fa-cloud", link: "https://www.youtube.com/watch?v=d4yCWBGFCEs&pp=ygUGZ2VuIGFp0gcJCQMKAYcqIYzv" },
         { name: "Version Control for ML", icon: "fab fa-git-alt", link: "https://www.youtube.com/watch?v=Ez8F0nW6S-w&pp=ygUPdmVyc2lvbiBjb250cm9s" }
       ]
     },

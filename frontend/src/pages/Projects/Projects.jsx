@@ -327,11 +327,11 @@ const Projects = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="max-w-6xl mx-auto">
             {/* Main Title */}
-            <div className="animate-on-scroll opacity-0 text-center mb-12">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-200 font-young font-bold mb-8 hover:scale-105 transition-transform duration-300">
+            <div className="animate-on-scroll opacity-0 text-center mb-14">
+              <h1 className="text-7xl text-transparent  py-2 bg-clip-text bg-gradient-to-r from-white to-cyan-200 font-mont -translate-y-2 font-bold mb-8 hover:scale-105 transition-transform duration-300">
                 Our Projects
               </h1>
-              <p className="text-white/80 text-xl font-mont max-w-2xl mx-auto">
+              <p className="text-white/80 text-xl font-mont translate-y-2 max-w-2xl mx-auto">
                 Exploring the frontiers of artificial intelligence through innovative projects and real-world applications
               </p>
             </div>
