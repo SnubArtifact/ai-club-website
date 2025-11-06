@@ -308,7 +308,7 @@ const Projects = () => {
   return (
     <div id="projects" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden w-full">
       {/* Background elements */}
-      <div className="absolute inset-0 bg-[#2b1c54] z-0"></div>
+      <div className="absolute inset-0 bg-[#33274f] z-0"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-500/10 via-transparent to-transparent animate-pulse"></div>
       <img
         className="w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105"
