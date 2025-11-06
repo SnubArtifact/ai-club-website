@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 // Define the base URL for the API
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'https://aiclub-bitsp.dev/api';
 
 /**
  * Utility function to format the date from the API

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const API_BASE_URL = 'http://aiclub-bitsp.dev/api';
+const API_BASE_URL = 'https://aiclub-bitsp.dev/api';
 
 /**
  * Renders a single SMALLER Project Card.
