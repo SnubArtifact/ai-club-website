@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import Navbar from '../../components/Navbar/Navbar'
+import React, { useState, useEffect } from 'react';
+import Navbar from '../../components/Navbar/Navbar';
 
 const Landing = () => {
   const [showArrow, setShowArrow] = useState(true);
+  const [currentEventIndex, setCurrentEventIndex] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,6 +14,16 @@ const Landing = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Auto-rotate events every 5 seconds
+  useEffect(() => {
+    if (upcomingEvents.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentEventIndex((prev) => (prev + 1) % upcomingEvents.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, []);
+
   const scrollToAbout = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -21,168 +32,212 @@ const Landing = () => {
   const upcomingEvents = [
     {
       id: 1,
-      title: "AI Workshop Series",
-      date: "Dec 15, 2024",
-      time: "3:00 PM",
-      location: "CS Department",
-      type: "Workshop"
+      title: "NetApp Hackathon",
+      date: "Nov 8, 2025",
+      // time: "3:00 PM - 5:00 PM",
+       location: "Online",
+      type: "Hackathon",
+      icon: "fas fa-code",
+      link:'https://docs.google.com/forms/d/1r2F9ML4yp_feyO7YgHyUQ2ALJhQYdfLNa721Sp2Gxkc/edit?ts=6908ff00'
     },
-    {
-      id: 2,
-      title: "Hackathon 2024",
-      date: "Dec 20, 2024",
-      time: "10:00 AM",
-      location: "Tech Park",
-      type: "Competition"
-    },
-    {
-      id: 3,
-      title: "Guest Lecture: ML in Healthcare",
-      date: "Jan 5, 2025",
-      time: "2:00 PM",
-      location: "Auditorium",
-      type: "Lecture"
-    }
+    // {
+    //   id: 2,
+    //   title: "Annual Hackathon: Future of Computing",
+    //   date: "Dec 20, 2024",
+    //   time: "10:00 AM - 6:00 PM",
+    //   location: "Tech Innovation Park, Hall A",
+    //   type: "Competition",
+    //   icon: "fas fa-laptop-code",
+    // },
+    // {
+    //   id: 3,
+    //   title: "Guest Lecture: ML in Healthcare",
+    //   date: "Jan 5, 2025",
+    //   time: "2:00 PM - 4:00 PM",
+    //   location: "Main Auditorium",
+    //   type: "Guest Lecture",
+    //   icon: "fas fa-comment-alt",
+    // }
   ];
+
+  const nextEvent = () => {
+    setCurrentEventIndex((prev) => (prev + 1) % upcomingEvents.length);
+  };
+
+  const prevEvent = () => {
+    setCurrentEventIndex((prev) => (prev - 1 + upcomingEvents.length) % upcomingEvents.length);
+  };
+
+  const goToEvent = (index) => {
+    setCurrentEventIndex(index);
+  };
+
+  const currentEvent = upcomingEvents[currentEventIndex];
 
   return (
     <>
       <Navbar />
       <div id="home" className="h-[100vh] w-full relative overflow-hidden bg-black">
-        {/* Main background image */}
+        {/* --- Background elements adjusted --- */}
         <img 
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover opacity-50" 
           src="images/landingimg.png" 
           alt="AI Innovation" 
           loading="eager"
         />
         
-        {/* Animated Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/50 via-indigo-900/30 to-black/60 animate-gradient-flow"></div>
+        {/* Softened Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-purple-900/30 to-black/50 animate-gradient-flow-soft"></div>
 
-        {/* Floating Glow Orbs */}
+        {/* Softened Glow Orbs */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-float-slow"></div>
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-indigo-500/8 rounded-full blur-3xl animate-float-medium delay-2000"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/5 rounded-full blur-2xl animate-float-fast delay-1000"></div>
+          <div className="absolute top-20 right-20 w-80 h-80 bg-purple-500/8 rounded-full blur-3xl animate-float-slow"></div>
+          <div className="absolute bottom-20 left-20 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-float-medium delay-2000"></div>
         </div>
 
-        {/* Animated Grid Pattern */}
-        <div className="absolute inset-0 opacity-10">
+        {/* Animated Grid Pattern (Made softer) */}
+        <div className="absolute inset-0 opacity-8">
           <div 
             className="w-full h-full"
             style={{
               backgroundImage: `
-                linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(139, 92, 246, 0.3) 1px, transparent 1px)
+                linear-gradient(rgba(139, 92, 246, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.2) 1px, transparent 1px)
               `,
               backgroundSize: '60px 60px',
-              animation: 'gridMove 20s linear infinite'
+              animation: 'gridMove 30s linear infinite'
             }}
           ></div>
         </div>
-
-        {/* Subtle Particle Effects */}
-        <div className="absolute inset-0">
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 bg-cyan-400/30 rounded-full animate-particle-float"
-              style={{
-                top: `${20 + Math.random() * 60}%`,
-                left: `${10 + Math.random() * 80}%`,
-                animationDelay: `${i * 1.5}s`,
-                animationDuration: `${8 + Math.random() * 4}s`
-              }}
-            ></div>
-          ))}
-        </div>
-
-        {/* Fixed Events Section */}
-        <div className="fixed top-1/2 right-8 -translate-y-1/2 z-40">
-          <div className="w-80 bg-black/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6">
-            {/* Events Header */}
-            <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '1s' }}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-2 h-8 bg-gradient-to-b from-purple-500 to-cyan-500 rounded-full"></div>
-                <h3 className="text-2xl font-bold text-white font-mont">
-                  Upcoming Events
-                </h3>
+        
+        {/* Professional Events Carousel - ATTENTION GRABBING */}
+        <div className="absolute top-1/2 left-1/2 transform translate-x-1/4 -translate-y-1/2 z-40 w-full max-w-lg px-4">
+          <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '1s' }}>
+            {/* VIBRANT ACCENT CARD */}
+            <div className="event-card-attention rounded-xl overflow-hidden 
+                          transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 transform hover:-translate-y-2 hover:scale-[1.03]">
+              
+              {/* Header - Stronger Purple Accent */}
+              <div className="bg-purple-900 px-5 py-3 border-b border-purple-700">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center shadow-lg">
+                      <i className="fas fa-calendar-alt text-purple-600 text-sm"></i>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-white font-mont">Upcoming Events</h3>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-purple-200 font-semibold text-md font-mont">{currentEventIndex + 1}/{upcomingEvents.length}</div>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* Events List */}
-            <div className="space-y-4 max-h-96 overflow-y-auto">
-              {upcomingEvents.map((event, index) => (
-                <div
-                  key={event.id}
-                  className="animate-fadeInUp opacity-0 bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 
-                           hover:bg-white/10 hover:border-purple-500/30 transition-all duration-300 group cursor-pointer"
-                  style={{ animationDelay: `${1.2 + index * 0.1}s` }}
-                >
-                  {/* Event Type Badge */}
-                  <div className="flex justify-between items-start mb-2">
-                    <span className={`px-2 py-1 rounded-full text-xs font-semibold font-mont ${
-                      event.type === 'Workshop' 
-                        ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                        : event.type === 'Competition'
-                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
-                        : 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
-                    }`}>
-                      {event.type}
-                    </span>
-                    <i className="fas fa-arrow-up-right-from-square text-white/40 group-hover:text-purple-400 transition-colors duration-300 text-sm"></i>
-                  </div>
+              {/* Event Content - Light Background for Contrast */}
+              <div className="bg-white  p-5 relative">
+                
+                {/* Event Type Badge */}
+                <span className={`inline-flex items-center px-2 py-0.5 text-xs font-semibold font-mont rounded shadow-sm mb-2 ${
+                  currentEvent.type === 'Workshop' 
+                    ? 'bg-red-100 text-red-700' // Changed to red for high contrast/alertness
+                    : currentEvent.type === 'Competition'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'bg-green-100 text-green-700'
+                }`}>
+                  <i className={`${currentEvent.icon} mr-1 text-xs`}></i>
+                  {currentEvent.type}
+                </span>
 
-                  {/* Event Title */}
-                  <h4 className="text-lg font-bold text-white font-mont mb-3 group-hover:text-cyan-200 transition-colors duration-300">
-                    {event.title}
-                  </h4>
+                {/* Event Title */}
+                <h4 className="text-xl font-extrabold text-gray-900 font-mont leading-snug mb-4">
+                  {currentEvent.title}
+                </h4>
 
-                  {/* Event Details */}
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2 text-white/70">
-                      <i className="fas fa-calendar text-purple-400 w-4 text-sm"></i>
-                      <span className="text-sm font-mont">{event.date}</span>
+                {/* Event Details - Clean, stacked look */}
+                <div className="space-y-3 mb-5 border-t border-b border-gray-200 py-3">
+                  
+                  {/* Date & Time */}
+                  <div className="flex items-center space-x-3 group cursor-default hover:bg-gray-50 p-1 rounded transition-colors duration-200">
+                    <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors">
+                      <i className="fas fa-clock text-purple-600 text-xs"></i>
                     </div>
-                    <div className="flex items-center gap-2 text-white/70">
-                      <i className="fas fa-clock text-cyan-400 w-4 text-sm"></i>
-                      <span className="text-sm font-mont">{event.time}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-white/70">
-                      <i className="fas fa-location-dot text-indigo-400 w-4 text-sm"></i>
-                      <span className="text-sm font-mont">{event.location}</span>
+                    <div>
+                      <div className="text-sm text-gray-800 font-mont font-medium">{currentEvent.date}</div>
+                      <div className="text-xs text-gray-500 font-mont">{currentEvent.time}</div>
                     </div>
                   </div>
-
-                  {/* Hover Effect Line */}
-                  <div className="w-0 h-0.5 bg-gradient-to-r from-purple-500 to-cyan-500 mt-3 group-hover:w-full transition-all duration-300"></div>
+                  
+                  {/* Location */}
+                  <div className="flex items-center space-x-3 group cursor-default hover:bg-gray-50 p-1 rounded transition-colors duration-200">
+                    <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors">
+                      <i className="fas fa-map-marker-alt text-purple-600 text-xs"></i>
+                    </div>
+                    <div className="text-sm text-gray-800 font-mont">{currentEvent.location}</div>
+                  </div>
                 </div>
-              ))}
-            </div>
 
-            {/* View All Events Button */}
-            <div className="animate-fadeInUp opacity-0 pt-4 border-t border-white/10 mt-4" style={{ animationDelay: '1.5s' }}>
-              <button className="w-full py-3 bg-gradient-to-r from-purple-600/20 to-cyan-600/20 text-white font-mont font-semibold rounded-xl
-                          border border-white/10 hover:border-purple-500/50 transition-all duration-300
-                          hover:from-purple-600/30 hover:to-cyan-600/30 group">
-                <div className="flex items-center justify-center gap-2">
-                  <span>View All Events</span>
-                  <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                {/* Single, Primary Action Button - Glowing Shadow on Hover */}
+                <div className="mt-4">
+                  <a href="https://docs.google.com/forms/d/1r2F9ML4yp_feyO7YgHyUQ2ALJhQYdfLNa721Sp2Gxkc/edit?ts=6908ff00" className="w-full bg-purple-900 text-white font-extrabold py-3 px-4 rounded-lg
+                                  hover:from-red-600 hover:to-purple-700 transition-all duration-300
+                                  shadow-lg shadow-red-500/50 hover:shadow-xl hover:shadow-purple-500/70 transform hover:scale-[1.02]
+                                  flex items-center justify-center space-x-2 text-md group">
+                    <i className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform duration-200"></i>
+                    <span>Register Now</span>
+                  </a>
                 </div>
-              </button>
+              </div>
+
+              {/* Carousel Controls - Darker Footer for Grounding */}
+              <div className="px-5 py-3 border-t border-gray-200 flex items-center justify-between bg-gray-100">
+                {/* Prev Button */}
+                <button 
+                  onClick={prevEvent}
+                  className="w-8 h-8 bg-white border border-gray-300 rounded-full flex items-center justify-center
+                                hover:bg-gray-200 transition-all duration-200 text-gray-700 group hover:shadow-md">
+                  <i className="fas fa-chevron-left text-xs group-hover:-translate-x-0.5 transition-transform duration-200"></i>
+                </button>
+
+                {/* Dot Indicators */}
+                <div className="flex space-x-1.5">
+                  {upcomingEvents.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToEvent(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        index === currentEventIndex 
+                          ? 'bg-red-500 scale-125 shadow-md shadow-red-500/50' // Highlighted dot
+                          : 'bg-gray-400 hover:bg-gray-500'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                {/* Next Button */}
+                <button 
+                  onClick={nextEvent}
+                  className="w-8 h-8 bg-white border border-gray-300 rounded-full flex items-center justify-center
+                                hover:bg-gray-200 transition-all duration-200 text-gray-700 group hover:shadow-md">
+                  <i className="fas fa-chevron-right text-xs group-hover:translate-x-0.5 transition-transform duration-200"></i>
+                </button>
+                
+                {/* <a href="#events" className="text-xs text-purple-700 hover:text-red-600 font-semibold ml-4 hidden sm:block transition-colors duration-200">
+                  View All
+                </a> */}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Main content */}
+        {/* ... (Main content section remains the same) ... */}
         <div className="absolute inset-0 flex items-center">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl ml-20 space-y-8">
               
               {/* Main heading */}
               <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.2s' }}>
-                <h1 className="text-9xl text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-cyan-200 font-archivo hover:scale-105 transition-transform duration-500">
+                <h1 className="text-9xl bg-clip-text bg-gradient-to-r from-white via-purple-200 to-indigo-200 font-nabla hover:scale-105 transition-transform duration-500">
                   AI Club
                 </h1>
               </div>
@@ -207,9 +262,9 @@ const Landing = () => {
                 <button
                   onClick={scrollToAbout}
                   className="px-10 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-mont font-semibold rounded-xl 
-                           hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 
-                           shadow-2xl hover:shadow-purple-500/30 hover:-translate-y-1 hover:scale-105
-                           flex items-center gap-3 group"
+                            hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 
+                            shadow-2xl hover:shadow-purple-500/30 hover:-translate-y-1 hover:scale-105
+                            flex items-center gap-3 group"
                 >
                   <i className="fas fa-rocket group-hover:rotate-12 transition-transform duration-300"></i>
                   Explore More
@@ -218,9 +273,9 @@ const Landing = () => {
                 <a
                   href="#contact"
                   className="px-10 py-4 bg-white/10 backdrop-blur-sm text-white font-mont font-semibold rounded-xl
-                           border border-white/20 hover:bg-white/20 transition-all duration-300
-                           shadow-2xl hover:shadow-white/20 hover:-translate-y-1 hover:scale-105
-                           flex items-center gap-3 group"
+                            border border-white/20 hover:bg-white/20 transition-all duration-300
+                            shadow-2xl hover:shadow-white/20 hover:-translate-y-1 hover:scale-105
+                            flex items-center gap-3 group"
                 >
                   <i className="fas fa-users group-hover:scale-110 transition-transform duration-300"></i>
                   Join Now
@@ -251,6 +306,26 @@ const Landing = () => {
       </div>
 
       <style jsx>{`
+        /* Reintroduced more aggressive shadow on hover for the whole card */
+        .event-card-attention {
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Base shadow */
+        }
+        
+        /* Background animations remain soft */
+        .animate-gradient-flow-soft {
+          background-size: 200% 200%;
+          animation: gradientFlow 10s ease infinite;
+        }
+        
+        @keyframes gradientFlow {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+
         .animate-fadeInUp {
           animation: fadeInUp 0.8s ease-out forwards;
         }
@@ -265,31 +340,13 @@ const Landing = () => {
             transform: translateY(0);
           }
         }
-
-        .animate-gradient-flow {
-          background-size: 200% 200%;
-          animation: gradientFlow 8s ease infinite;
-        }
-
-        @keyframes gradientFlow {
-          0%, 100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-
+        
         .animate-float-slow {
           animation: float 12s ease-in-out infinite;
         }
 
         .animate-float-medium {
           animation: float 8s ease-in-out infinite;
-        }
-
-        .animate-float-fast {
-          animation: float 6s ease-in-out infinite;
         }
 
         @keyframes float {
@@ -304,29 +361,6 @@ const Landing = () => {
           }
         }
 
-        .animate-particle-float {
-          animation: particleFloat 8s ease-in-out infinite;
-        }
-
-        @keyframes particleFloat {
-          0%, 100% {
-            transform: translateY(0px) translateX(0px) scale(1);
-            opacity: 0.3;
-          }
-          25% {
-            transform: translateY(-40px) translateX(10px) scale(1.2);
-            opacity: 0.6;
-          }
-          50% {
-            transform: translateY(-20px) translateX(-10px) scale(0.8);
-            opacity: 0.4;
-          }
-          75% {
-            transform: translateY(-30px) translateX(5px) scale(1.1);
-            opacity: 0.5;
-          }
-        }
-
         @keyframes gridMove {
           0% {
             transform: translateX(0px) translateY(0px);
@@ -337,7 +371,7 @@ const Landing = () => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
-export default Landing
+export default Landing;
