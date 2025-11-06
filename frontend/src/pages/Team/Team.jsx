@@ -382,7 +382,7 @@ const Team = () => {
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
             <div className="text-center mb-16">
-              <h1 className="text-7xl text-transparent  -translate-y-6 bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-mont font-semibold mb-8">
+              <h1 className="text-7xl text-transparent translate-y-2 bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-mont font-semibold mb-8">
                 Our Team
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">

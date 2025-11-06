@@ -33,12 +33,15 @@ const Landing = () => {
     {
       id: 1,
       title: "NetApp Hackathon",
-      date: "Nov 8, 2025",
-      // time: "3:00 PM - 5:00 PM",
-       location: "Online",
+      date: "Nov 8-9, 2024",
+      time: "10:00 AM - 10:00 AM (24 Hours)",
+      location: "Online",
       type: "Hackathon",
       icon: "fas fa-code",
-      link:'https://docs.google.com/forms/d/1r2F9ML4yp_feyO7YgHyUQ2ALJhQYdfLNa721Sp2Gxkc/edit?ts=6908ff00'
+      link: 'https://docs.google.com/forms/d/1r2F9ML4yp_feyO7YgHyUQ2ALJhQYdfLNa721Sp2Gxkc/edit?ts=6908ff00',
+      logo: "images/netapp-logo.png", 
+      prizes: "Exciting prizes + PPI Opportunity for top performers",
+      eligibility: "BITS Pilani Students (UG+PG)"
     },
     // {
     //   id: 2,
@@ -49,15 +52,6 @@ const Landing = () => {
     //   type: "Competition",
     //   icon: "fas fa-laptop-code",
     // },
-    //  {
-    //    id: 3,
-    //    title: "Guest Lecture: ML in Healthcare",
-    //    date: "Jan 5, 2025",
-    //    time: "2:00 PM - 4:00 PM",
-    //    location: "Main Auditorium",
-    //    type: "Guest Lecture",
-    //    icon: "fas fa-comment-alt",
-    //  }
   ];
 
   const nextEvent = () => {
@@ -110,22 +104,20 @@ const Landing = () => {
           ></div>
         </div>
         
-        {/* Professional Events Carousel - ATTENTION GRABBING */}
+        {/* Professional Events Carousel - UPDATED WITH ADDITIONAL INFO */}
         <div className="absolute top-1/2 left-1/2 transform translate-x-1/4 -translate-y-1/2 z-40 w-full max-w-lg px-4">
           <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '1s' }}>
             {/* VIBRANT ACCENT CARD */}
             <div className="event-card-attention rounded-xl overflow-hidden 
                           transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 transform hover:-translate-y-2 hover:scale-[1.03]">
               
-              {/* Header - Stronger Purple Accent */}
-              <div className="bg-purple-900 px-5 py-3 border-b border-purple-700">
+              {/* Header - With NetApp Logo */}
+              <div className="bg-purple-900 px-5 py-4 border-b border-purple-700">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center shadow-lg">
-                      <i className="fas fa-calendar-alt text-purple-600 text-sm"></i>
-                    </div>
+                    
                     <div>
-                      <h3 className="text-lg font-bold text-white font-mont">Upcoming Events</h3>
+                      <h3 className="text-lg font-bold text-white font-mont">Upcoming Event</h3>
                     </div>
                   </div>
                   <div className="text-right">
@@ -135,55 +127,93 @@ const Landing = () => {
               </div>
 
               {/* Event Content - Light Background for Contrast */}
-              <div className="bg-white  p-5 relative">
+              <div className="bg-white p-5 relative">
                 
                 {/* Event Type Badge */}
-                <span className={`inline-flex items-center px-2 py-0.5 text-xs font-semibold font-mont rounded shadow-sm mb-2 ${
+                <span className={`inline-flex items-center px-3 py-1 text-sm font-semibold font-mont rounded-full shadow-sm mb-3 ${
                   currentEvent.type === 'Workshop' 
-                    ? 'bg-red-100 text-red-700' // Changed to red for high contrast/alertness
+                    ? 'bg-red-100 text-red-700'
                     : currentEvent.type === 'Competition'
                     ? 'bg-blue-100 text-blue-700'
                     : 'bg-green-100 text-green-700'
                 }`}>
-                  <i className={`${currentEvent.icon} mr-1 text-xs`}></i>
+                  <i className={`${currentEvent.icon} mr-2 text-xs`}></i>
                   {currentEvent.type}
                 </span>
 
                 {/* Event Title */}
-                <h4 className="text-xl font-extrabold text-gray-900 font-mont leading-snug mb-4">
+                {/* NetApp Logo */}
+                <div className='flex gap-4'>
+                    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center p-1">
+                      <img 
+                        src="images/netapp1.svg"
+                        alt="NetApp Logo" 
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                <h4 className="text-2xl font-extrabold text-gray-900 font-mont leading-tight mb-4">
                   {currentEvent.title}
                 </h4>
+                </div>
+                
 
                 {/* Event Details - Clean, stacked look */}
-                <div className="space-y-3 mb-5 border-t border-b border-gray-200 py-3">
+                <div className="space-y-4 mb-5 border-t border-b border-gray-200 py-4">
                   
                   {/* Date & Time */}
-                  <div className="flex items-center space-x-3 group cursor-default hover:bg-gray-50 p-1 rounded transition-colors duration-200">
-                    <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors">
+                  <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
+                    <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors mt-0.5">
                       <i className="fas fa-clock text-purple-600 text-xs"></i>
                     </div>
                     <div>
-                      <div className="text-sm text-gray-800 font-mont font-medium">{currentEvent.date}</div>
-                      <div className="text-xs text-gray-500 font-mont">{currentEvent.time}</div>
+                      <div className="text-sm text-gray-800 font-mont font-semibold">{currentEvent.date}</div>
+                      <div className="text-sm text-gray-600 font-mont">{currentEvent.time}</div>
                     </div>
                   </div>
                   
                   {/* Location */}
-                  <div className="flex items-center space-x-3 group cursor-default hover:bg-gray-50 p-1 rounded transition-colors duration-200">
-                    <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors">
+                  <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
+                    <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors mt-0.5">
                       <i className="fas fa-map-marker-alt text-purple-600 text-xs"></i>
                     </div>
-                    <div className="text-sm text-gray-800 font-mont">{currentEvent.location}</div>
+                    <div className="text-sm text-gray-800 font-mont font-semibold">{currentEvent.location}</div>
+                  </div>
+
+                  {/* Prizes Section */}
+                  <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
+                    <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-yellow-200 transition-colors mt-0.5">
+                      <i className="fas fa-trophy text-yellow-600 text-xs"></i>
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-800 font-mont font-semibold">Win exciting prizes</div>
+                      <div className="text-sm text-green-600 font-mont font-medium">+ PPI Opportunity for top performers</div>
+                    </div>
+                  </div>
+
+                  {/* Eligibility Section */}
+                  <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
+                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-blue-200 transition-colors mt-0.5">
+                      <i className="fas fa-user-graduate text-blue-600 text-xs"></i>
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-800 font-mont font-semibold">Who can apply?</div>
+                      <div className="text-sm text-gray-600 font-mont">{currentEvent.eligibility}</div>
+                    </div>
                   </div>
                 </div>
 
                 {/* Single, Primary Action Button - Glowing Shadow on Hover */}
-                <div className="mt-4">
-                  <a href="https://docs.google.com/forms/d/1r2F9ML4yp_feyO7YgHyUQ2ALJhQYdfLNa721Sp2Gxkc/edit?ts=6908ff00" className="w-full bg-purple-900 text-white font-extrabold py-3 px-4 rounded-lg
-                                  hover:from-red-600 hover:to-purple-700 transition-all duration-300
-                                  shadow-lg shadow-red-500/50 hover:shadow-xl hover:shadow-purple-500/70 transform hover:scale-[1.02]
-                                  flex items-center justify-center space-x-2 text-md group">
-                    <i className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform duration-200"></i>
+                <div className="mt-6">
+                  <a 
+                    href={currentEvent.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-full bg-purple-900 text-white font-extrabold py-4 px-4 rounded-lg
+                                hover:from-purple-700 hover:to-red-700 transition-all duration-300
+                                shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-red-500/70 transform hover:scale-[1.02]
+                                flex items-center justify-center space-x-3 text-lg group"
+                  >
+                    <i className="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform duration-200"></i>
                     <span>Register Now</span>
                   </a>
                 </div>
@@ -195,7 +225,8 @@ const Landing = () => {
                 <button 
                   onClick={prevEvent}
                   className="w-8 h-8 bg-white border border-gray-300 rounded-full flex items-center justify-center
-                                hover:bg-gray-200 transition-all duration-200 text-gray-700 group hover:shadow-md">
+                                hover:bg-gray-200 transition-all duration-200 text-gray-700 group hover:shadow-md"
+                >
                   <i className="fas fa-chevron-left text-xs group-hover:-translate-x-0.5 transition-transform duration-200"></i>
                 </button>
 
@@ -207,7 +238,7 @@ const Landing = () => {
                       onClick={() => goToEvent(index)}
                       className={`w-1 h-1 rounded-full transition-all duration-300 ${
                         index === currentEventIndex 
-                          ? 'bg-purple-500 scale-100 shadow-md shadow-red-500/50' // Highlighted dot
+                          ? 'bg-purple-500 scale-100 shadow-md shadow-red-500/50'
                           : 'bg-gray-400 hover:bg-gray-500'
                       }`}
                     />
@@ -218,19 +249,16 @@ const Landing = () => {
                 <button 
                   onClick={nextEvent}
                   className="w-8 h-8 bg-white border border-gray-300 rounded-full flex items-center justify-center
-                                hover:bg-gray-200 transition-all duration-200 text-gray-700 group hover:shadow-md">
+                                hover:bg-gray-200 transition-all duration-200 text-gray-700 group hover:shadow-md"
+                >
                   <i className="fas fa-chevron-right text-xs group-hover:translate-x-0.5 transition-transform duration-200"></i>
                 </button>
-                
-                {/* <a href="#events" className="text-xs text-purple-700 hover:text-red-600 font-semibold ml-4 hidden sm:block transition-colors duration-200">
-                  View All
-                </a> */}
               </div>
             </div>
           </div>
         </div>
 
-        {/* ... (Main content section remains the same) ... */}
+        {/* Main content section */}
         <div className="absolute inset-0 flex items-center">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl ml-20 space-y-8">
@@ -306,12 +334,10 @@ const Landing = () => {
       </div>
 
       <style jsx>{`
-        /* Reintroduced more aggressive shadow on hover for the whole card */
         .event-card-attention {
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Base shadow */
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         
-        /* Background animations remain soft */
         .animate-gradient-flow-soft {
           background-size: 200% 200%;
           animation: gradientFlow 10s ease infinite;
