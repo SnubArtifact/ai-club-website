@@ -21,10 +21,10 @@ const ResourceCard = ({ title, description, icon, link, tags, delay, type }) => 
     >
       {/* Header with Icon and Type Badge */}
       <div className="flex items-start justify-between mb-4">
-        <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${getTypeColor(type)} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+        <div className={`w-12 h-12 rounded-xl bg-white flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
           <i className={`${icon} text-white text-lg`}></i>
         </div>
-        <span className={`px-3 py-1 rounded-full text-xs font-mont font-medium bg-gradient-to-r ${getTypeColor(type)} text-white`}>
+        <span className={`px-3 py-1 rounded-full text-xs font-mont font-medium bg-gray-600 text-white`}>
           {type}
         </span>
       </div>
@@ -193,7 +193,7 @@ const Resources = () => {
   return (
     <div id="resources" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
       {/* Background with parallax effect */}
-      <div className="absolute inset-0 bg-[#382b59] z-0"></div>
+      <div className="absolute inset-0 bg-[#0e0e0eff] z-0"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent animate-pulse"></div>
       <img 
         className="w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s]"

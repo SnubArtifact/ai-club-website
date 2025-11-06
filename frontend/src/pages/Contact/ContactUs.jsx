@@ -41,7 +41,7 @@ const ContactUs = () => {
   return (
     <div id="contact" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-[#352659] z-0"></div>
+      <div className="absolute inset-0 bg-[#0e0e0eff] z-0"></div>
       <img 
         className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
         src="images/landingimg.png" 
@@ -103,7 +103,7 @@ const ContactUs = () => {
                     </div>
                     <button 
                       type="submit"
-                      className="w-full bg-gradient-to-r from-violet-600 to-purple-700 text-white font-mont font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105"
+                      className="w-full bg-gray-600 text-white font-mont font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105"
                     >
                       Send Message
                     </button>
@@ -115,7 +115,7 @@ const ContactUs = () => {
                   <h3 className="text-2xl text-white font-mont font-semibold mb-6">Contact Info</h3>
                   <div className="space-y-4">
                     <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                      <div className="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center">
                         <span className="text-white">📍</span>
                       </div>
                       <div>
@@ -125,7 +125,7 @@ const ContactUs = () => {
                     </div>
 
                     <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                      <div className="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center">
                         <span className="text-white">📧</span>
                       </div>
                       <div>
@@ -135,7 +135,7 @@ const ContactUs = () => {
                     </div>
 
                     <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                      <div className="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center">
                         <span className="text-white">🌐</span>
                       </div>
                       <div>

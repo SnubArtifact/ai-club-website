@@ -24,7 +24,7 @@ const AboutUs = () => {
   return (
     <div id="about" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
       {/* Background with parallax effect */}
-      <div className="absolute inset-0 bg-[#2e1f50] z-0"></div>
+      <div className="absolute inset-0 bg-[#0e0e0eff] z-0"></div> 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-500/10 via-transparent to-transparent animate-pulse"></div>
       <img 
         className="w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s]"

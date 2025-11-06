@@ -7,41 +7,18 @@ const Gallery = () => {
   // Sample images - replace with your actual images
   const images = [
     {
-      src: "images/landingimg.png",
-      title: "AI Research Lab",
-      description: "State-of-the-art artificial intelligence research facility",
-      tags: ['Research', 'AI', 'Innovation']
+      src: "/images/gallery1.jpg",
+      title: "Oasis Snaps",
+      description: "AI Club snapped at Oasis 2025 - BITS Pilani's annual cultural fest",
+     
     },
     {
       src: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
       title: "Neural Network Architecture",
       description: "Complex neural network visualization showing deep learning layers",
-      tags: ['Deep Learning', 'Neural Networks', 'Architecture']
+      
     },
-    {
-      src: "https://images.unsplash.com/photo-1555949963-aa79dcee981c",
-      title: "Data Visualization",
-      description: "Advanced data analytics and visualization techniques",
-      tags: ['Data Science', 'Visualization', 'Analytics']
-    },
-    {
-      src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
-      title: "Machine Learning Models",
-      description: "Training and deployment of sophisticated ML models",
-      tags: ['Machine Learning', 'Training', 'Deployment']
-    },
-    {
-      src: "https://images.unsplash.com/photo-1555255707-c07966088b7b",
-      title: "AI Development",
-      description: "Cutting-edge artificial intelligence development environment",
-      tags: ['Development', 'AI', 'Technology']
-    },
-    {
-      src: "https://images.unsplash.com/photo-1535223289827-42f1e9919769",
-      title: "Future Technology",
-      description: "Innovative technologies shaping the future of AI",
-      tags: ['Innovation', 'Future', 'Tech']
-    }
+    
   ];
 
   // Auto-advance carousel every 5 seconds
@@ -90,7 +67,7 @@ const Gallery = () => {
   return (
     <div id="gallery" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
       {/* Background with parallax effect */}
-      <div className="absolute inset-0 bg-[#332455] z-0"></div>
+      <div className="absolute inset-0 bg-[#0e0e0eff] z-0"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent animate-pulse"></div>
       <img 
         className="w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s]"
@@ -165,16 +142,7 @@ const Gallery = () => {
                           <p className="text-white/80 font-mont text-lg mb-4 max-w-2xl">
                             {image.description}
                           </p>
-                          <div className="flex flex-wrap gap-2">
-                            {image.tags.map((tag, tagIndex) => (
-                              <span 
-                                key={tagIndex}
-                                className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm text-white/90 font-mont"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
+                          
                         </div>
                       </div>
                     </div>

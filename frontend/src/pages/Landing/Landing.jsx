@@ -36,6 +36,7 @@ const Landing = () => {
       date: "Nov 8-9, 2024",
       time: "10:00 AM - 10:00 AM (24 Hours)",
       location: "Online",
+      comments:"Problem statement will be released offline.",
       type: "Hackathon",
       icon: "fas fa-code",
       link: 'https://docs.google.com/forms/d/1r2F9ML4yp_feyO7YgHyUQ2ALJhQYdfLNa721Sp2Gxkc/edit?ts=6908ff00',
@@ -74,14 +75,14 @@ const Landing = () => {
       <div id="home" className="h-[100vh] w-full relative overflow-hidden bg-black">
         {/* --- Background elements adjusted --- */}
         <img 
-          className="w-full h-full object-cover opacity-50" 
-          src="images/landingimg.png" 
+          className="w-full h-full  grayscale object-cover " 
+          src="/images/landingimg2.png" 
           alt="AI Innovation" 
           loading="eager"
         />
         
-        {/* Softened Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-purple-900/30 to-black/50 animate-gradient-flow-soft"></div>
+        {/* Softened Gradient Overlay */}        {/* <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-purple-900/30 to-black/50 animate-gradient-flow-soft"></div>
+ */}
 
         {/* Softened Glow Orbs */}
         <div className="absolute inset-0 overflow-hidden">
@@ -105,14 +106,14 @@ const Landing = () => {
         </div>
         
         {/* Professional Events Carousel - UPDATED WITH ADDITIONAL INFO */}
-        <div className="absolute top-1/2 left-1/2 transform translate-x-1/4 -translate-y-1/2 z-40 w-full max-w-lg px-4">
+        <div className="absolute top-1/2 left-1/2 transform translate-x-1/4 -translate-y-1/2 z-40 w-full max-w-md  px-4">
           <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '1s' }}>
             {/* VIBRANT ACCENT CARD */}
             <div className="event-card-attention rounded-xl overflow-hidden 
                           transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 transform hover:-translate-y-2 hover:scale-[1.03]">
               
               {/* Header - With NetApp Logo */}
-              <div className="bg-purple-900 px-5 py-4 border-b border-purple-700">
+              <div className="bg-gray-700 px-5 py-4 border-b border-purple-700">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     
@@ -163,7 +164,7 @@ const Landing = () => {
                   {/* Date & Time */}
                   <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
                     <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors mt-0.5">
-                      <i className="fas fa-clock text-purple-600 text-xs"></i>
+                      <i className="fas fa-clock text-black text-xs"></i>
                     </div>
                     <div>
                       <div className="text-sm text-gray-800 font-mont font-semibold">{currentEvent.date}</div>
@@ -174,15 +175,25 @@ const Landing = () => {
                   {/* Location */}
                   <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
                     <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors mt-0.5">
-                      <i className="fas fa-map-marker-alt text-purple-600 text-xs"></i>
+                      <i className="fas fa-map-marker-alt text-black text-xs"></i>
                     </div>
                     <div className="text-sm text-gray-800 font-mont font-semibold">{currentEvent.location}</div>
+                  </div>
+
+                  {/* Comments */}
+                  <div>
+                    <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
+                      <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors mt-0.5">
+                        <i className="fas fa-comment text-black text-xs"></i>
+                      </div>
+                      <div className="text-sm text-gray-800 font-mont font-semibold">{currentEvent.comments}</div>
+                    </div>
                   </div>
 
                   {/* Prizes Section */}
                   <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
                     <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-yellow-200 transition-colors mt-0.5">
-                      <i className="fas fa-trophy text-yellow-600 text-xs"></i>
+                      <i className="fas fa-trophy text-black text-xs"></i>
                     </div>
                     <div>
                       <div className="text-sm text-gray-800 font-mont font-semibold">Win exciting prizes</div>
@@ -193,7 +204,7 @@ const Landing = () => {
                   {/* Eligibility Section */}
                   <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
                     <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-blue-200 transition-colors mt-0.5">
-                      <i className="fas fa-user-graduate text-blue-600 text-xs"></i>
+                      <i className="fas fa-user-graduate text-black text-xs"></i>
                     </div>
                     <div>
                       <div className="text-sm text-gray-800 font-mont font-semibold">Who can apply?</div>
@@ -208,9 +219,9 @@ const Landing = () => {
                     href={currentEvent.link} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-full bg-purple-900 text-white font-extrabold py-4 px-4 rounded-lg
-                                hover:from-purple-700 hover:to-red-700 transition-all duration-300
-                                shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-red-500/70 transform hover:scale-[1.02]
+                    className="w-full bg-gray-600 text-white font-extrabold py-4 px-4 rounded-lg
+                                hover:gray-800 transition-all duration-300
+                                shadow-lg shadow-purple-500/50 hover:shadow-xl hover:black transform hover:scale-[1.02]
                                 flex items-center justify-center space-x-3 text-lg group"
                   >
                     <i className="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform duration-200"></i>
@@ -238,7 +249,7 @@ const Landing = () => {
                       onClick={() => goToEvent(index)}
                       className={`w-1 h-1 rounded-full transition-all duration-300 ${
                         index === currentEventIndex 
-                          ? 'bg-purple-500 scale-100 shadow-md shadow-red-500/50'
+                          ? 'bg-gray-600 scale-100 shadow-md '
                           : 'bg-gray-400 hover:bg-gray-500'
                       }`}
                     />
