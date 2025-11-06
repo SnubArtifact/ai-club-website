@@ -32,8 +32,8 @@ services:
       - ./frontend/dist:/usr/share/nginx/html:ro
       - static_volume:/app/staticfiles:ro
       - media_volume:/app/media:ro
-      - certbot_conf:/etc/letsencrypt:ro
-      - certbot_www:/var/www/certbot:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /var/www/certbot:/var/www/certbot:ro
     depends_on:
       - backend
     restart: unless-stopped
@@ -50,5 +50,3 @@ volumes:
   postgres_data:
   static_volume:
   media_volume:
-  certbot_conf:
-  certbot_www:
