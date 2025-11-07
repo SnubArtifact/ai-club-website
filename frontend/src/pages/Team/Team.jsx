@@ -9,51 +9,51 @@ const TeamMemberCard = ({ name, position, image, socials, batch, isActive }) => 
   return (
     <div
       className={`flex-shrink-0 w-80 mx-3 transition-all duration-500 transform ${
-        isActive 
-          ? 'scale-105 opacity-100' 
-          : 'scale-95 opacity-70'
-      } hover:scale-110 hover:opacity-100`}
+        isActive ? "scale-105 opacity-100" : "scale-95 opacity-70"
+      } hover:scale-105 hover:opacity-100`}
     >
-      <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-500 group h-full">
-        {/* Member Image with Hover Effect */}
-        <div className="relative aspect-square rounded-xl overflow-hidden mb-6">
-          <img
-            src={image }
-            alt={name}
-            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-          />
-          <div className="absolute inset-0 bg-[#653A97] opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+      <div className="relative flex flex-col justify-between bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-[2px] border border-white/10 hover:border-indigo-400/40 shadow-lg hover:shadow-indigo-400/20 transition-all duration-500 group h-[480px]">
+        
+        {/* Outer Glow Animation */}
+        <div className="absolute inset-0 rounded-2xl bg-[linear-gradient(120deg,#6366f1,#a855f7,#6366f1)] bg-[length:200%_200%] opacity-0 group-hover:opacity-40 blur-xl animate-gradient-move"></div>
+        
+        {/* Inner Card */}
+        <div className="relative z-10 flex flex-col justify-between items-center bg-black/70 rounded-2xl p-6 h-full">
+          
+          {/* Image */}
+          <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-indigo-400/40 shadow-[0_0_20px_rgba(99,102,241,0.4)] group-hover:border-indigo-300 transition-all duration-500">
+            <img
+              src={image}
+              alt={name}
+              className="w-full h-full object-cover rounded-full group-hover:scale-110 transition-transform duration-700"
+            />
+          </div>
 
-          {/* Social Links on Hover */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 flex gap-3">
+          {/* Info */}
+          <div className="text-center flex flex-col items-center justify-center flex-grow mt-6">
+            <h3 className="text-xl font-semibold font-mont text-white leading-tight mb-2 text-balance text-center px-2">
+              {name}
+            </h3>
+            <p className="text-indigo-300 font-medium text-base mb-2">{position}</p>
+            {batch && (
+              <p className="text-white/60 text-sm mb-4">Batch {batch}</p>
+            )}
+          </div>
+
+          {/* Socials */}
+          <div className="flex justify-center gap-3 mt-2">
             {socials?.map((social, index) => (
               <a
                 key={index}
                 href={social.url}
-                className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-indigo-500 hover:scale-110 transition-all duration-300"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="relative w-9 h-9 flex items-center justify-center rounded-full bg-gradient-to-tr from-indigo-600 to-purple-500 text-white hover:scale-110 hover:shadow-[0_0_15px_rgba(99,102,241,0.6)] transition-all duration-300"
               >
-                <i className={`${social.icon} text-white text-sm`}></i>
+                <i className={`${social.icon} text-sm`}></i>
               </a>
             ))}
           </div>
-        </div>
-
-        {/* Member Info */}
-        <div className="text-center">
-          <h3 className="text-2xl text-white font-mont mb-2 group-hover:text-indigo-200 transition-colors duration-300">
-            {name}
-          </h3>
-          <p className="text-indigo-300 font-mont font-medium mb-3 text-lg">
-            {position}
-          </p>
-          {batch && (
-            <p className="text-white/60 font-mont text-sm mb-3">
-              Batch {batch}
-            </p>
-          )}
-         
         </div>
       </div>
     </div>
