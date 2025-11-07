@@ -139,124 +139,88 @@ const Projects = () => {
   });
 
   // -------- Robust API fetch that auto-recovers on common backend differences
-  const fetchProjects = async (pageToFetch, currentFilters) => {
-    setPageTransition(true);
-    setLoading(true);
+const fetchProjects = async (pageToFetch, currentFilters) => {
+  setPageTransition(true);
+  setLoading(true);
 
-    const buildParams = (usePagingAndOrdering = true) => {
-      const p = new URLSearchParams();
-      if (usePagingAndOrdering) {
-        p.set("page", String(pageToFetch));
-        p.set("page_size", String(cardsPerPage));
-      }
-      if (currentFilters.status) p.set("status", currentFilters.status); // ongoing|completed|planned
-      if (currentFilters.technology) p.set("technology", currentFilters.technology);
-      if (currentFilters.search) p.set("search", currentFilters.search);
-      if (usePagingAndOrdering && currentFilters.ordering)
-        p.set("ordering", currentFilters.ordering); // name|start_date|end_date|created_at (optionally prefixed by '-')
-      return p;
-    };
+  try {
+    const params = new URLSearchParams();
 
-    const parseList = (data) => {
-      if (Array.isArray(data?.results)) return data.results; // DRF pagination
-      if (Array.isArray(data?.items)) return data.items; // alt shape
-      if (Array.isArray(data)) return data; // plain list
-      return [];
-    };
+    // filters the API actually supports
+    if (currentFilters.status) params.set("status", currentFilters.status);
+    if (currentFilters.technology) params.set("technology", currentFilters.technology);
+    if (currentFilters.search) params.set("search", currentFilters.search);
 
-    const normalize = (rawList) =>
-      rawList.map((p, i) => ({
-        id: p.id ?? `${pageToFetch}-${i}`,
-        slug: p.slug ?? "",
-        title: p.title ?? p.name ?? "Untitled Project",
-        description: p.description ?? p.short_description ?? "",
-        technologies: Array.isArray(p.technologies)
-          ? p.technologies
-          : typeof p.technologies === "string"
-          ? p.technologies
-              .split(",")
-              .map((s) => s.trim())
-              .filter(Boolean)
-          : [],
-        tags: Array.isArray(p.tags)
-          ? p.tags
-          : typeof p.tags === "string"
-          ? p.tags
-              .split(",")
-              .map((s) => s.trim())
-              .filter(Boolean)
-          : [],
-        status: p.status ?? "",
-        category: p.category ?? p.domain ?? "",
-        featured: Boolean(p.featured),
-        image: p.image || p.image_url || p.thumbnail || null, // you’ll wire hardcoded images later
-        code_url: p.code_url ?? p.github_url ?? p.repo_url ?? "",
-        demo_url: p.demo_url ?? p.live_url ?? p.preview_url ?? "",
-        created_at: p.created_at ?? p.createdAt ?? p.date_created ?? null,
-      }));
+    // API doc shows ?ordering=field (no minus). If UI sends "-field",
+    // we send "field" and reverse locally afterwards.
+    const orderRaw = currentFilters.ordering || "created_at";
+    const orderField = orderRaw.replace(/^-/, "");
+    const isDesc = orderRaw.startsWith("-");
+    params.set("ordering", orderField);
 
-    const tryFetch = async (withSlash, usePagingAndOrdering) => {
-      const qs = buildParams(usePagingAndOrdering).toString();
-      const base = withSlash
-        ? `${API_BASE_URL}/projects/`
-        : `${API_BASE_URL}/projects`;
-      const url = qs ? `${base}?${qs}` : base;
-      const res = await fetch(url, {
-        method: "GET",
-        headers: { Accept: "application/json" },
-        mode: "cors",
-        cache: "no-store",
-      });
-      return res;
-    };
+    const res = await fetch(`${API_BASE_URL}/projects/${params.toString() ? `?${params}` : ""}`, {
+      headers: { Accept: "application/json" },
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-    try {
-      // 1) First attempt: trailing slash + paging/ordering
-      let res = await tryFetch(true, true);
+    const data = await res.json();
+    const raw = Array.isArray(data?.results) ? data.results : Array.isArray(data) ? data : [];
 
-      // 2) If not ok, try without trailing slash
-      if (!res.ok) res = await tryFetch(false, true);
+    // normalize minimal fields for the card
+    let normalized = raw.map((p, i) => ({
+      id: p.id ?? i + 1,
+      slug: p.slug ?? "",
+      title: p.title ?? p.name ?? "Untitled Project",
+      description: p.description ?? p.short_description ?? "",
+      technologies: Array.isArray(p.technologies)
+        ? p.technologies
+        : typeof p.technologies === "string"
+        ? p.technologies.split(",").map(s => s.trim()).filter(Boolean)
+        : [],
+      tags: Array.isArray(p.tags)
+        ? p.tags
+        : typeof p.tags === "string"
+        ? p.tags.split(",").map(s => s.trim()).filter(Boolean)
+        : [],
+      status: p.status ?? "",
+      category: p.category ?? p.domain ?? "",
+      featured: Boolean(p.featured),
+      image: p.image || p.image_url || p.thumbnail || null, // we'll handle custom images later
+      code_url: p.code_url ?? p.github_url ?? p.repo_url ?? "",
+      demo_url: p.demo_url ?? p.live_url ?? p.preview_url ?? "",
+      created_at: p.created_at ?? p.createdAt ?? p.date_created ?? null,
+      start_date: p.start_date ?? null,
+      end_date: p.end_date ?? null,
+    }));
 
-      // 3) If still 400 (backend doesn’t like page/order), retry with minimal filters
-      if (!res.ok && res.status === 400) {
-        res = await tryFetch(true, false);
-        if (!res.ok) res = await tryFetch(false, false);
-      }
+    // If UI asked for descending (e.g., "-created_at"), reverse locally.
+    if (isDesc) normalized = [...normalized].reverse();
 
-      if (!res.ok) {
-        const txt = await res.text().catch(() => "");
-        throw new Error(`HTTP ${res.status} ${res.statusText} :: ${txt}`);
-      }
+    // client-side pagination
+    const total = normalized.length;
+    const totalPagesLocal = Math.max(1, Math.ceil(total / cardsPerPage));
+    setTotalPages(totalPagesLocal);
 
-      const data = await res.json();
-      let list = parseList(data);
+    const start = (pageToFetch - 1) * cardsPerPage;
+    const end = start + cardsPerPage;
+    setProjects(normalized.slice(start, end));
 
-      // If server returned a full list (no pagination), compute local paging
-      let pages;
-      if (typeof data?.count === "number") {
-        pages = Math.max(1, Math.ceil(data.count / cardsPerPage));
-      } else if (!Array.isArray(data?.results)) {
-        // Plain array: client-side paginate to keep UI consistent
-        pages = Math.max(1, Math.ceil(list.length / cardsPerPage));
-        const start = (pageToFetch - 1) * cardsPerPage;
-        const end = start + cardsPerPage;
-        list = list.slice(start, end);
-      } else {
-        pages = 1; // fallback
-      }
-
-      setProjects(normalize(list));
-      setTotalPages(pages);
-      setError(null);
-    } catch (e) {
-      console.error("Failed to fetch projects:", e);
-      setError("Failed to load project data.");
-      setProjects([]);
-    } finally {
-      setLoading(false);
-      setTimeout(() => setPageTransition(false), 120);
+    // clamp page if it went out of range after filter change
+    if (pageToFetch > totalPagesLocal) {
+      setCurrentPage(1);
     }
-  };
+
+    setError(null);
+  } catch (e) {
+    console.error("Failed to fetch projects:", e);
+    setError("Failed to load project data.");
+    setProjects([]);
+    setTotalPages(1);
+  } finally {
+    setLoading(false);
+    setTimeout(() => setPageTransition(false), 120);
+  }
+};
 
   useEffect(() => {
     fetchProjects(currentPage, filters);
