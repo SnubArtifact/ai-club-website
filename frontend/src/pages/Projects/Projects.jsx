@@ -186,7 +186,7 @@ const fetchProjects = async (pageToFetch, currentFilters) => {
       category: p.category ?? p.domain ?? "",
       featured: Boolean(p.featured),
       image: p.image || p.image_url || p.thumbnail || null, // we'll handle custom images later
-      code_url: p.code_url ?? p.github_url ?? p.repo_url ?? "",
+     code_url: p.code_url ?? p.github_url ?? p.github_link ?? p.repo_url ?? "",
       demo_url: p.demo_url ?? p.live_url ?? p.preview_url ?? "",
       created_at: p.created_at ?? p.createdAt ?? p.date_created ?? null,
       start_date: p.start_date ?? null,
