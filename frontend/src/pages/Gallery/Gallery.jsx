@@ -15,8 +15,7 @@ const Gallery = () => {
     {
       src: "/images/gallery2.jpg",
       title: "Learning Session",
-      description: "Learning session on AI and Machine Learning conducted by AI Club",
-      
+      description: " Learning session on Transformers and LLMs conducted by the club"
     },
     
   ];

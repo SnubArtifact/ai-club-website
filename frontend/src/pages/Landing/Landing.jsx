@@ -55,6 +55,7 @@ const Landing = () => {
       location: "Online",
       comments:"Problem statement will be released offline.",
       type: "Hackathon",
+      liveUpdates:"https://x.com/AI_ClubBPPC",
       icon: "fas fa-code",
       link: 'https://docs.google.com/forms/d/1r2F9ML4yp_feyO7YgHyUQ2ALJhQYdfLNa721Sp2Gxkc/edit?ts=6908ff00',
       logo: "images/netapp-logo.png", 
@@ -135,7 +136,7 @@ const Landing = () => {
 
                 {/* Event Title */}
                 <div className='flex gap-4'>
-                    <div className="w-11 h-11 bg-white rounded-lg -translate-y-1 flex items-center justify-center p-1">
+                    <div className="w-11 h-11 bg-white rounded-lg -translate-y-2 flex items-center justify-center p-1">
                       <img 
                         src="images/netapp2.svg"
                         alt="NetApp Logo" 
@@ -219,6 +220,14 @@ const Landing = () => {
                     <span>Register Now</span>
                   </a>
                 </div>
+                <a
+                href={currentEvent.liveUpdates}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute top-3 right-3 text-sm text-purple-600 font-mont font-semibold hover:underline"
+              >
+                Live Updates <i className="fas fa-external-link-alt ml-1 text-xs"></i>
+                </a>
               </div>
 
               {/* Carousel Controls */}

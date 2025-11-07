@@ -148,6 +148,9 @@ const ContactUs = () => {
                           <a href="https://www.instagram.com/aiclub.bitsp/" className="text-white/80 hover:text-white transition-colors">
                             <i className="fab fa-instagram text-lg"></i>
                           </a>
+                          <a href="https://x.com/AI_ClubBPPC" className="text-white/80 hover:text-white transition-colors">
+                            <i className="fab fa-x text-lg"></i>
+                          </a>
                           {/* <a href="#" className="text-white/80 hover:text-white transition-colors">
                             <i className="fab fa-github text-lg"></i>
                           </a> */} 
