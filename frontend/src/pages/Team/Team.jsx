@@ -21,7 +21,7 @@ const TeamMemberCard = ({ name, position, image, socials, batch, isActive }) => 
         <div className="relative z-10 flex flex-col justify-between items-center bg-black/70 rounded-2xl p-6 h-full">
           
           {/* Image */}
-          <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-indigo-400/40 shadow-[0_0_20px_rgba(99,102,241,0.4)] group-hover:border-indigo-300 transition-all duration-500">
+          <div className="relative w-50 h-50 rounded-full overflow-hidden border-4 border-indigo-400/40 shadow-[0_0_20px_rgba(99,102,241,0.4)] group-hover:border-indigo-300 transition-all duration-500">
             <img
               src={image}
               alt={name}
