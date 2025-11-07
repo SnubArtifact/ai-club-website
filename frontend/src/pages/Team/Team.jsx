@@ -184,26 +184,48 @@ const fetchTeamMembers = useCallback(async () => {
         } // End of while loop
         
         // --- Process All Collected Members ---
-        const formattedMembers = allMembers.map(member => ({
-            id: member.id,
-            name: member.name,
-            position: member.designation, 
-            description: member.bio || member.description,     
-            image: member.image_url
-  || (member.image && (member.image.startsWith('http') 
-        ? member.image 
-        : `${API_BASE_URL.replace('/api', '')}${member.image}`))
-  || member.profile_picture
-  || member.photo
-  || null,     
-            socials: member.social_links?.map(social => ({ 
-                icon: social.icon_class || social.icon, 
-                url: social.url
-            })) || [],
-            batch: member.batch,
-            joined_date: member.joined_date,
-            active: member.active
-        }));
+const formattedMembers = allMembers.map(member => {
+  // Decide which image field to use
+  let image = null;
+
+  if (member.photo_link) {
+    // Direct external URL (e.g., Google Drive, Cloudinary)
+    image = member.photo_link;
+  } else if (member.photo_file) {
+    // Uploaded image file (relative /media path)
+    image = member.photo_file.startsWith('http')
+      ? member.photo_file
+      : `${API_BASE_URL.replace('/api', '')}${member.photo_file}`;
+  } else if (member.image || member.image_url) {
+    // Future-proofing in case serializer uses other names
+    image = member.image || member.image_url;
+  } else {
+    // Fallback placeholder
+    image = 'https://via.placeholder.com/400x400?text=AI+Club+Member';
+  }
+
+  // Build socials cleanly
+  const socials = [];
+  if (member.github_link) {
+    socials.push({ icon: 'fab fa-github', url: member.github_link });
+  }
+  if (member.linkedin_link) {
+    socials.push({ icon: 'fab fa-linkedin-in', url: member.linkedin_link });
+  }
+
+  return {
+    id: member.id,
+    name: member.name,
+    position: member.designation,
+    description: member.bio || '',
+    image,
+    socials,
+    batch: member.batch,
+    joined_date: member.joined_date,
+    active: member.is_active, // your model field name
+  };
+});
+
         
         setTeamMembers(formattedMembers);
         setCurrentPage(0); // Reset to the first page after successful fetch
