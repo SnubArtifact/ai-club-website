@@ -60,8 +60,8 @@ const ProjectCard = ({ project }) => {
         <h3 className="text-xl md:text-2xl font-semibold text-white mb-2">{title}</h3>
         {}
 {project.status && (
-  <p
-    className={`inline-block text-xs font-medium px-2.5 py-0.5 mb-3 rounded-full border ${
+  <span
+    className={`self-start text-[0.7rem] font-medium px-2 py-[1px] mb-3 rounded-full border whitespace-nowrap leading-none ${
       project.status === "ongoing"
         ? "bg-emerald-500/15 text-emerald-300 border-emerald-400/30"
         : project.status === "completed"
@@ -72,7 +72,7 @@ const ProjectCard = ({ project }) => {
     }`}
   >
     {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
-  </p>
+  </span>
 )}
 
         <p className="text-white/75 leading-relaxed line-clamp-3 mb-4">{description}</p>
