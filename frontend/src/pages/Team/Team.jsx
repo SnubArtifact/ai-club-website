@@ -5,7 +5,7 @@ const API_BASE_URL = 'https://aiclub-bitsp.dev/api';
 /**
  * Team Member Card for Carousel
  */
-const TeamMemberCard = ({ name, position, image, socials, description, batch, isActive }) => {
+const TeamMemberCard = ({ name, position, image, socials, batch, isActive }) => {
   return (
     <div
       className={`flex-shrink-0 w-80 mx-3 transition-all duration-500 transform ${
@@ -18,7 +18,7 @@ const TeamMemberCard = ({ name, position, image, socials, description, batch, is
         {/* Member Image with Hover Effect */}
         <div className="relative aspect-square rounded-xl overflow-hidden mb-6">
           <img
-            src={image || "images/team-placeholder.jpg"}
+            src={image }
             alt={name}
             className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
           />
@@ -53,9 +53,7 @@ const TeamMemberCard = ({ name, position, image, socials, description, batch, is
               Batch {batch}
             </p>
           )}
-          <p className="text-white/70 font-mont text-sm leading-relaxed line-clamp-3">
-            {description || "Passionate about advancing AI technology and building innovative solutions for real-world challenges."}
-          </p>
+         
         </div>
       </div>
     </div>
