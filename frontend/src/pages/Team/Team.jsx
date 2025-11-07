@@ -71,9 +71,9 @@ const Team = () => {
   const [teamMembers, setTeamMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0); // Now using page index instead of card index
   const [autoPlay, setAutoPlay] = useState(true);
-  const visibleCards = 3; // Fixed to show exactly 3 cards per page
+  const cardsPerPage = 3; // Fixed to show exactly 3 cards per page
   
   // Filters state
   const [filters, setFilters] = useState({
@@ -85,18 +85,21 @@ const Team = () => {
     ordering: 'name',
   });
 
+  // Calculate total pages
+  const totalPages = Math.ceil(teamMembers.length / cardsPerPage);
+
   // Auto-play interval
   useEffect(() => {
-    if (!autoPlay || teamMembers.length <= visibleCards) return;
+    if (!autoPlay || totalPages <= 1) return;
     
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => 
-        prevIndex >= teamMembers.length - visibleCards ? 0 : prevIndex + visibleCards
+      setCurrentPage((prevPage) => 
+        prevPage === totalPages - 1 ? 0 : prevPage + 1
       );
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [autoPlay, teamMembers.length, visibleCards]);
+  }, [autoPlay, totalPages]);
 
   // Build API URL based on filters
   const buildApiUrl = (currentFilters) => {
@@ -177,7 +180,7 @@ const Team = () => {
       }));
       
       setTeamMembers(formattedMembers);
-      setCurrentIndex(0);
+      setCurrentPage(0);
     } catch (e) {
       console.error("Failed to fetch team members:", e);
       setError("Failed to load team data. Please try again later.");
@@ -191,18 +194,18 @@ const Team = () => {
   }, [fetchTeamMembers]);
 
   // Navigation functions
-  const nextSlide = () => {
-    if (teamMembers.length <= visibleCards) return;
-    setCurrentIndex(currentIndex >= teamMembers.length - visibleCards ? 0 : currentIndex + visibleCards);
+  const nextPage = () => {
+    if (totalPages <= 1) return;
+    setCurrentPage(currentPage === totalPages - 1 ? 0 : currentPage + 1);
   };
 
-  const prevSlide = () => {
-    if (teamMembers.length <= visibleCards) return;
-    setCurrentIndex(currentIndex === 0 ? teamMembers.length - visibleCards : currentIndex - visibleCards);
+  const prevPage = () => {
+    if (totalPages <= 1) return;
+    setCurrentPage(currentPage === 0 ? totalPages - 1 : currentPage - 1);
   };
 
-  const goToSlide = (pageIndex) => {
-    setCurrentIndex(pageIndex * visibleCards);
+  const goToPage = (pageIndex) => {
+    setCurrentPage(pageIndex);
   };
 
   // Filter handlers
@@ -223,41 +226,23 @@ const Team = () => {
     });
   };
 
-  // Get visible cards for carousel
+  // Get visible cards for current page
   const getVisibleCards = () => {
     if (teamMembers.length === 0) return [];
     
+    const startIndex = currentPage * cardsPerPage;
+    const endIndex = Math.min(startIndex + cardsPerPage, teamMembers.length);
+    
     const cards = [];
-    const totalCards = teamMembers.length;
-    
-    // Show exactly 3 cards
-    for (let i = 0; i < Math.min(visibleCards, totalCards - currentIndex); i++) {
-      const index = currentIndex + i;
-      if (index < totalCards) {
-        cards.push({
-          ...teamMembers[index],
-          isActive: true
-        });
-      }
-    }
-    
-    // If we're at the end and don't have 3 cards, loop back to start
-    if (cards.length < visibleCards) {
-      const remaining = visibleCards - cards.length;
-      for (let i = 0; i < remaining; i++) {
-        cards.push({
-          ...teamMembers[i],
-          isActive: true
-        });
-      }
+    for (let i = startIndex; i < endIndex; i++) {
+      cards.push({
+        ...teamMembers[i],
+        isActive: true
+      });
     }
     
     return cards;
   };
-
-  // Calculate total pages
-  const totalPages = Math.ceil(teamMembers.length / visibleCards);
-  const currentPage = Math.floor(currentIndex / visibleCards) + 1;
 
   // Get batch options from current members
   const batchOptions = [...new Set(teamMembers.map(member => member.batch).filter(batch => batch))].sort();
@@ -306,6 +291,7 @@ const Team = () => {
     );
   } else {
     const visibleMemberCards = getVisibleCards();
+    const currentDisplayNumber = currentPage + 1;
     
     content = (
       <div className="relative">
@@ -320,10 +306,10 @@ const Team = () => {
         </div>
 
         {/* Carousel Navigation */}
-        {teamMembers.length > visibleCards && (
+        {totalPages > 1 && (
           <div className="flex items-center justify-center mb-8 space-x-6">
             <button
-              onClick={prevSlide}
+              onClick={prevPage}
               onMouseEnter={() => setAutoPlay(false)}
               onMouseLeave={() => setAutoPlay(true)}
               className="p-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-indigo-500/20"
@@ -332,11 +318,11 @@ const Team = () => {
             </button>
             
             <span className="text-white font-mont text-lg px-6 py-3 bg-white/5 rounded-lg">
-              Page {currentPage} of {totalPages} • Showing {visibleCards} members
+              Page {currentDisplayNumber} of {totalPages} • Showing {visibleMemberCards.length} of {teamMembers.length} members
             </span>
             
             <button
-              onClick={nextSlide}
+              onClick={nextPage}
               onMouseEnter={() => setAutoPlay(false)}
               onMouseLeave={() => setAutoPlay(true)}
               className="p-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-indigo-500/20"
@@ -353,23 +339,23 @@ const Team = () => {
         >
           {visibleMemberCards.map((member, index) => (
             <TeamMemberCard
-              key={`${member.id}-${currentIndex}-${index}`}
+              key={`${member.id}-${currentPage}-${index}`}
               {...member}
             />
           ))}
         </div>
 
         {/* Carousel Indicators */}
-        {teamMembers.length > visibleCards && (
+        {totalPages > 1 && (
           <div className="flex justify-center mt-8 space-x-3">
             {Array.from({ length: totalPages }, (_, index) => (
               <button
                 key={index}
-                onClick={() => goToSlide(index)}
+                onClick={() => goToPage(index)}
                 onMouseEnter={() => setAutoPlay(false)}
                 onMouseLeave={() => setAutoPlay(true)}
                 className={`w-10 h-3 rounded-full transition-all duration-300 ${
-                  currentPage === index + 1
+                  currentPage === index
                     ? 'bg-indigo-400 w-12' 
                     : 'bg-white/30 hover:bg-white/50'
                 }`}
