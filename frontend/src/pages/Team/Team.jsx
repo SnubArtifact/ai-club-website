@@ -3,94 +3,75 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 const API_BASE_URL = 'https://aiclub-bitsp.dev/api';
 
 /**
- * Team Member Card for Carousel
+ * Team Member Card Component
  */
-const TeamMemberCard = ({ name, position, image, socials, description, isActive }) => {
+const TeamMemberCard = ({ name, position, image, socials, description, batch }) => {
   return (
-    <div
-      className={`flex-shrink-0 w-80 mx-4 transition-all duration-500 transform ${
-        isActive 
-          ? 'scale-105 opacity-100' 
-          : 'scale-95 opacity-60'
-      }`}
-    >
-      <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-500 group">
-        {/* Member Image with Hover Effect */}
-        <div className="relative aspect-square rounded-xl overflow-hidden mb-6">
-          <img
-            src={image || "images/team-placeholder.jpg"}
-            alt={name}
-            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-          />
-          <div className="absolute inset-0 bg-[#653A97] opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-500 group transform hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/20">
+      {/* Member Image with Hover Effect */}
+      <div className="relative aspect-square rounded-xl overflow-hidden mb-6">
+        <img
+          src={image || "images/team-placeholder.jpg"}
+          alt={name}
+          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 bg-[#653A97] opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
 
-          {/* Social Links on Hover */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 flex gap-3">
-            {socials?.map((social, index) => (
-              <a
-                key={index}
-                href={social.url}
-                className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-indigo-500 hover:scale-110 transition-all duration-300"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i className={`${social.icon} text-white text-sm`}></i>
-              </a>
-            ))}
-          </div>
+        {/* Social Links on Hover */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 flex gap-3">
+          {socials?.map((social, index) => (
+            <a
+              key={index}
+              href={social.url}
+              className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-indigo-500 hover:scale-110 transition-all duration-300"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className={`${social.icon} text-white text-sm`}></i>
+            </a>
+          ))}
         </div>
+      </div>
 
-        {/* Member Info */}
-        <div className="text-center">
-          <h3 className="text-2xl text-white font-mont  mb-2 group-hover:text-indigo-200 transition-colors duration-300">
-            {name}
-          </h3>
-          <p className="text-indigo-300 font-mont font-medium mb-3 text-lg">
-            {position}
+      {/* Member Info */}
+      <div className="text-center">
+        <h3 className="text-2xl text-white font-mont mb-2 group-hover:text-indigo-200 transition-colors duration-300">
+          {name}
+        </h3>
+        <p className="text-indigo-300 font-mont font-medium mb-3 text-lg">
+          {position}
+        </p>
+        {batch && (
+          <p className="text-white/60 font-mont text-sm mb-3">
+            Batch {batch}
           </p>
-          <p className="text-white/70 font-mont text-sm leading-relaxed line-clamp-3">
-            {description || "Passionate about advancing AI technology and building innovative solutions for real-world challenges."}
-          </p>
-        </div>
+        )}
+        <p className="text-white/70 font-mont text-sm leading-relaxed line-clamp-3">
+          {description || "Passionate about advancing AI technology and building innovative solutions for real-world challenges."}
+        </p>
       </div>
     </div>
   );
 };
 
 /**
- * Carousel Team Component
+ * Team Component with Grid Layout
  */
 const Team = () => {
   const containerRef = useRef(null);
-  const carouselRef = useRef(null);
   const [teamMembers, setTeamMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [autoPlay, setAutoPlay] = useState(true);
   
   // Filters state
   const [filters, setFilters] = useState({
-    active: 'all', // 'true', 'false', or 'all'
-    por_holders: 'all', // 'true', 'false', or 'all'
+    active: 'all',
+    por_holders: 'all',
     batch: '',
     search: '',
     designation: '',
     ordering: 'name',
   });
-
-  // Auto-play interval
-  useEffect(() => {
-    if (!autoPlay || teamMembers.length === 0) return;
-    
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => 
-        prevIndex === teamMembers.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [autoPlay, teamMembers.length]);
 
   // Build API URL based on filters
   const buildApiUrl = (currentFilters) => {
@@ -137,7 +118,7 @@ const Team = () => {
     const apiURL = buildApiUrl(filters);
     
     try {
-      console.log('Fetching from:', apiURL); // For debugging
+      console.log('Fetching from:', apiURL);
       
       const response = await fetch(apiURL); 
       
@@ -150,9 +131,9 @@ const Team = () => {
       // Handle different response formats
       let membersData = data;
       if (Array.isArray(data.results)) {
-        membersData = data.results; // Handle paginated responses
+        membersData = data.results;
       } else if (Array.isArray(data.members)) {
-        membersData = data.members; // Handle nested responses
+        membersData = data.members;
       }
       
       const formattedMembers = membersData.map(member => ({
@@ -171,7 +152,6 @@ const Team = () => {
       }));
       
       setTeamMembers(formattedMembers);
-      setCurrentIndex(0); // Reset to first slide when filters change
     } catch (e) {
       console.error("Failed to fetch team members:", e);
       setError("Failed to load team data. Please try again later.");
@@ -183,19 +163,6 @@ const Team = () => {
   useEffect(() => {
     fetchTeamMembers();
   }, [fetchTeamMembers]);
-
-  // Navigation functions
-  const nextSlide = () => {
-    setCurrentIndex(currentIndex === teamMembers.length - 1 ? 0 : currentIndex + 1);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex(currentIndex === 0 ? teamMembers.length - 1 : currentIndex - 1);
-  };
-
-  const goToSlide = (index) => {
-    setCurrentIndex(index);
-  };
 
   // Filter handlers
   const handleFilterChange = (e) => {
@@ -215,35 +182,8 @@ const Team = () => {
     });
   };
 
-  // Team stats
-  const teamStats = [
-    { number: "20+", label: "Active Members" },
-    { number: "15+", label: "Projects Completed" },
-    { number: "10+", label: "Research Papers" },
-    { number: "25+", label: "Workshops Hosted" }
-  ];
-
-  // Calculate visible cards (show 3 cards at a time)
-  const getVisibleCards = () => {
-    if (teamMembers.length === 0) return [];
-    
-    const cards = [];
-    const totalCards = teamMembers.length;
-    
-    // Show 3 cards: previous, current, next
-    for (let i = -1; i <= 1; i++) {
-      const index = (currentIndex + i + totalCards) % totalCards;
-      cards.push({
-        ...teamMembers[index],
-        isActive: i === 0 // Center card is active
-      });
-    }
-    
-    return cards;
-  };
-
   // Get batch options from current members
-  const batchOptions = [...new Set(teamMembers.map(member => member.batch).filter(Batch => Batch))].sort();
+  const batchOptions = [...new Set(teamMembers.map(member => member.batch).filter(batch => batch))].sort();
 
   // Render content based on state
   let content;
@@ -251,131 +191,80 @@ const Team = () => {
   if (loading) {
     content = (
       <div className="text-center py-20">
-        <p className="text-white text-xl">Loading team data...</p>
-        <div className="mt-4 w-8 h-8 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
+        <div className="flex justify-center items-center space-x-4">
+          <div className="w-12 h-12 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-white text-xl font-mont">Loading team members...</p>
+        </div>
       </div>
     );
   } else if (error) {
     content = (
       <div className="text-center py-20">
-        <p className="text-red-400 text-xl font-bold">{error}</p>
-        <button 
-          onClick={fetchTeamMembers}
-          className="mt-4 px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors duration-300"
-        >
-          Retry
-        </button>
+        <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-8 max-w-md mx-auto">
+          <p className="text-red-400 text-xl font-bold mb-4">Connection Issue</p>
+          <p className="text-white/70 mb-6">{error}</p>
+          <button 
+            onClick={fetchTeamMembers}
+            className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 font-mont hover:scale-105"
+          >
+            Retry Loading
+          </button>
+        </div>
       </div>
     );
   } else if (teamMembers.length === 0) {
     content = (
       <div className="text-center py-20">
-        <p className="text-indigo-300 text-xl mb-4">No members found matching the criteria.</p>
-        <button 
-          onClick={clearFilters}
-          className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20 transition-colors duration-300"
-        >
-          Clear Filters
-        </button>
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-8 max-w-md mx-auto">
+          <p className="text-indigo-300 text-xl mb-4">No members found</p>
+          <p className="text-white/70 mb-6">Try adjusting your filters or search terms</p>
+          <button 
+            onClick={clearFilters}
+            className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20 transition-all duration-300 font-mont hover:scale-105"
+          >
+            Clear All Filters
+          </button>
+        </div>
       </div>
     );
   } else {
-    const visibleCards = getVisibleCards();
-    
     content = (
-      <div className="relative">
-       
-
-        {/* Carousel Navigation */}
-        <div className="flex items-center justify-center mb-8">
-          <button
-            onClick={prevSlide}
-            onMouseEnter={() => setAutoPlay(false)}
-            onMouseLeave={() => setAutoPlay(true)}
-            className="p-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white transition-all duration-300 mr-4 hover:scale-110"
-            disabled={teamMembers.length <= 1}
-          >
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          
-          <button
-            onClick={nextSlide}
-            onMouseEnter={() => setAutoPlay(false)}
-            onMouseLeave={() => setAutoPlay(true)}
-            className="p-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white transition-all duration-300 hover:scale-110"
-            disabled={teamMembers.length <= 1}
-          >
-            <i className="fas fa-chevron-right"></i>
-          </button>
+      <div className="animate-on-scroll opacity-0 w-full">
+        {/* Results Count */}
+        <div className="text-center mb-8">
+          <p className="text-indigo-300 text-lg font-mont">
+            Showing <strong>{teamMembers.length}</strong> member{teamMembers.length !== 1 ? 's' : ''}
+            {filters.batch && <span> • Batch: <strong>{filters.batch}</strong></span>}
+            {filters.designation && <span> • Designation: <strong>{filters.designation}</strong></span>}
+            {filters.search && <span> • Search: <strong>"{filters.search}"</strong></span>}
+          </p>
         </div>
 
-        {/* Carousel */}
-        <div 
-          ref={carouselRef}
-          className="flex items-center justify-center transition-transform duration-500 ease-out"
-        >
-          {visibleCards.map((member, index) => (
+        {/* Team Members Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {teamMembers.map((member, index) => (
             <TeamMemberCard
-              key={`${member.id}-${index}`}
+              key={member.id}
               {...member}
             />
           ))}
-        </div>
-
-        {/* Carousel Indicators */}
-        {teamMembers.length > 1 && (
-          <div className="flex justify-center mt-8 space-x-2">
-            {teamMembers.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                onMouseEnter={() => setAutoPlay(false)}
-                onMouseLeave={() => setAutoPlay(true)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentIndex 
-                    ? 'bg-indigo-400 w-8' 
-                    : 'bg-white/30 hover:bg-white/50'
-                }`}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* Current Member Info */}
-        <div className="text-center mt-8">
-          <img
-            src={teamMembers[currentIndex]?.image } />
-          <h3 className="text-2xl text-white font-bold">
-            {teamMembers[currentIndex]?.name}
-          </h3>
-          <p className="text-indigo-300 mt-2">
-            {teamMembers[currentIndex]?.position}
-          </p>
-          {teamMembers[currentIndex]?.batch && (
-            <p className="text-white/50 text-sm mt-1">
-              Batch: {teamMembers[currentIndex]?.batch}
-            </p>
-          )}
-          <p className="text-white/70 mt-4 max-w-2xl mx-auto leading-relaxed">
-            {teamMembers[currentIndex]?.description}
-          </p>
         </div>
       </div>
     );
   }
 
   return (
-  <section id="team" ref={containerRef} className="relative w-full bg-black overflow-hidden">
+    <section id="team" ref={containerRef} className="relative w-full bg-black overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 -z-10">
-  <div className="absolute inset-0 bg-[#0e0e0eff]" />
-  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent animate-pulse" />
-  <img
-    className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
-    src="images/landingimg.png"
-    alt="Team Background"
-   />
-</div>
+        <div className="absolute inset-0 bg-[#0e0e0eff]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent animate-pulse" />
+        <img
+          className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
+          src="images/landingimg.png"
+          alt="Team Background"
+        />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 py-20">
@@ -383,7 +272,7 @@ const Team = () => {
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
             <div className="text-center mb-16">
-              <h1 className="text-7xl  hover:scale-105 transition-all duration-300 text-transparent translate-y-2 bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-mont font-semibold mb-8">
+              <h1 className="text-7xl hover:scale-105 transition-all duration-300 text-transparent translate-y-2 bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-mont font-semibold mb-8">
                 Our Team
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">
@@ -392,18 +281,38 @@ const Team = () => {
             </div>
             
             {/* Filter Controls */}
-            <div className="mb-12 bg-white/5 p-6 rounded-lg border border-white/10">
-              <div className="flex flex-wrap gap-4 justify-center mb-4">
-               
+            <div className="mb-12 bg-white/5 p-6 rounded-xl border border-white/10 backdrop-blur-sm">
+              <div className="flex flex-wrap gap-4 justify-center items-center">
+                {/* Active Status Filter */}
+                <select 
+                  name="active" 
+                  value={filters.active} 
+                  onChange={handleFilterChange}
+                  className="p-3 rounded-lg bg-white/10 text-white border border-indigo-400/50 hover:bg-white/20 transition-all duration-300 font-mont hover:scale-105"
+                >
+                  <option value="all">All Members</option>
+                  <option value="true">Active Only</option>
+                  <option value="false">Inactive Only</option>
+                </select>
 
-                
+                {/* POR Holders Filter */}
+                <select 
+                  name="por_holders" 
+                  value={filters.por_holders} 
+                  onChange={handleFilterChange}
+                  className="p-3 rounded-lg bg-white/10 text-white border border-indigo-400/50 hover:bg-white/20 transition-all duration-300 font-mont hover:scale-105"
+                >
+                  <option value="all">All Roles</option>
+                  <option value="true">POR Holders</option>
+                  <option value="false">Members</option>
+                </select>
 
                 {/* Batch Filter */}
                 <select 
                   name="batch" 
                   value={filters.batch} 
                   onChange={handleFilterChange}
-                  className="p-2 rounded bg-white/10 text-white border border-indigo-400/50 hover:bg-white/20 transition duration-300"
+                  className="p-3 rounded-lg bg-white/10 text-white border border-indigo-400/50 hover:bg-white/20 transition-all duration-300 font-mont hover:scale-105"
                 >
                   <option value="">All Batches</option>
                   {batchOptions.map(batch => (
@@ -416,25 +325,24 @@ const Team = () => {
                   name="ordering" 
                   value={filters.ordering} 
                   onChange={handleFilterChange}
-                  className="p-2 rounded bg-white/10 text-white border border-indigo-400/50 hover:bg-white/20 transition duration-300"
+                  className="p-3 rounded-lg bg-white/10 text-white border border-indigo-400/50 hover:bg-white/20 transition-all duration-300 font-mont hover:scale-105"
                 >
                   <option value="name">Name A-Z</option>
                   <option value="-name">Name Z-A</option>
                   <option value="batch">Batch (Oldest)</option>
                   <option value="-batch">Batch (Newest)</option>
-                 
                 </select>
               </div>
 
               {/* Search and Designation Row */}
-              <div className="flex flex-wrap gap-4 justify-center">
+              <div className="flex flex-wrap gap-4 justify-center mt-4">
                 <input 
                   type="text" 
                   name="search" 
                   value={filters.search} 
                   onChange={handleFilterChange} 
                   placeholder="Search names, positions, bio..."
-                  className="p-2 rounded bg-white/10 text-white placeholder-white/50 border border-indigo-400/50 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300 min-w-64"
+                  className="p-3 rounded-lg bg-white/10 text-white placeholder-white/50 border border-indigo-400/50 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300 min-w-64 font-mont hover:scale-105 focus:scale-105"
                 />
 
                 <input 
@@ -443,25 +351,23 @@ const Team = () => {
                   value={filters.designation} 
                   onChange={handleFilterChange} 
                   placeholder="Filter by designation..."
-                  className="p-2 rounded bg-white/10 text-white placeholder-white/50 border border-indigo-400/50 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300 min-w-64"
+                  className="p-3 rounded-lg bg-white/10 text-white placeholder-white/50 border border-indigo-400/50 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300 min-w-64 font-mont hover:scale-105 focus:scale-105"
                 />
 
                 {/* Clear Filters Button */}
                 <button
                   onClick={clearFilters}
-                  className="p-2 px-4 rounded bg-white/10 hover:bg-white/20 text-white border border-white/20 transition duration-300"
+                  className="p-3 px-6 rounded-lg bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all duration-300 font-mont hover:scale-105"
                 >
                   Clear Filters
                 </button>
               </div>
             </div>
 
-            {/* Carousel Content */}
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20 min-h-96">
+            {/* Team Members Grid Container */}
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20 transform transition-all duration-500">
               {content}
             </div>
-
-          
           </div>
         </div>
       </div>
