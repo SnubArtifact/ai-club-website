@@ -3,65 +3,77 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 const API_BASE_URL = 'https://aiclub-bitsp.dev/api';
 
 /**
- * Team Member Card Component
+ * Team Member Card for Carousel
  */
-const TeamMemberCard = ({ name, position, image, socials, description, batch }) => {
+const TeamMemberCard = ({ name, position, image, socials, description, batch, isActive }) => {
   return (
-    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-500 group transform hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/20">
-      {/* Member Image with Hover Effect */}
-      <div className="relative aspect-square rounded-xl overflow-hidden mb-6">
-        <img
-          src={image || "images/team-placeholder.jpg"}
-          alt={name}
-          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-        />
-        <div className="absolute inset-0 bg-[#653A97] opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+    <div
+      className={`flex-shrink-0 w-80 mx-3 transition-all duration-500 transform ${
+        isActive 
+          ? 'scale-105 opacity-100' 
+          : 'scale-95 opacity-70'
+      } hover:scale-110 hover:opacity-100`}
+    >
+      <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-500 group h-full">
+        {/* Member Image with Hover Effect */}
+        <div className="relative aspect-square rounded-xl overflow-hidden mb-6">
+          <img
+            src={image || "images/team-placeholder.jpg"}
+            alt={name}
+            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-[#653A97] opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
 
-        {/* Social Links on Hover */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 flex gap-3">
-          {socials?.map((social, index) => (
-            <a
-              key={index}
-              href={social.url}
-              className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-indigo-500 hover:scale-110 transition-all duration-300"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className={`${social.icon} text-white text-sm`}></i>
-            </a>
-          ))}
+          {/* Social Links on Hover */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 flex gap-3">
+            {socials?.map((social, index) => (
+              <a
+                key={index}
+                href={social.url}
+                className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-indigo-500 hover:scale-110 transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className={`${social.icon} text-white text-sm`}></i>
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Member Info */}
-      <div className="text-center">
-        <h3 className="text-2xl text-white font-mont mb-2 group-hover:text-indigo-200 transition-colors duration-300">
-          {name}
-        </h3>
-        <p className="text-indigo-300 font-mont font-medium mb-3 text-lg">
-          {position}
-        </p>
-        {batch && (
-          <p className="text-white/60 font-mont text-sm mb-3">
-            Batch {batch}
+        {/* Member Info */}
+        <div className="text-center">
+          <h3 className="text-2xl text-white font-mont mb-2 group-hover:text-indigo-200 transition-colors duration-300">
+            {name}
+          </h3>
+          <p className="text-indigo-300 font-mont font-medium mb-3 text-lg">
+            {position}
           </p>
-        )}
-        <p className="text-white/70 font-mont text-sm leading-relaxed line-clamp-3">
-          {description || "Passionate about advancing AI technology and building innovative solutions for real-world challenges."}
-        </p>
+          {batch && (
+            <p className="text-white/60 font-mont text-sm mb-3">
+              Batch {batch}
+            </p>
+          )}
+          <p className="text-white/70 font-mont text-sm leading-relaxed line-clamp-3">
+            {description || "Passionate about advancing AI technology and building innovative solutions for real-world challenges."}
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
 /**
- * Team Component with Grid Layout
+ * Carousel Team Component
  */
 const Team = () => {
   const containerRef = useRef(null);
+  const carouselRef = useRef(null);
   const [teamMembers, setTeamMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [autoPlay, setAutoPlay] = useState(true);
+  const [visibleCards, setVisibleCards] = useState(4); // Number of cards to show
   
   // Filters state
   const [filters, setFilters] = useState({
@@ -72,6 +84,38 @@ const Team = () => {
     designation: '',
     ordering: 'name',
   });
+
+  // Calculate visible cards based on screen size
+  useEffect(() => {
+    const updateVisibleCards = () => {
+      if (window.innerWidth < 640) {
+        setVisibleCards(1);
+      } else if (window.innerWidth < 768) {
+        setVisibleCards(2);
+      } else if (window.innerWidth < 1024) {
+        setVisibleCards(3);
+      } else {
+        setVisibleCards(4);
+      }
+    };
+
+    updateVisibleCards();
+    window.addEventListener('resize', updateVisibleCards);
+    return () => window.removeEventListener('resize', updateVisibleCards);
+  }, []);
+
+  // Auto-play interval
+  useEffect(() => {
+    if (!autoPlay || teamMembers.length <= visibleCards) return;
+    
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => 
+        prevIndex >= teamMembers.length - visibleCards ? 0 : prevIndex + 1
+      );
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [autoPlay, teamMembers.length, visibleCards]);
 
   // Build API URL based on filters
   const buildApiUrl = (currentFilters) => {
@@ -152,6 +196,7 @@ const Team = () => {
       }));
       
       setTeamMembers(formattedMembers);
+      setCurrentIndex(0);
     } catch (e) {
       console.error("Failed to fetch team members:", e);
       setError("Failed to load team data. Please try again later.");
@@ -163,6 +208,21 @@ const Team = () => {
   useEffect(() => {
     fetchTeamMembers();
   }, [fetchTeamMembers]);
+
+  // Navigation functions
+  const nextSlide = () => {
+    if (teamMembers.length <= visibleCards) return;
+    setCurrentIndex(currentIndex >= teamMembers.length - visibleCards ? 0 : currentIndex + 1);
+  };
+
+  const prevSlide = () => {
+    if (teamMembers.length <= visibleCards) return;
+    setCurrentIndex(currentIndex === 0 ? teamMembers.length - visibleCards : currentIndex - 1);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
 
   // Filter handlers
   const handleFilterChange = (e) => {
@@ -180,6 +240,25 @@ const Team = () => {
       designation: '',
       ordering: 'name',
     });
+  };
+
+  // Get visible cards for carousel
+  const getVisibleCards = () => {
+    if (teamMembers.length === 0) return [];
+    
+    const cards = [];
+    const totalCards = teamMembers.length;
+    
+    // Show multiple cards based on visibleCards count
+    for (let i = 0; i < Math.min(visibleCards, totalCards); i++) {
+      const index = (currentIndex + i) % totalCards;
+      cards.push({
+        ...teamMembers[index],
+        isActive: true // All visible cards are active
+      });
+    }
+    
+    return cards;
   };
 
   // Get batch options from current members
@@ -228,8 +307,10 @@ const Team = () => {
       </div>
     );
   } else {
+    const visibleMemberCards = getVisibleCards();
+    
     content = (
-      <div className="animate-on-scroll opacity-0 w-full">
+      <div className="relative">
         {/* Results Count */}
         <div className="text-center mb-8">
           <p className="text-indigo-300 text-lg font-mont">
@@ -240,15 +321,64 @@ const Team = () => {
           </p>
         </div>
 
-        {/* Team Members Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {teamMembers.map((member, index) => (
+        {/* Carousel Navigation */}
+        {teamMembers.length > visibleCards && (
+          <div className="flex items-center justify-center mb-8 space-x-4">
+            <button
+              onClick={prevSlide}
+              onMouseEnter={() => setAutoPlay(false)}
+              onMouseLeave={() => setAutoPlay(true)}
+              className="p-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-indigo-500/20"
+            >
+              <i className="fas fa-chevron-left text-lg"></i>
+            </button>
+            
+            <span className="text-white font-mont text-lg px-4 py-2 bg-white/5 rounded-lg">
+              {currentIndex + 1}-{Math.min(currentIndex + visibleCards, teamMembers.length)} of {teamMembers.length}
+            </span>
+            
+            <button
+              onClick={nextSlide}
+              onMouseEnter={() => setAutoPlay(false)}
+              onMouseLeave={() => setAutoPlay(true)}
+              className="p-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-indigo-500/20"
+            >
+              <i className="fas fa-chevron-right text-lg"></i>
+            </button>
+          </div>
+        )}
+
+        {/* Carousel */}
+        <div 
+          ref={carouselRef}
+          className="flex items-center justify-center transition-transform duration-500 ease-out"
+        >
+          {visibleMemberCards.map((member, index) => (
             <TeamMemberCard
-              key={member.id}
+              key={`${member.id}-${index}`}
               {...member}
             />
           ))}
         </div>
+
+        {/* Carousel Indicators */}
+        {teamMembers.length > visibleCards && (
+          <div className="flex justify-center mt-8 space-x-2">
+            {Array.from({ length: Math.ceil(teamMembers.length / visibleCards) }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index * visibleCards)}
+                onMouseEnter={() => setAutoPlay(false)}
+                onMouseLeave={() => setAutoPlay(true)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  Math.floor(currentIndex / visibleCards) === index
+                    ? 'bg-indigo-400 w-8' 
+                    : 'bg-white/30 hover:bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     );
   }
@@ -364,7 +494,7 @@ const Team = () => {
               </div>
             </div>
 
-            {/* Team Members Grid Container */}
+            {/* Carousel Container */}
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20 transform transition-all duration-500">
               {content}
             </div>
