@@ -58,6 +58,23 @@ const ProjectCard = ({ project }) => {
       {/* Body */}
       <div className="p-6 flex flex-col flex-1">
         <h3 className="text-xl md:text-2xl font-semibold text-white mb-2">{title}</h3>
+        {}
+{project.status && (
+  <p
+    className={`inline-block text-xs font-medium px-3 py-1 mb-3 rounded-full border ${
+      project.status === "ongoing"
+        ? "bg-emerald-500/15 text-emerald-300 border-emerald-400/30"
+        : project.status === "completed"
+        ? "bg-blue-500/15 text-blue-200 border-blue-400/30"
+        : project.status === "planned"
+        ? "bg-yellow-500/15 text-yellow-200 border-yellow-400/30"
+        : "bg-white/10 text-white/70 border-white/20"
+    }`}
+  >
+    {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
+  </p>
+)}
+
         <p className="text-white/75 leading-relaxed line-clamp-3 mb-4">{description}</p>
 
         {/* Tech Stack */}
