@@ -344,7 +344,7 @@ const Team = () => {
         {/* Current Member Info */}
         <div className="text-center mt-8">
           <img
-            src={teamMembers[currentIndex]?.image || "images/team-placeholder.jpg"} />
+            src={teamMembers[currentIndex]?.image } />
           <h3 className="text-2xl text-white font-bold">
             {teamMembers[currentIndex]?.name}
           </h3>
