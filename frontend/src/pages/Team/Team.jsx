@@ -189,7 +189,13 @@ const fetchTeamMembers = useCallback(async () => {
             name: member.name,
             position: member.designation, 
             description: member.bio || member.description,     
-            image: member.image_url || member.image,     
+            image: member.image_url
+  || (member.image && (member.image.startsWith('http') 
+        ? member.image 
+        : `${API_BASE_URL.replace('/api', '')}${member.image}`))
+  || member.profile_picture
+  || member.photo
+  || null,     
             socials: member.social_links?.map(social => ({ 
                 icon: social.icon_class || social.icon, 
                 url: social.url
