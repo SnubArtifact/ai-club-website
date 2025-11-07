@@ -165,33 +165,60 @@ const fetchProjects = async (pageToFetch, currentFilters) => {
 
     const data = await res.json();
     const raw = Array.isArray(data?.results) ? data.results : Array.isArray(data) ? data : [];
+let normalized = raw.map((p, i) => {
+  // Handle technologies_used and tech_stack fields
+  const techArray =
+    Array.isArray(p.technologies)
+      ? p.technologies
+      : typeof p.technologies_used === "string"
+      ? p.technologies_used.split(",").map(s => s.trim()).filter(Boolean)
+      : typeof p.technologies === "string"
+      ? p.technologies.split(",").map(s => s.trim()).filter(Boolean)
+      : [];
 
-    // normalize minimal fields for the card
-    let normalized = raw.map((p, i) => ({
-      id: p.id ?? i + 1,
-      slug: p.slug ?? "",
-      title: p.title ?? p.name ?? "Untitled Project",
-      description: p.description ?? p.short_description ?? "",
-      technologies: Array.isArray(p.technologies)
-        ? p.technologies
-        : typeof p.technologies === "string"
-        ? p.technologies.split(",").map(s => s.trim()).filter(Boolean)
-        : [],
-      tags: Array.isArray(p.tags)
-        ? p.tags
-        : typeof p.tags === "string"
-        ? p.tags.split(",").map(s => s.trim()).filter(Boolean)
-        : [],
-      status: p.status ?? "",
-      category: p.category ?? p.domain ?? "",
-      featured: Boolean(p.featured),
-      image: p.image || p.image_url || p.thumbnail || null, // we'll handle custom images later
-     code_url: p.code_url ?? p.github_url ?? p.github_link ?? p.repo_url ?? "",
-      demo_url: p.demo_url ?? p.live_url ?? p.preview_url ?? "",
-      created_at: p.created_at ?? p.createdAt ?? p.date_created ?? null,
-      start_date: p.start_date ?? null,
-      end_date: p.end_date ?? null,
-    }));
+  return {
+    id: p.id ?? i + 1,
+    slug: p.slug ?? p.Slug ?? "", // ✅ handle both lowercase/uppercase
+    title: p.title ?? p.name ?? "Untitled Project",
+    description:
+      p.description ??
+      p.short_description ??
+      p.tagline ??
+      "No description provided.",
+    technologies: techArray,
+    tech_stack: p.tech_stack ?? "", // ✅ capture long-form stack
+    tags: Array.isArray(p.tags)
+      ? p.tags
+      : typeof p.tags === "string"
+      ? p.tags.split(",").map(s => s.trim()).filter(Boolean)
+      : [],
+    status: p.status ?? "",
+    category: p.category ?? p.domain ?? "",
+    featured: Boolean(p.featured ?? p.is_featured),
+    image:
+      p.image ||
+      p.heroSectionImageLink ||
+      p.image_url ||
+      p.thumbnail ||
+      null,
+    code_url:
+      p.code_url ??
+      p.github_url ??
+      p.github_link ??
+      p.repo_url ??
+      "",
+    demo_url:
+      p.demo_url ??
+      p.demo_link ??
+      p.live_url ??
+      p.preview_url ??
+      "",
+    created_at: p.created_at ?? p.createdAt ?? p.date_created ?? null,
+    start_date: p.start_date ?? null,
+    end_date: p.end_date ?? null,
+  };
+});
+
 
     // If UI asked for descending (e.g., "-created_at"), reverse locally.
     if (isDesc) normalized = [...normalized].reverse();
