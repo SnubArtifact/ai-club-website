@@ -101,11 +101,13 @@ const Team = () => {
     return () => clearInterval(interval);
   }, [autoPlay, totalPages]);
 
-  // Build API URL based on filters
-  const buildApiUrl = (currentFilters) => {
+ // ... inside the Team component
+
+// Build API URL based on filters
+const buildApiUrl = (currentFilters) => {
     const params = new URLSearchParams();
     
-    // Handle special endpoints
+    // Handle special endpoints (if por_holders=true and no other filters)
     if (currentFilters.por_holders === 'true' && 
         currentFilters.active === 'all' && 
         !currentFilters.batch && 
@@ -114,13 +116,14 @@ const Team = () => {
       return `${API_BASE_URL}/members/por_holders/`;
     }
     
-    // Add filter parameters
+    // Add filter parameters to URLSearchParams
     if (currentFilters.active !== 'all') {
       params.append('active', currentFilters.active);
     }
     if (currentFilters.por_holders !== 'all') {
       params.append('por_holders', currentFilters.por_holders);
     }
+    // ... (other filters like batch, designation, search, ordering)
     if (currentFilters.batch) {
       params.append('batch', currentFilters.batch);
     }
@@ -135,60 +138,78 @@ const Team = () => {
     }
     
     const queryString = params.toString();
+    // Return the final URL
     return `${API_BASE_URL}/members/${queryString ? `?${queryString}` : ''}`;
-  };
-
+};
   // Fetch team members
-  const fetchTeamMembers = useCallback(async () => {
+  // Fetch team members with pagination support
+const fetchTeamMembers = useCallback(async () => {
     setLoading(true);
     setError(null);
     
-    const apiURL = buildApiUrl(filters);
+    // Start with the initial URL based on filters
+    let currentURL = buildApiUrl(filters);
+    let allMembers = [];
     
     try {
-      console.log('Fetching from:', apiURL);
-      
-      const response = await fetch(apiURL); 
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      // Handle different response formats
-      let membersData = data;
-      if (Array.isArray(data.results)) {
-        membersData = data.results;
-      } else if (Array.isArray(data.members)) {
-        membersData = data.members;
-      }
-      
-      const formattedMembers = membersData.map(member => ({
-        id: member.id,
-        name: member.name,
-        position: member.designation, 
-        description: member.bio || member.description,    
-        image: member.image_url || member.image,    
-        socials: member.social_links?.map(social => ({ 
-          icon: social.icon_class || social.icon, 
-          url: social.url
-        })) || [],
-        batch: member.batch,
-        joined_date: member.joined_date,
-        active: member.active
-      }));
-      
-      setTeamMembers(formattedMembers);
-      setCurrentPage(0);
+        while (currentURL) {
+            console.log('Fetching from:', currentURL);
+            
+            const response = await fetch(currentURL); 
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            // Extract members from the current page
+            let membersData = [];
+            if (Array.isArray(data.results)) {
+                membersData = data.results; // Standard DRF pagination
+            } else if (Array.isArray(data.members)) {
+                membersData = data.members; // Alternate array key
+            } else if (Array.isArray(data)) {
+                membersData = data; // Non-paginated response for the first run
+            }
+            
+            // Add members from the current page to the total list
+            allMembers = [...allMembers, ...membersData];
+            
+            // Set the URL for the next iteration (data.next will be null when done)
+            currentURL = data.next || null;
+            
+            // OPTIONAL: If the response is not paginated, break the loop after the first fetch
+            if (!data.next && !data.results) {
+                break;
+            }
+        } // End of while loop
+        
+        // --- Process All Collected Members ---
+        const formattedMembers = allMembers.map(member => ({
+            id: member.id,
+            name: member.name,
+            position: member.designation, 
+            description: member.bio || member.description,     
+            image: member.image_url || member.image,     
+            socials: member.social_links?.map(social => ({ 
+                icon: social.icon_class || social.icon, 
+                url: social.url
+            })) || [],
+            batch: member.batch,
+            joined_date: member.joined_date,
+            active: member.active
+        }));
+        
+        setTeamMembers(formattedMembers);
+        setCurrentPage(0); // Reset to the first page after successful fetch
     } catch (e) {
-      console.error("Failed to fetch team members:", e);
-      setError("Failed to load team data. Please try again later.");
+        console.error("Failed to fetch team members:", e);
+        setError("Failed to load team data. Please try again later.");
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  }, [filters]);
-
+}, [filters]);
   useEffect(() => {
     fetchTeamMembers();
   }, [fetchTeamMembers]);
