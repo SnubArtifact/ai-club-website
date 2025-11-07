@@ -61,7 +61,7 @@ const ProjectCard = ({ project }) => {
         {}
 {project.status && (
   <p
-    className={`inline-block text-xs font-medium px-3 py-1 mb-3 rounded-full border ${
+    className={`inline-block text-xs font-medium px-2.5 py-0.5 mb-3 rounded-full border ${
       project.status === "ongoing"
         ? "bg-emerald-500/15 text-emerald-300 border-emerald-400/30"
         : project.status === "completed"
@@ -351,7 +351,7 @@ let normalized = raw.map((p, i) => {
     >
       {/* Decorative background (no layout impact) */}
       <div aria-hidden className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[#0e0e0e]" />
+        <div className="absolute inset-0 bg-[#0e0e0eff]" />
         <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_40%,rgba(99,102,241,0.10),transparent_60%)]" />
       </div>
 
