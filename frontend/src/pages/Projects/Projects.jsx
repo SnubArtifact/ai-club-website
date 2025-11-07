@@ -11,19 +11,14 @@ const COLOR = {
 };
 
 const Tag = ({ children, color = "indigo" }) => (
-  <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${COLOR[color] || COLOR.indigo}`}>
+  <span
+    className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+      COLOR[color] || COLOR.indigo
+    }`}
+  >
     {children}
   </span>
 );
-
-const DUMMY_IMAGES = [
-  "https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
-];
 
 /* ----------------------------- Project Card ------------------------------ */
 const ProjectCard = ({ project }) => {
@@ -33,10 +28,10 @@ const ProjectCard = ({ project }) => {
     technologies = [],
     tags = [],
     image,
-    category,     // e.g., "IoT", "Computer Vision"
-    featured,     // boolean
-    code_url,     // string
-    demo_url,     // string
+    category, // e.g., "IoT", "Computer Vision"
+    featured, // boolean
+    code_url, // string
+    demo_url, // string
   } = project;
 
   return (
@@ -143,66 +138,115 @@ const Projects = () => {
     ordering: "-created_at",
   });
 
-  // API fetch (server pagination + filters)
+  // -------- Robust API fetch that auto-recovers on common backend differences
   const fetchProjects = async (pageToFetch, currentFilters) => {
     setPageTransition(true);
     setLoading(true);
 
-    try {
-      const params = new URLSearchParams();
-      params.set("page", String(pageToFetch));
-      params.set("page_size", String(cardsPerPage));
+    const buildParams = (usePagingAndOrdering = true) => {
+      const p = new URLSearchParams();
+      if (usePagingAndOrdering) {
+        p.set("page", String(pageToFetch));
+        p.set("page_size", String(cardsPerPage));
+      }
+      if (currentFilters.status) p.set("status", currentFilters.status); // ongoing|completed|planned
+      if (currentFilters.technology) p.set("technology", currentFilters.technology);
+      if (currentFilters.search) p.set("search", currentFilters.search);
+      if (usePagingAndOrdering && currentFilters.ordering)
+        p.set("ordering", currentFilters.ordering); // name|start_date|end_date|created_at (optionally prefixed by '-')
+      return p;
+    };
 
-      if (currentFilters.status) params.set("status", currentFilters.status);          // ?status=ongoing|completed|planned
-      if (currentFilters.technology) params.set("technology", currentFilters.technology); // ?technology=...
-      if (currentFilters.search) params.set("search", currentFilters.search);             // ?search=...
-      if (currentFilters.ordering) params.set("ordering", currentFilters.ordering);       // ?ordering=name|start_date|end_date|created_at
+    const parseList = (data) => {
+      if (Array.isArray(data?.results)) return data.results; // DRF pagination
+      if (Array.isArray(data?.items)) return data.items; // alt shape
+      if (Array.isArray(data)) return data; // plain list
+      return [];
+    };
 
-      const res = await fetch(`${API_BASE_URL}/projects/?${params.toString()}`, {
-        method: "GET",
-        headers: { Accept: "application/json" },
-      });
-
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const data = await res.json();
-
-      const rawList = Array.isArray(data?.results)
-        ? data.results
-        : Array.isArray(data)
-        ? data
-        : [];
-
-      // Normalize minimal fields so cards render safely
-      const normalized = rawList.map((p, i) => ({
+    const normalize = (rawList) =>
+      rawList.map((p, i) => ({
         id: p.id ?? `${pageToFetch}-${i}`,
+        slug: p.slug ?? "",
         title: p.title ?? p.name ?? "Untitled Project",
         description: p.description ?? p.short_description ?? "",
         technologies: Array.isArray(p.technologies)
           ? p.technologies
           : typeof p.technologies === "string"
-          ? p.technologies.split(",").map((s) => s.trim()).filter(Boolean)
+          ? p.technologies
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean)
           : [],
         tags: Array.isArray(p.tags)
           ? p.tags
           : typeof p.tags === "string"
-          ? p.tags.split(",").map((s) => s.trim()).filter(Boolean)
+          ? p.tags
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean)
           : [],
         status: p.status ?? "",
         category: p.category ?? p.domain ?? "",
         featured: Boolean(p.featured),
-        image: p.image || p.image_url || p.thumbnail || null, // we'll add hardcoded images later
+        image: p.image || p.image_url || p.thumbnail || null, // you’ll wire hardcoded images later
         code_url: p.code_url ?? p.github_url ?? p.repo_url ?? "",
         demo_url: p.demo_url ?? p.live_url ?? p.preview_url ?? "",
         created_at: p.created_at ?? p.createdAt ?? p.date_created ?? null,
-        slug: p.slug ?? "",
       }));
 
-      // Total pages from server count (if present)
-      const pages = typeof data?.count === "number" ? Math.ceil(data.count / cardsPerPage) : 1;
+    const tryFetch = async (withSlash, usePagingAndOrdering) => {
+      const qs = buildParams(usePagingAndOrdering).toString();
+      const base = withSlash
+        ? `${API_BASE_URL}/projects/`
+        : `${API_BASE_URL}/projects`;
+      const url = qs ? `${base}?${qs}` : base;
+      const res = await fetch(url, {
+        method: "GET",
+        headers: { Accept: "application/json" },
+        mode: "cors",
+        cache: "no-store",
+      });
+      return res;
+    };
 
-      setTotalPages(Math.max(1, pages));
-      setProjects(normalized);
+    try {
+      // 1) First attempt: trailing slash + paging/ordering
+      let res = await tryFetch(true, true);
+
+      // 2) If not ok, try without trailing slash
+      if (!res.ok) res = await tryFetch(false, true);
+
+      // 3) If still 400 (backend doesn’t like page/order), retry with minimal filters
+      if (!res.ok && res.status === 400) {
+        res = await tryFetch(true, false);
+        if (!res.ok) res = await tryFetch(false, false);
+      }
+
+      if (!res.ok) {
+        const txt = await res.text().catch(() => "");
+        throw new Error(`HTTP ${res.status} ${res.statusText} :: ${txt}`);
+      }
+
+      const data = await res.json();
+      let list = parseList(data);
+
+      // If server returned a full list (no pagination), compute local paging
+      let pages;
+      if (typeof data?.count === "number") {
+        pages = Math.max(1, Math.ceil(data.count / cardsPerPage));
+      } else if (!Array.isArray(data?.results)) {
+        // Plain array: client-side paginate to keep UI consistent
+        pages = Math.max(1, Math.ceil(list.length / cardsPerPage));
+        const start = (pageToFetch - 1) * cardsPerPage;
+        const end = start + cardsPerPage;
+        list = list.slice(start, end);
+      } else {
+        pages = 1; // fallback
+      }
+
+      setProjects(normalize(list));
+      setTotalPages(pages);
       setError(null);
     } catch (e) {
       console.error("Failed to fetch projects:", e);
@@ -222,7 +266,8 @@ const Projects = () => {
   useEffect(() => {
     if (!containerRef.current || loading) return;
     const obs = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("animate-fadeIn")),
+      (entries) =>
+        entries.forEach((e) => e.isIntersecting && e.target.classList.add("animate-fadeIn")),
       { threshold: 0.12 }
     );
     containerRef.current.querySelectorAll(".animate-on-scroll").forEach((el) => obs.observe(el));
@@ -245,50 +290,57 @@ const Projects = () => {
   };
 
   // grid content
-  const grid =
-    loading ? (
-      <div className="text-center py-20">
-        <div className="mx-auto w-16 h-16 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin" />
-        <p className="text-white text-xl mt-6">Loading projects...</p>
+  const grid = loading ? (
+    <div className="text-center py-20">
+      <div className="mx-auto w-16 h-16 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+      <p className="text-white text-xl mt-6">Loading projects...</p>
+    </div>
+  ) : error ? (
+    <div className="text-center py-20">
+      <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-8 max-w-md mx-auto">
+        <p className="text-red-400 text-xl font-bold mb-3">Error Loading Projects</p>
+        <p className="text-white/70 mb-6">{error}</p>
+        <button
+          onClick={() => fetchProjects(currentPage, filters)}
+          className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition"
+        >
+          Try Again
+        </button>
       </div>
-    ) : error ? (
-      <div className="text-center py-20">
-        <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-8 max-w-md mx-auto">
-          <p className="text-red-400 text-xl font-bold mb-3">Error Loading Projects</p>
-          <p className="text-white/70 mb-6">{error}</p>
-          <button
-            onClick={() => fetchProjects(currentPage, filters)}
-            className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition"
-          >
-            Try Again
-          </button>
-        </div>
+    </div>
+  ) : projects.length === 0 ? (
+    <div className="text-center py-20">
+      <div className="bg-white/5 border border-white/10 rounded-2xl p-8 max-w-md mx-auto">
+        <p className="text-indigo-300 text-xl mb-2">No projects found</p>
+        <p className="text-white/70 mb-6">Try adjusting filters or search terms.</p>
+        <button
+          onClick={clearFilters}
+          className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20 transition"
+        >
+          Clear Filters
+        </button>
       </div>
-    ) : projects.length === 0 ? (
-      <div className="text-center py-20">
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-8 max-w-md mx-auto">
-          <p className="text-indigo-300 text-xl mb-2">No projects found</p>
-          <p className="text-white/70 mb-6">Try adjusting filters or search terms.</p>
-          <button
-            onClick={clearFilters}
-            className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20 transition"
-          >
-            Clear Filters
-          </button>
-        </div>
+    </div>
+  ) : (
+    <div
+      className={`transition duration-500 ${
+        pageTransition ? "opacity-0 scale-[0.99]" : "opacity-100 scale-100"
+      }`}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
+        {projects.map((p) => (
+          <ProjectCard key={p.id} project={p} />
+        ))}
       </div>
-    ) : (
-      <div className={`transition duration-500 ${pageTransition ? "opacity-0 scale-[0.99]" : "opacity-100 scale-100"}`}>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
-          {projects.map((p) => (
-            <ProjectCard key={p.id} project={p} />
-          ))}
-        </div>
-      </div>
-    );
+    </div>
+  );
 
   return (
-    <section id="projects" ref={containerRef} className="relative w-full bg-black overflow-hidden py-20 md:py-28">
+    <section
+      id="projects"
+      ref={containerRef}
+      className="relative w-full bg-black overflow-hidden py-20 md:py-28"
+    >
       {/* Decorative background (no layout impact) */}
       <div aria-hidden className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[#0e0e0e]" />
