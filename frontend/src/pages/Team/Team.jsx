@@ -365,20 +365,20 @@ const Team = () => {
   }
 
   return (
-    <section id="team" ref={containerRef} className="min-h-screen w-full relative bg-black overflow-hidden">
+  <section id="team" ref={containerRef} className="relative w-full bg-black overflow-hidden">
       {/* Background elements */}
-      <div className="absolute inset-0 bg-[#0e0e0eff] z-0"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent animate-pulse"></div>
-
-      <img
-        className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
-        src="images/landingimg.png"
-        alt="Team Background"
-      
-      />
+      <div className="absolute inset-0 -z-10">
+  <div className="absolute inset-0 bg-[#0e0e0eff]" />
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent animate-pulse" />
+  <img
+    className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
+    src="images/landingimg.png"
+    alt="Team Background"
+   />
+</div>
 
       {/* Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen py-20">
+      <div className="relative z-10 py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
