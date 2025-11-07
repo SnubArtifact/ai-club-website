@@ -73,7 +73,7 @@ const Team = () => {
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
-  const [visibleCards, setVisibleCards] = useState(4); // Number of cards to show
+  const visibleCards = 3; // Fixed to show exactly 3 cards per page
   
   // Filters state
   const [filters, setFilters] = useState({
@@ -85,32 +85,13 @@ const Team = () => {
     ordering: 'name',
   });
 
-  // Calculate visible cards based on screen size
-  useEffect(() => {
-    const updateVisibleCards = () => {
-      if (window.innerWidth < 640) {
-        setVisibleCards(1);
-      } else if (window.innerWidth < 768) {
-        setVisibleCards(2);
-      } else if (window.innerWidth < 1024) {
-        setVisibleCards(3);
-      } else {
-        setVisibleCards(4);
-      }
-    };
-
-    updateVisibleCards();
-    window.addEventListener('resize', updateVisibleCards);
-    return () => window.removeEventListener('resize', updateVisibleCards);
-  }, []);
-
   // Auto-play interval
   useEffect(() => {
     if (!autoPlay || teamMembers.length <= visibleCards) return;
     
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => 
-        prevIndex >= teamMembers.length - visibleCards ? 0 : prevIndex + 1
+        prevIndex >= teamMembers.length - visibleCards ? 0 : prevIndex + visibleCards
       );
     }, 4000);
 
@@ -212,16 +193,16 @@ const Team = () => {
   // Navigation functions
   const nextSlide = () => {
     if (teamMembers.length <= visibleCards) return;
-    setCurrentIndex(currentIndex >= teamMembers.length - visibleCards ? 0 : currentIndex + 1);
+    setCurrentIndex(currentIndex >= teamMembers.length - visibleCards ? 0 : currentIndex + visibleCards);
   };
 
   const prevSlide = () => {
     if (teamMembers.length <= visibleCards) return;
-    setCurrentIndex(currentIndex === 0 ? teamMembers.length - visibleCards : currentIndex - 1);
+    setCurrentIndex(currentIndex === 0 ? teamMembers.length - visibleCards : currentIndex - visibleCards);
   };
 
-  const goToSlide = (index) => {
-    setCurrentIndex(index);
+  const goToSlide = (pageIndex) => {
+    setCurrentIndex(pageIndex * visibleCards);
   };
 
   // Filter handlers
@@ -249,17 +230,34 @@ const Team = () => {
     const cards = [];
     const totalCards = teamMembers.length;
     
-    // Show multiple cards based on visibleCards count
-    for (let i = 0; i < Math.min(visibleCards, totalCards); i++) {
-      const index = (currentIndex + i) % totalCards;
-      cards.push({
-        ...teamMembers[index],
-        isActive: true // All visible cards are active
-      });
+    // Show exactly 3 cards
+    for (let i = 0; i < Math.min(visibleCards, totalCards - currentIndex); i++) {
+      const index = currentIndex + i;
+      if (index < totalCards) {
+        cards.push({
+          ...teamMembers[index],
+          isActive: true
+        });
+      }
+    }
+    
+    // If we're at the end and don't have 3 cards, loop back to start
+    if (cards.length < visibleCards) {
+      const remaining = visibleCards - cards.length;
+      for (let i = 0; i < remaining; i++) {
+        cards.push({
+          ...teamMembers[i],
+          isActive: true
+        });
+      }
     }
     
     return cards;
   };
+
+  // Calculate total pages
+  const totalPages = Math.ceil(teamMembers.length / visibleCards);
+  const currentPage = Math.floor(currentIndex / visibleCards) + 1;
 
   // Get batch options from current members
   const batchOptions = [...new Set(teamMembers.map(member => member.batch).filter(batch => batch))].sort();
@@ -323,7 +321,7 @@ const Team = () => {
 
         {/* Carousel Navigation */}
         {teamMembers.length > visibleCards && (
-          <div className="flex items-center justify-center mb-8 space-x-4">
+          <div className="flex items-center justify-center mb-8 space-x-6">
             <button
               onClick={prevSlide}
               onMouseEnter={() => setAutoPlay(false)}
@@ -333,8 +331,8 @@ const Team = () => {
               <i className="fas fa-chevron-left text-lg"></i>
             </button>
             
-            <span className="text-white font-mont text-lg px-4 py-2 bg-white/5 rounded-lg">
-              {currentIndex + 1}-{Math.min(currentIndex + visibleCards, teamMembers.length)} of {teamMembers.length}
+            <span className="text-white font-mont text-lg px-6 py-3 bg-white/5 rounded-lg">
+              Page {currentPage} of {totalPages} • Showing {visibleCards} members
             </span>
             
             <button
@@ -355,7 +353,7 @@ const Team = () => {
         >
           {visibleMemberCards.map((member, index) => (
             <TeamMemberCard
-              key={`${member.id}-${index}`}
+              key={`${member.id}-${currentIndex}-${index}`}
               {...member}
             />
           ))}
@@ -363,16 +361,16 @@ const Team = () => {
 
         {/* Carousel Indicators */}
         {teamMembers.length > visibleCards && (
-          <div className="flex justify-center mt-8 space-x-2">
-            {Array.from({ length: Math.ceil(teamMembers.length / visibleCards) }).map((_, index) => (
+          <div className="flex justify-center mt-8 space-x-3">
+            {Array.from({ length: totalPages }, (_, index) => (
               <button
                 key={index}
-                onClick={() => goToSlide(index * visibleCards)}
+                onClick={() => goToSlide(index)}
                 onMouseEnter={() => setAutoPlay(false)}
                 onMouseLeave={() => setAutoPlay(true)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  Math.floor(currentIndex / visibleCards) === index
-                    ? 'bg-indigo-400 w-8' 
+                className={`w-10 h-3 rounded-full transition-all duration-300 ${
+                  currentPage === index + 1
+                    ? 'bg-indigo-400 w-12' 
                     : 'bg-white/30 hover:bg-white/50'
                 }`}
               />
@@ -388,7 +386,7 @@ const Team = () => {
       {/* Background elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[#0e0e0eff]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-800/10 via-transparent to-transparent animate-pulse"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent animate-pulse" />
         <img
           className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
           src="images/landingimg.png"
