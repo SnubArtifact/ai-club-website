@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
- const API_BASE_URL = "https://aiclub-bitsp.dev/api";
-
+const API_BASE_URL = "https://aiclub-bitsp.dev/api";
 
 /* ---------------------- Pill Tag (purge-safe colors) ---------------------- */
 const COLOR = {
@@ -16,6 +15,7 @@ const Tag = ({ children, color = "indigo" }) => (
     {children}
   </span>
 );
+
 const DUMMY_IMAGES = [
   "https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1200&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop",
@@ -60,8 +60,8 @@ const ProjectCard = ({ project }) => {
         </div>
       </div>
 
- {/* Body */}
-<div className="p-6 flex flex-col flex-1">
+      {/* Body */}
+      <div className="p-6 flex flex-col flex-1">
         <h3 className="text-xl md:text-2xl font-semibold text-white mb-2">{title}</h3>
         <p className="text-white/75 leading-relaxed line-clamp-3 mb-4">{description}</p>
 
@@ -94,7 +94,7 @@ const ProjectCard = ({ project }) => {
         )}
 
         {/* Buttons */}
-  <div className="mt-auto pt-4 flex items-center gap-3">
+        <div className="mt-auto pt-4 flex items-center gap-3">
           {code_url && (
             <a
               href={code_url}
@@ -133,7 +133,7 @@ const Projects = () => {
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const cardsPerPage = 3; // 3 columns x 2 rows per "page" feel
+  const cardsPerPage = 3; // server-aligned via page_size
 
   // filters
   const [filters, setFilters] = useState({
@@ -143,101 +143,76 @@ const Projects = () => {
     ordering: "-created_at",
   });
 
-  // fetch (simulated)
-const fetchProjects = async (pageToFetch, currentFilters) => {
-  setPageTransition(true);
-  setLoading(true);
+  // API fetch (server pagination + filters)
+  const fetchProjects = async (pageToFetch, currentFilters) => {
+    setPageTransition(true);
+    setLoading(true);
 
-  try {
-    // Build server-side query (DRF-style)
-    const params = new URLSearchParams();
+    try {
+      const params = new URLSearchParams();
+      params.set("page", String(pageToFetch));
+      params.set("page_size", String(cardsPerPage));
 
-    // pagination
-    params.set("page", String(pageToFetch));
-    params.set("page_size", String(cardsPerPage)); // keep UI + API in sync
+      if (currentFilters.status) params.set("status", currentFilters.status);          // ?status=ongoing|completed|planned
+      if (currentFilters.technology) params.set("technology", currentFilters.technology); // ?technology=...
+      if (currentFilters.search) params.set("search", currentFilters.search);             // ?search=...
+      if (currentFilters.ordering) params.set("ordering", currentFilters.ordering);       // ?ordering=name|start_date|end_date|created_at
 
-    // filters (only send if present)
-    if (currentFilters.status) params.set("status", currentFilters.status);
-    if (currentFilters.technology) params.set("technology", currentFilters.technology);
-    if (currentFilters.search) params.set("search", currentFilters.search);
-    if (currentFilters.ordering) params.set("ordering", currentFilters.ordering);
+      const res = await fetch(`${API_BASE_URL}/projects/?${params.toString()}`, {
+        method: "GET",
+        headers: { Accept: "application/json" },
+      });
 
-    const res = await fetch(`${API_BASE_URL}/projects/?${params.toString()}`, {
-      method: "GET",
-      headers: { Accept: "application/json" },
-    });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
-    }
+      const data = await res.json();
 
-    const data = await res.json();
-
-    // Handle common response shapes:
-    // DRF: { count, next, previous, results: [...] }
-    // or a plain array: [...]
-    const rawList = Array.isArray(data?.results)
-      ? data.results
-      : Array.isArray(data)
-      ? data
-      : [];
-
-    // Normalize fields so ProjectCard keeps working
-    const normalized = rawList.map((p, i) => {
-      // robust image detection + fallback
-      const image =
-        p.image ||
-        p.image_url ||
-        p.cover ||
-        p.cover_image ||
-        p.thumbnail ||
-        `https://picsum.photos/seed/project-${p.id ?? `${pageToFetch}-${i}`}/1200/630`;
-
-      const technologies = Array.isArray(p.technologies)
-        ? p.technologies
-        : typeof p.technologies === "string"
-        ? p.technologies.split(",").map((s) => s.trim()).filter(Boolean)
+      const rawList = Array.isArray(data?.results)
+        ? data.results
+        : Array.isArray(data)
+        ? data
         : [];
 
-      const tags = Array.isArray(p.tags)
-        ? p.tags
-        : typeof p.tags === "string"
-        ? p.tags.split(",").map((s) => s.trim()).filter(Boolean)
-        : [];
-
-      return {
+      // Normalize minimal fields so cards render safely
+      const normalized = rawList.map((p, i) => ({
         id: p.id ?? `${pageToFetch}-${i}`,
         title: p.title ?? p.name ?? "Untitled Project",
         description: p.description ?? p.short_description ?? "",
-        technologies,
-        tags,
+        technologies: Array.isArray(p.technologies)
+          ? p.technologies
+          : typeof p.technologies === "string"
+          ? p.technologies.split(",").map((s) => s.trim()).filter(Boolean)
+          : [],
+        tags: Array.isArray(p.tags)
+          ? p.tags
+          : typeof p.tags === "string"
+          ? p.tags.split(",").map((s) => s.trim()).filter(Boolean)
+          : [],
         status: p.status ?? "",
         category: p.category ?? p.domain ?? "",
         featured: Boolean(p.featured),
-        image,
+        image: p.image || p.image_url || p.thumbnail || null, // we'll add hardcoded images later
         code_url: p.code_url ?? p.github_url ?? p.repo_url ?? "",
         demo_url: p.demo_url ?? p.live_url ?? p.preview_url ?? "",
         created_at: p.created_at ?? p.createdAt ?? p.date_created ?? null,
-      };
-    });
+        slug: p.slug ?? "",
+      }));
 
-    // Total pages (prefer server count if available)
-    const totalFromServer =
-      typeof data?.count === "number" ? Math.ceil(data.count / cardsPerPage) : 1;
+      // Total pages from server count (if present)
+      const pages = typeof data?.count === "number" ? Math.ceil(data.count / cardsPerPage) : 1;
 
-    setTotalPages(Math.max(1, totalFromServer));
-    setProjects(normalized);
-    setError(null);
-  } catch (e) {
-    console.error("Failed to fetch projects:", e);
-    setError("Failed to load project data.");
-    setProjects([]); // keep empty on error
-  } finally {
-    setLoading(false);
-    setTimeout(() => setPageTransition(false), 120);
-  }
-};
-
+      setTotalPages(Math.max(1, pages));
+      setProjects(normalized);
+      setError(null);
+    } catch (e) {
+      console.error("Failed to fetch projects:", e);
+      setError("Failed to load project data.");
+      setProjects([]);
+    } finally {
+      setLoading(false);
+      setTimeout(() => setPageTransition(false), 120);
+    }
+  };
 
   useEffect(() => {
     fetchProjects(currentPage, filters);
@@ -324,11 +299,9 @@ const fetchProjects = async (pageToFetch, currentFilters) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="text-center mb-6">
-          <h2 className="text-7xl font-mont font-semibold text-transparent bg-clip-text
-+                bg-gradient-to-r from-white to-indigo-200 hover:scale-105
-+                transition-transform duration-300 leading-[1.15] pb-1 mb-6">
-                Our Projects
-              </h2>
+          <h2 className="text-7xl font-mont font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200 hover:scale-105 transition-transform duration-300 leading-[1.15] pb-1 mb-6">
+            Our Projects
+          </h2>
         </div>
 
         {/* Filters */}
