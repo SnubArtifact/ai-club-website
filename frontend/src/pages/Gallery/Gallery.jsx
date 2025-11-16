@@ -88,7 +88,7 @@ const Gallery = () => {
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center mb-16">
-              <h1 className="text-7xl text-white bg-clip-text bg-gradient-to-r from-white to-amber-200 font-mont font-semibold mb-8 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-white bg-clip-text bg-gradient-to-r from-white to-amber-200 font-mont font-semibold mb-8 hover:scale-105 transition-transform duration-300">
                 Gallery
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">

@@ -30,7 +30,7 @@ const ResourceCard = ({ title, description, icon, link, tags, delay, type }) => 
       </div>
 
       {/* Content */}
-      <h3 className="text-xl text-white font-playfair font-semibold mb-3 group-hover:text-cyan-200 transition-colors duration-300">
+      <h3 className="text-xl text-white font-mont font-semibold mb-3 group-hover:text-cyan-200 transition-colors duration-300">
         {title}
       </h3>
       <p className="text-white/70 font-mont text-sm leading-relaxed mb-4">
@@ -61,7 +61,7 @@ const ResourceSection = ({ title, description, resources, delay }) => {
   return (
     <div className="animate-on-scroll opacity-0" style={{ animationDelay: delay }}>
       <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
-        <h3 className="text-2xl text-white font-nata font-semibold mb-3">
+        <h3 className="text-2xl text-white font-mont font-semibold mb-3">
           {title}
         </h3>
         <p className="text-white/70 font-mont mb-6 leading-relaxed">
@@ -197,14 +197,14 @@ const Resources = () => {
   ]
 
   return (
-    <div id="resources" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
+    <div id="resources" ref={containerRef} className="min-h-screen relative bg-black overflow-visible">
       {/* Background with parallax effect */}
       <div className="absolute inset-0 bg-[#0e0e0eff] z-0"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent animate-pulse"></div>
-      <img 
-        className="w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s]"
-        src="images/landingimg.png" 
-        alt="Resources Background" 
+      <img
+        className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s] z-0"
+        src="images/landingimg.png"
+        alt="Resources Background"
         loading="lazy"
       />
 
@@ -216,12 +216,12 @@ const Resources = () => {
       </div>
       
       {/* Content */}
-      <div className="absolute inset-0 flex items-center justify-center py-20">
+      <div className="relative flex items-start justify-center py-12 z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center mb-16">
-              <h1 className="text-7xl text-white bg-clip-text bg-gradient-to-r from-white to-amber-200 font-mont font-semibold mb-8 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-white bg-clip-text bg-gradient-to-r from-white to-amber-200 font-mont font-semibold mb-8 hover:scale-105 transition-transform duration-300">
                 Resources
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">

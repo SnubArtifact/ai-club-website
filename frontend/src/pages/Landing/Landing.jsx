@@ -84,7 +84,7 @@ const Landing = () => {
       {/* Set base background to black and apply CSS variables for spotlight effect */}
       <div 
         id="home" 
-        className="h-[100vh] w-full relative overflow-hidden bg-black"
+        className="min-h-screen w-full relative overflow-visible bg-black"
         style={{ '--x': `${mousePosition.x}%`, '--y': `${mousePosition.y}%` }}
       >
         
@@ -98,7 +98,7 @@ const Landing = () => {
         */}
         
         {/* Professional Events Carousel (z-index 40 ensures it's above the spotlight overlay) */}
-        <div className="absolute top-1/2 left-1/2 transform translate-x-1/2 -translate-y-[45%] z-40 w-full max-w-md px-4">
+  <div className="hidden md:block absolute top-1/2 left-1/2 transform translate-x-1/2 -translate-y-[45%] z-40 w-full max-w-md px-4">
           <div 
             key={currentEvent.id} // Key change forces component re-mount for animation
             className="animate-fadeInRight animation-delay-1s" 
@@ -270,40 +270,40 @@ const Landing = () => {
         </div>
 
         {/* Main content section (z-index 20 ensures it's above the spotlight overlay) */}
-        <div className="absolute inset-0 flex items-center z-20">
+        <div className=" translate-y-1/2 relative z-20 py-12">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl ml-20 space-y-8">
+            <div className="max-w-4xl ml-0 sm:ml-20 space-y-8">
               
               {/* Main heading */}
               <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.2s' }}>
-                <h1 className="text-9xl bg-clip-text bg-gradient-to-r from-white via-purple-200 to-indigo-200 font-nabla hover:scale-105 transition-transform duration-500 animate-text-shadow-pulse">
+                <h1 className=" site-h1 bg-clip-text bg-gradient-to-r from-white via-purple-200 to-indigo-200 font-nabla hover:scale-105 transition-transform duration-500 animate-text-shadow-pulse">
                   AI Club
                 </h1>
               </div>
 
               {/* Institution name */}
               <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.4s' }}>
-                <h2 className="text-4xl text-white/90 font-mont tracking-wide">
+                <h2 className="site-h2 text-white/90 tracking-wide">
                   BITS Pilani, Pilani Campus
                 </h2>
               </div>
 
               {/* Description */}
               <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.6s' }}>
-                <p className="text-2xl text-white/85 font-mont max-w-2xl leading-relaxed">
+                <p className="text-base sm:text-lg md:text-2xl text-white/85 font-mont max-w-2xl leading-relaxed">
                   Pioneering the future of artificial intelligence through innovation, 
                   collaboration, and cutting-edge research.
                 </p>
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex gap-6 mt-12 animate-fadeInUp opacity-0" style={{ animationDelay: '0.8s' }}>
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-8 sm:mt-12 animate-fadeInUp opacity-0" style={{ animationDelay: '0.8s' }}>
                 <button
                   onClick={scrollToAbout}
-                  className="px-10 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-mont font-semibold rounded-xl 
+                  className="px-6 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-mont font-semibold rounded-xl 
                             hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 
                             shadow-2xl hover:shadow-purple-500/30 hover:-translate-y-1 hover:scale-105
-                            flex items-center gap-3 group"
+                            flex items-center gap-3 group w-full sm:w-auto text-sm sm:text-base"
                 >
                   <i className="fas fa-rocket group-hover:rotate-12 transition-transform duration-300"></i>
                   Explore More
@@ -311,10 +311,10 @@ const Landing = () => {
 
                 <a
                   href="#contact"
-                  className="px-10 py-4 bg-white/10 backdrop-blur-sm text-white font-mont font-semibold rounded-xl
+                  className="px-6 sm:px-10 py-3 sm:py-4 bg-white/10 backdrop-blur-sm text-white font-mont font-semibold rounded-xl
                             border border-white/20 hover:bg-white/20 transition-all duration-300
                             shadow-2xl hover:shadow-white/20 hover:-translate-y-1 hover:scale-105
-                            flex items-center gap-3 group"
+                            flex items-center gap-3 group text-sm sm:text-base w-full sm:w-auto"
                 >
                   <i className="fas fa-users group-hover:scale-110 transition-transform duration-300"></i>
                   Join Now

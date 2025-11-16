@@ -8,11 +8,11 @@ const API_BASE_URL = 'https://aiclub-bitsp.dev/api';
 const TeamMemberCard = ({ name, position, image, socials, batch, isActive }) => {
   return (
     <div
-      className={`flex-shrink-0 w-80 mx-3 transition-all duration-500 transform ${
+      className={`flex-shrink-0 w-full max-w-xs sm:w-72 md:w-80 mx-3 transition-all duration-500 transform ${
         isActive ? "scale-105 opacity-100" : "scale-95 opacity-70"
       } hover:scale-105 hover:opacity-100`}
     >
-      <div className="relative flex flex-col justify-between bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-[2px] border border-white/10 hover:border-indigo-400/40 shadow-lg hover:shadow-indigo-400/20 transition-all duration-500 group h-[480px]">
+          <div className="relative flex flex-col justify-between bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-[2px] border border-white/10 hover:border-indigo-400/40 shadow-lg hover:shadow-indigo-400/20 transition-all duration-500 group h-auto sm:h-[480px]">
         
         {/* Outer Glow Animation */}
         <div className="absolute inset-0 rounded-2xl bg-[linear-gradient(120deg,#6366f1,#a855f7,#6366f1)] bg-[length:200%_200%] opacity-0 group-hover:opacity-40 blur-xl animate-gradient-move"></div>
@@ -21,7 +21,7 @@ const TeamMemberCard = ({ name, position, image, socials, batch, isActive }) => 
         <div className="relative z-10 flex flex-col justify-between items-center bg-black/70 rounded-2xl p-6 h-full">
           
           {/* Image */}
-          <div className="relative w-60 h-60 rounded-full overflow-hidden border-4 border-indigo-400/40 shadow-[0_0_20px_rgba(99,102,241,0.4)] group-hover:border-indigo-300 transition-all duration-500">
+          <div className="relative w-40 h-40 sm:w-60 sm:h-60 rounded-full overflow-hidden border-4 border-indigo-400/40 shadow-[0_0_20px_rgba(99,102,241,0.4)] group-hover:border-indigo-300 transition-all duration-500">
             <img
               src={image}
               alt={name}
@@ -382,7 +382,7 @@ const formattedMembers = allMembers.map(member => {
         {/* Carousel */}
         <div 
           ref={carouselRef}
-          className="flex items-center justify-center transition-transform duration-500 ease-out"
+          className="flex flex-wrap items-center justify-center gap-4 transition-transform duration-500 ease-out"
         >
           {visibleMemberCards.map((member, index) => (
             <TeamMemberCard
@@ -433,7 +433,7 @@ const formattedMembers = allMembers.map(member => {
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
             <div className="text-center mb-16">
-              <h1 className="text-7xl hover:scale-105 transition-all duration-300 text-transparent translate-y-2 bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-mont font-semibold mb-8">
+              <h1 className="site-h1 hover:scale-105 transition-all duration-300 text-transparent translate-y-2 bg-clip-text bg-gradient-to-r from-white to-indigo-200 font-mont mb-8">
                 Our Team
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">

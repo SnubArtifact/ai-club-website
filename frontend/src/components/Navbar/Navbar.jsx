@@ -55,7 +55,7 @@ const Navbar = () => {
             </div>
 
            
-            <div className="md:hidden">
+            <div className=" translate-x-10 md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="p-2 rounded-full text-gray-200 hover:text-white hover:bg-white/5 focus:outline-none transition-all duration-200 font-mont"

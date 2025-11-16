@@ -42,7 +42,7 @@ const ProjectCard = ({ project }) => {
                  transition-all duration-300 overflow-hidden"
     >
       {/* Image header */}
-      <div className="relative h-52 w-full overflow-hidden">
+  <div className="relative h-40 md:h-52 w-full overflow-hidden">
         <img
           src={image || `https://picsum.photos/seed/project-${project.id}/1200/630`}
           alt={title}
@@ -359,7 +359,7 @@ let normalized = raw.map((p, i) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="text-center mb-6">
-          <h2 className="text-7xl font-mont font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200 hover:scale-105 transition-transform duration-300 leading-[1.15] pb-1 mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-mont font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200 hover:scale-105 transition-transform duration-300 leading-[1.15] pb-1 mb-6">
             Our Projects
           </h2>
         </div>

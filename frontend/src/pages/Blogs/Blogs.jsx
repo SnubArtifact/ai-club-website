@@ -53,7 +53,7 @@ const BlogPost = ({ title, excerpt, author, date, tags, image, readTime, delay }
       </div>
 
       {/* Title */}
-      <h3 className="text-2xl text-white font-playfair font-semibold mb-3 group-hover:text-rose-200 transition-colors duration-300">
+      <h3 className="text-2xl text-white font-mont font-semibold mb-3 group-hover:text-rose-200 transition-colors duration-300">
         {title}
       </h3>
 
@@ -247,7 +247,7 @@ const fetchBlogPosts = async () => {
           <div className="max-w-6xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center mb-16">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-rose-200 font-young font-bold mb-8 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-rose-200 font-mont font-bold mb-8 hover:scale-105 transition-transform duration-300">
                 Blogs
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">
