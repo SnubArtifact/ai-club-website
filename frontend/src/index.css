@@ -166,8 +166,8 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  /* Use block layout to avoid constraining page width on small screens */
+  display: block;
   min-width: 320px;
   min-height: 100vh;
 }
