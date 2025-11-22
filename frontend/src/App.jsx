@@ -7,6 +7,8 @@ import Resources from "./pages/Resources/Resources";
 import Gallery from "./pages/Gallery/Gallery";
 import ContactUs from "./pages/Contact/ContactUs";
 import Footer from "./components/Footer/Footer";
+import Faculty from "./pages/Faculty/Faculty";
+import Blogs from "./pages/Blogs/Blogs";
 
 function App() {
   useEffect(() => {
