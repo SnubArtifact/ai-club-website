@@ -19,9 +19,11 @@ function App() {
       <main className="w-full overflow-x-hidden">
         <Landing />
         <AboutUs />
+        <Faculty />
         <Team />
         <Projects />
         <Resources />
+        <Blogs />
         <Gallery />
         <ContactUs />
       </main>
