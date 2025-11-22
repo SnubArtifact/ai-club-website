@@ -286,7 +286,7 @@ const Blogs = () => {
   const currentBlogs = filtered.slice(start, start + cardsPerPage);
 
   return (
-    <section className="relative w-full bg-black overflow-x-hidden pt-40 pb-24">
+    <section id="blogs" className="relative w-full bg-black overflow-x-hidden pt-40 pb-24">
       {/* Heading */}
       <div className="text-center mb-12">
         <h1 className="text-5xl md:text-6xl font-semibold text-white mb-3">
