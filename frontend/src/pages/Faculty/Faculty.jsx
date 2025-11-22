@@ -48,9 +48,6 @@ const Faculty = () => {
               <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200 hover:scale-105 transition-all duration-300 font-mont font-semibold mb-6">
                 Faculty in Charge
               </h1>
-              <p className="text-white/80 text-xl font-mont">
-                Meet the founder of AI Club BITS Pilani
-              </p>
             </div>
 
             {/* Founder Card */}
@@ -77,52 +74,17 @@ const Faculty = () => {
                     <h2 className="text-3xl sm:text-4xl text-white font-mont font-semibold mb-2">
                       Dhruv Kumar
                     </h2>
-                    <p className="text-violet-200 font-mont text-lg">
-                      Founder, AI Club BITS Pilani
-                    </p>
+
                   </div>
 
                   <p className="text-white/80 font-mont leading-relaxed text-sm sm:text-base">
-                    Dhruv Kumar founded the AI Club at BITS Pilani to create a collaborative
+                    Dhruv Kumar guided the AI Club at BITS Pilani to create a collaborative
                     ecosystem for students passionate about AI, machine learning, and modern
                     computing. His vision built one of the strongest tech communities on
                     campus, empowering students through workshops, projects, research, and a
                     culture of curiosity and innovation.
                   </p>
 
-    {/* Skills Heading */}
-<div>
-  <h3 className="text-white font-mont font-semibold text-lg mb-2">
-    Skills
-  </h3>
-
-  <div className="flex flex-wrap gap-2">
-    <span className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs sm:text-sm text-white font-mont">
-      Artificial Intelligence
-    </span>
-    <span className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs sm:text-sm text-white font-mont">
-      Leadership
-    </span>
-    <span className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs sm:text-sm text-white font-mont">
-      Community Building
-    </span>
-  </div>
-</div>
-
-                  <div className="grid grid-cols-2 gap-4 text-sm sm:text-base">
-                    <div className="bg-white/5 rounded-lg p-4">
-                      <p className="text-white/60 font-mont text-xs uppercase tracking-wide mb-1">
-                        Batch
-                      </p>
-                      <p className="text-white font-mont font-medium">2010–2014</p>
-                    </div>
-                    <div className="bg-white/5 rounded-lg p-4">
-                      <p className="text-white/60 font-mont text-xs uppercase tracking-wide mb-1">
-                        Institute
-                      </p>
-                      <p className="text-white font-mont font-medium">BITS Pilani</p>
-                    </div>
-                  </div>
 
                 </div>
               </div>
