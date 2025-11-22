@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 const Faculty = () => {
   const containerRef = useRef(null);
@@ -8,7 +8,7 @@ const Faculty = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fadeIn');
+            entry.target.classList.add("animate-fadeIn");
           }
         });
       },
@@ -16,7 +16,7 @@ const Faculty = () => {
     );
 
     if (containerRef.current) {
-      const elements = containerRef.current.querySelectorAll('.animate-on-scroll');
+      const elements = containerRef.current.querySelectorAll(".animate-on-scroll");
       elements.forEach((el) => observer.observe(el));
     }
 
@@ -39,22 +39,19 @@ const Faculty = () => {
       />
 
       {/* Content */}
-<div className="relative z-10 min-h-screen pt-10 pb-20">
-  <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="max-w-5xl mx-auto">
-
-      {/* Title */}
-      <div className="animate-on-scroll opacity-0 text-center mb-12">
-        <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200 hover:scale-105 transition-all duration-300 font-mont font-semibold mb-6">
-          Faculty in Charge
-        </h1>
-      </div>
-
+      <div className="relative z-10 min-h-screen pt-20 pb-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto">
+            {/* Title */}
+            <div className="animate-on-scroll opacity-0 text-center mb-12">
+              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200 hover:scale-105 transition-all duration-300 font-mont font-semibold mb-6">
+                Faculty in Charge
+              </h1>
+            </div>
 
             {/* Founder Card */}
             <div className="animate-on-scroll opacity-0 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-
                 {/* Photo */}
                 <div className="flex justify-center">
                   <div className="relative w-64 h-64 sm:w-72 sm:h-72">
@@ -73,9 +70,8 @@ const Faculty = () => {
                 <div className="space-y-5">
                   <div>
                     <h2 className="text-3xl sm:text-4xl text-white font-mont font-semibold mb-2">
-                      Dhruv Kumar
+                      Prof. Dhruv Kumar
                     </h2>
-
                   </div>
 
                   <p className="text-white/80 font-mont leading-relaxed text-sm sm:text-base">
@@ -86,11 +82,30 @@ const Faculty = () => {
                     culture of curiosity and innovation.
                   </p>
 
-
+                  {/* Links */}
+                  <div className="flex flex-wrap gap-3 pt-2">
+                    <a
+                      href="https://kudhru.github.io/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-4 py-2 rounded-full bg-white/10 border border-white/30 text-white/90 text-sm font-mont hover:bg-white/20 hover:-translate-y-0.5 transition-all duration-200"
+                    >
+                      Personal Website
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/dhruv-kumar-87082b335/?originalSubdomain=in"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-4 py-2 rounded-full bg-blue-500/20 border border-blue-400/50 text-blue-100 text-sm font-mont hover:bg-blue-500/30 hover:-translate-y-0.5 transition-all duration-200"
+                    >
+                      LinkedIn Profile
+                    </a>
+                  </div>
                 </div>
+                {/* End Founder Info */}
               </div>
             </div>
-
+            {/* End Founder Card */}
           </div>
         </div>
       </div>
@@ -98,4 +113,4 @@ const Faculty = () => {
   );
 };
 
-export default Faculty; 
+export default Faculty;
