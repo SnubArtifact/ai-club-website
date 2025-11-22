@@ -1,400 +1,458 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 
-const API_BASE_URL = 'https://aiclub-bitsp.dev/api';
+const API_BASE_URL = "https://aiclub-bitsp.dev/api";
 
-/**
- * Renders a single SMALLER Project Card.
- */
-const ProjectCard = ({ title, description, tags, delay, status }) => {
-  const statusColors = {
-    ongoing: 'bg-yellow-500/20 text-yellow-300',
-    completed: 'bg-green-500/20 text-green-300',
-    planned: 'bg-blue-500/20 text-blue-300'
-  };
+/* ---------------------- Pill Tag (purge-safe colors) ---------------------- */
+const COLOR = {
+  indigo: "bg-indigo-500/15 text-indigo-200 border border-indigo-400/30",
+  pink: "bg-pink-500/15 text-pink-200 border border-pink-400/30",
+  violet: "bg-violet-500/15 text-violet-200 border border-violet-400/30",
+  cyan: "bg-cyan-500/15 text-cyan-200 border border-cyan-400/30",
+};
 
-  // Ensure tags is always an array
-  const safeTags = Array.isArray(tags) ? tags : [];
+const Tag = ({ children, color = "indigo" }) => (
+  <span
+    className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+      COLOR[color] || COLOR.indigo
+    }`}
+  >
+    {children}
+  </span>
+);
+
+/* ----------------------------- Project Card ------------------------------ */
+const ProjectCard = ({ project }) => {
+  const {
+    title,
+    description,
+    technologies = [],
+    tags = [],
+    image,
+    category, // e.g., "IoT", "Computer Vision"
+    featured, // boolean
+    code_url, // string
+    demo_url, // string
+  } = project;
 
   return (
-    <div
-      className="animate-on-scroll opacity-0 bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 transform hover:scale-105 transition-all duration-300 hover:bg-white/10 hover:shadow-lg hover:shadow-cyan-500/10 group flex flex-col justify-between cursor-pointer h-full"
-      style={{ animationDelay: delay }}
+    <article
+      className="group relative h-full flex flex-col rounded-2xl bg-white/5 border border-white/10
+                 shadow-[0_10px_40px_-10px_rgba(0,0,0,.6)]
+                 hover:border-indigo-400/30 hover:shadow-indigo-500/20
+                 transition-all duration-300 overflow-hidden"
     >
-      <div>
-        {/* Status Badge */}
-        {status && (
-          <span className={`inline-block px-2 py-1 rounded-full text-xs font-mont mb-2 ${statusColors[status] || 'bg-gray-500/20 text-gray-300'}`}>
-            {status?.charAt(0).toUpperCase() + status?.slice(1)}
-          </span>
-        )}
-        
-        {/* Project Title */}
-        <h3 className="text-xl text-white font-young font-semibold mb-2 group-hover:text-cyan-200 transition-colors duration-300">
-          {title}
-        </h3>
-        
-        {/* Project Description */}
-        <p className="text-white/80 font-mont text-sm mb-3 leading-relaxed line-clamp-3">
-          {description}
-        </p>
+      {/* Image header */}
+  <div className="relative h-40 md:h-52 w-full overflow-hidden">
+        <img
+          src={image || `https://picsum.photos/seed/project-${project.id}/1200/630`}
+          alt={title}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          loading="lazy"
+        />
+        <div className="absolute top-3 left-3 flex gap-2">
+          {category && <Tag>{category}</Tag>}
+          {featured && <Tag color="pink">Featured</Tag>}
+        </div>
       </div>
 
-      {/* Tags */}
-      {safeTags.length > 0 && (
-        <div className="flex flex-wrap gap-1 mt-auto pt-2 border-t border-white/5">
-          {safeTags.map((tag, index) => (
-            <span
-              key={index}
-              className="px-2 py-0.5 bg-white/5 rounded-full text-xs text-white/90 font-mont hover:bg-cyan-500/20 hover:text-cyan-200 transition-all duration-300 cursor-default"
+      {/* Body */}
+      <div className="p-6 flex flex-col flex-1">
+        <h3 className="text-xl md:text-2xl font-semibold text-white mb-2">{title}</h3>
+        {}
+{project.status && (
+  <span
+    className={`self-start text-[0.7rem] font-medium px-2 py-[1px] mb-3 rounded-full border whitespace-nowrap leading-none ${
+      project.status === "ongoing"
+        ? "bg-emerald-500/15 text-emerald-300 border-emerald-400/30"
+        : project.status === "completed"
+        ? "bg-blue-500/15 text-blue-200 border-blue-400/30"
+        : project.status === "planned"
+        ? "bg-yellow-500/15 text-yellow-200 border-yellow-400/30"
+        : "bg-white/10 text-white/70 border-white/20"
+    }`}
+  >
+    {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
+  </span>
+)}
+
+        <p className="text-white/75 leading-relaxed line-clamp-3 mb-4">{description}</p>
+
+        {/* Tech Stack */}
+        {technologies.length > 0 && (
+          <>
+            <p className="text-white/80 text-sm font-medium mb-2">Tech Stack:</p>
+            <div className="mb-4 flex flex-wrap gap-2">
+              {technologies.map((t, i) => (
+                <span
+                  key={i}
+                  className="px-2.5 py-1 rounded-lg text-xs bg-indigo-500/15 text-indigo-200 border border-indigo-400/30"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Tags */}
+        {tags.length > 0 && (
+          <div className="mb-5 flex flex-wrap gap-2">
+            {tags.map((tg, i) => (
+              <span key={i} className="px-2 py-1 rounded-full text-xs bg-white/10 text-white/75">
+                #{tg}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Buttons */}
+        <div className="mt-auto pt-4 flex items-center gap-3">
+          {code_url && (
+            <a
+              href={code_url}
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 text-center px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white hover:bg-white/20 transition"
             >
-              {tag}
-            </span>
-          ))}
+              Code
+            </a>
+          )}
+          {demo_url && (
+            <a
+              href={demo_url}
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 text-center px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition"
+            >
+              Demo
+            </a>
+          )}
         </div>
-      )}
-    </div>
-  )
-}
+      </div>
+    </article>
+  );
+};
 
-// ------------------------------------------------------------------
-
-/**
- * Projects component with advanced filtering and API integration.
- */
+/* ----------------------------- Projects Page ----------------------------- */
 const Projects = () => {
   const containerRef = useRef(null);
+
   const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [pageTransition, setPageTransition] = useState(false);
   const [error, setError] = useState(null);
-  
-  // State for pagination
+
+  // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const pageSize = 12;
+  const cardsPerPage = 3; // server-aligned via page_size
 
-  // State for filters and ordering
+  // filters
   const [filters, setFilters] = useState({
-    status: '', // 'ongoing', 'completed', 'planned', or ''
-    technology: '',
-    search: '',
-    ordering: '-created_at' // Default: newest first
+    status: "",
+    technology: "",
+    search: "",
+    ordering: "-created_at",
   });
 
-  // Build API URL with filters and pagination
-  const buildApiUrl = (page, currentFilters) => {
+  // -------- Robust API fetch that auto-recovers on common backend differences
+const fetchProjects = async (pageToFetch, currentFilters) => {
+  setPageTransition(true);
+  setLoading(true);
+
+  try {
     const params = new URLSearchParams();
-    
-    // Add pagination
-    params.append('page', page);
-    params.append('page_size', pageSize);
-    
-    // Add filters
-    if (currentFilters.status) {
-      params.append('status', currentFilters.status);
-    }
-    if (currentFilters.technology) {
-      params.append('technology', currentFilters.technology);
-    }
-    if (currentFilters.search) {
-      params.append('search', currentFilters.search);
-    }
-    if (currentFilters.ordering) {
-      params.append('ordering', currentFilters.ordering);
-    }
-    
-    return `${API_BASE_URL}/projects/?${params.toString()}`;
-  };
 
-  // Function to fetch data
-  const fetchProjects = async (pageToFetch, currentFilters) => {
-    setLoading(true);
+    // filters the API actually supports
+    if (currentFilters.status) params.set("status", currentFilters.status);
+    if (currentFilters.technology) params.set("technology", currentFilters.technology);
+    if (currentFilters.search) params.set("search", currentFilters.search);
+
+    // API doc shows ?ordering=field (no minus). If UI sends "-field",
+    // we send "field" and reverse locally afterwards.
+    const orderRaw = currentFilters.ordering || "created_at";
+    const orderField = orderRaw.replace(/^-/, "");
+    const isDesc = orderRaw.startsWith("-");
+    params.set("ordering", orderField);
+
+    const res = await fetch(`${API_BASE_URL}/projects/${params.toString() ? `?${params}` : ""}`, {
+      headers: { Accept: "application/json" },
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const data = await res.json();
+    const raw = Array.isArray(data?.results) ? data.results : Array.isArray(data) ? data : [];
+let normalized = raw.map((p, i) => {
+  // Handle technologies_used and tech_stack fields
+  const techArray =
+    Array.isArray(p.technologies)
+      ? p.technologies
+      : typeof p.technologies_used === "string"
+      ? p.technologies_used.split(",").map(s => s.trim()).filter(Boolean)
+      : typeof p.technologies === "string"
+      ? p.technologies.split(",").map(s => s.trim()).filter(Boolean)
+      : [];
+
+  return {
+    id: p.id ?? i + 1,
+    slug: p.slug ?? p.Slug ?? "", // ✅ handle both lowercase/uppercase
+    title: p.title ?? p.name ?? "Untitled Project",
+    description:
+      p.description ??
+      p.short_description ??
+      p.tagline ??
+      "No description provided.",
+    technologies: techArray,
+    tech_stack: p.tech_stack ?? "", // ✅ capture long-form stack
+    tags: Array.isArray(p.tags)
+      ? p.tags
+      : typeof p.tags === "string"
+      ? p.tags.split(",").map(s => s.trim()).filter(Boolean)
+      : [],
+    status: p.status ?? "",
+    category: p.category ?? p.domain ?? "",
+    featured: Boolean(p.featured ?? p.is_featured),
+    image:
+      p.image ||
+      p.heroSectionImageLink ||
+      p.image_url ||
+      p.thumbnail ||
+      null,
+    code_url:
+      p.code_url ??
+      p.github_url ??
+      p.github_link ??
+      p.repo_url ??
+      "",
+    demo_url:
+      p.demo_url ??
+      p.demo_link ??
+      p.live_url ??
+      p.preview_url ??
+      "",
+    created_at: p.created_at ?? p.createdAt ?? p.date_created ?? null,
+    start_date: p.start_date ?? null,
+    end_date: p.end_date ?? null,
+  };
+});
+
+
+    // If UI asked for descending (e.g., "-created_at"), reverse locally.
+    if (isDesc) normalized = [...normalized].reverse();
+
+    // client-side pagination
+    const total = normalized.length;
+    const totalPagesLocal = Math.max(1, Math.ceil(total / cardsPerPage));
+    setTotalPages(totalPagesLocal);
+
+    const start = (pageToFetch - 1) * cardsPerPage;
+    const end = start + cardsPerPage;
+    setProjects(normalized.slice(start, end));
+
+    // clamp page if it went out of range after filter change
+    if (pageToFetch > totalPagesLocal) {
+      setCurrentPage(1);
+    }
+
     setError(null);
-    try {
-      const apiURL = buildApiUrl(pageToFetch, currentFilters);
-      console.log('Fetching from:', apiURL);
-      
-      const response = await fetch(apiURL);
-      
-      if (!response.ok) {
-        const errorText = await response.text(); 
-        throw new Error(`HTTP error! status: ${response.status} - ${errorText || 'Unknown Error'}`);
-      }
-      
-      const rawData = await response.json();
-      
-      const projectsArray = rawData.results || rawData; 
-      const totalCount = rawData.count || projectsArray.length; 
-      
-      // Calculate total pages based on count
-      if (rawData.count) {
-        setTotalPages(Math.ceil(totalCount / (rawData.page_size || pageSize)));
-      } else {
-        setTotalPages(1); 
-      }
+  } catch (e) {
+    console.error("Failed to fetch projects:", e);
+    setError("Failed to load project data.");
+    setProjects([]);
+    setTotalPages(1);
+  } finally {
+    setLoading(false);
+    setTimeout(() => setPageTransition(false), 120);
+  }
+};
 
-      if (!Array.isArray(projectsArray)) {
-        console.error("API response did not contain a list of projects:", rawData);
-        throw new TypeError("Received data is not a list of projects.");
-      }
-      
-      // Format projects with safe tag handling
-      const formattedProjects = projectsArray.map(project => {
-        // Handle tags - ensure it's always an array
-        let tagsArray = [];
-        if (Array.isArray(project.technologies)) {
-          tagsArray = project.technologies;
-        } else if (Array.isArray(project.tags)) {
-          tagsArray = project.tags;
-        } else if (project.slug) {
-          tagsArray = [project.slug];
-        } else if (typeof project.technologies === 'string') {
-          tagsArray = project.technologies.split(',').map(tag => tag.trim());
-        }
-        
-        return {
-          id: project.id,
-          title: project.name || project.title,
-          description: project.short_description || project.description || (project.full_description?.substring(0, 150) + '...' || 'No description provided.'), 
-          tags: tagsArray,
-          status: project.status,
-          start_date: project.start_date,
-          end_date: project.end_date,
-          created_at: project.created_at
-        };
-      });
-      
-      setProjects(formattedProjects);
-      
-    } catch (e) {
-      console.error("Failed to fetch projects:", e);
-      setError(`Failed to load project data. Error: ${e.message.includes('HTTP error!') ? e.message.split(' - ')[0] : e.message}`);
-    } finally {
-      setLoading(false);
-      // Scroll to the top of the content area on page/filter change
-      containerRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  useEffect(() => {
+    fetchProjects(currentPage, filters);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, filters]);
 
-  // Handler for pagination button clicks
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-    }
-  };
+  useEffect(() => {
+    if (!containerRef.current || loading) return;
+    const obs = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => e.isIntersecting && e.target.classList.add("animate-fadeIn")),
+      { threshold: 0.12 }
+    );
+    containerRef.current.querySelectorAll(".animate-on-scroll").forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, [projects, loading]);
 
-  // Handler for filter changes
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setFilters(prev => ({ ...prev, [name]: value }));
-    setCurrentPage(1); // Reset to first page when filters change
-  };
-
-  // Handler for clearing filters
-  const clearFilters = () => {
-    setFilters({
-      status: '',
-      technology: '',
-      search: '',
-      ordering: '-created_at'
-    });
+    setFilters((prev) => ({ ...prev, [name]: value }));
     setCurrentPage(1);
   };
 
-  // Effect for Data Fetching: Runs on mount and whenever currentPage or filters change
-  useEffect(() => {
-    fetchProjects(currentPage, filters);
-  }, [currentPage, filters]); 
+  const clearFilters = () => {
+    setFilters({ status: "", technology: "", search: "", ordering: "-created_at" });
+    setCurrentPage(1);
+  };
 
-  // Effect for Intersection Observer
-  useEffect(() => {
-    if (!containerRef.current || loading) return;
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages && !pageTransition) setCurrentPage(page);
+  };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fadeIn');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = containerRef.current.querySelectorAll('.animate-on-scroll');
-    elements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, [projects]); 
-
-  // --- Render Logic ---
-  let content;
-
-  if (loading) {
-     content = (
-      <div className="text-center py-20 col-span-full">
-        <p className="text-white text-xl">Loading projects...</p>
-        <div className="mt-4 w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
-      </div>
-    );
-  } else if (error) {
-    content = (
-      <div className="text-center py-20 col-span-full">
-        <p className="text-red-400 text-xl font-bold">{error}</p>
-        <p className="text-white/70 mt-2">Check your API status or CORS settings.</p>
-        <button 
+  // grid content
+  const grid = loading ? (
+    <div className="text-center py-20">
+      <div className="mx-auto w-16 h-16 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+      <p className="text-white text-xl mt-6">Loading projects...</p>
+    </div>
+  ) : error ? (
+    <div className="text-center py-20">
+      <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-8 max-w-md mx-auto">
+        <p className="text-red-400 text-xl font-bold mb-3">Error Loading Projects</p>
+        <p className="text-white/70 mb-6">{error}</p>
+        <button
           onClick={() => fetchProjects(currentPage, filters)}
-          className="mt-4 px-6 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors duration-300"
+          className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition"
         >
-          Retry
+          Try Again
         </button>
       </div>
-    );
-  } else if (projects.length === 0) {
-    content = (
-      <div className="text-center py-20 col-span-full">
-        <p className="text-cyan-300 text-xl mb-4">No projects found matching your criteria.</p>
-        <button 
+    </div>
+  ) : projects.length === 0 ? (
+    <div className="text-center py-20">
+      <div className="bg-white/5 border border-white/10 rounded-2xl p-8 max-w-md mx-auto">
+        <p className="text-indigo-300 text-xl mb-2">No projects found</p>
+        <p className="text-white/70 mb-6">Try adjusting filters or search terms.</p>
+        <button
           onClick={clearFilters}
-          className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20 transition-colors duration-300"
+          className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20 transition"
         >
           Clear Filters
         </button>
       </div>
-    );
-  } else {
-    content = (
-      <div className="animate-on-scroll opacity-0 w-full" style={{ animationDelay: '0.4s' }}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"> 
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={project.id || project.title || index} 
-              title={project.title}
-              description={project.description}
-              tags={project.tags}
-              status={project.status}
-              delay={`${0.1 + index * 0.05}s`}
-            />
-          ))}
-        </div>
+    </div>
+  ) : (
+    <div
+      className={`transition duration-500 ${
+        pageTransition ? "opacity-0 scale-[0.99]" : "opacity-100 scale-100"
+      }`}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
+        {projects.map((p) => (
+          <ProjectCard key={p.id} project={p} />
+        ))}
       </div>
-    );
-  }
-
-  // Pagination Controls Component
-  const PaginationControls = () => (
-    <div className="flex justify-center items-center mt-12 space-x-4">
-      <button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 1 || loading}
-        className="px-4 py-2 bg-white/10 text-white rounded-lg disabled:opacity-50 hover:bg-white/20 transition-colors duration-200 font-mont"
-      >
-        Previous
-      </button>
-      
-      <span className="text-white font-mont text-lg">
-        Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
-      </span>
-      
-      <button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage === totalPages || loading}
-        className="px-4 py-2 bg-white/10 text-white rounded-lg disabled:opacity-50 hover:bg-white/20 transition-colors duration-200 font-mont"
-      >
-        Next
-      </button>
     </div>
   );
 
   return (
-    <div id="projects" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden w-full">
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-[#2b1c54] z-0"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-500/10 via-transparent to-transparent animate-pulse"></div>
-      <img
-        className="w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105"
-        src="images/landingimg.png"
-        alt="Projects Background"
-        loading="lazy"
-      />
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="floating-element w-32 h-32 absolute top-1/4 left-1/4 opacity-10 bg-cyan-500 rounded-full blur-3xl"></div>
-        <div className="floating-element w-40 h-40 absolute bottom-1/3 right-1/4 opacity-10 bg-blue-500 rounded-full blur-3xl delay-1000"></div>
-        <div className="floating-element w-28 h-28 absolute top-1/2 right-1/3 opacity-10 bg-teal-500 rounded-full blur-3xl delay-500"></div>
+    <section
+      id="projects"
+      ref={containerRef}
+      className="relative w-full bg-black overflow-hidden py-20 md:py-28"
+    >
+      {/* Decorative background (no layout impact) */}
+      <div aria-hidden className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[#0e0e0eff]" />
+        <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_40%,rgba(99,102,241,0.10),transparent_60%)]" />
       </div>
 
-      {/* Content Overlay */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="max-w-6xl mx-auto">
-            {/* Main Title */}
-            <div className="animate-on-scroll opacity-0 text-center mb-12">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-200 font-young font-bold mb-8 hover:scale-105 transition-transform duration-300">
-                Our Projects
-              </h1>
-              <p className="text-white/80 text-xl font-mont max-w-2xl mx-auto">
-                Exploring the frontiers of artificial intelligence through innovative projects and real-world applications
-              </p>
-            </div>
+      {/* Content */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
+        <div className="text-center mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-mont font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-200 hover:scale-105 transition-transform duration-300 leading-[1.15] pb-1 mb-6">
+            Our Projects
+          </h2>
+        </div>
 
-            {/* Filter Controls */}
-            <div className="animate-on-scroll opacity-0 mb-8 bg-white/5 p-6 rounded-lg border border-white/10" style={{ animationDelay: '0.2s' }}>
-              <div className="flex flex-wrap gap-4 justify-center items-center">
-                {/* Status Filter */}
-                <select 
-                  name="status" 
-                  value={filters.status} 
-                  onChange={handleFilterChange}
-                  className="p-2 rounded bg-white/10 text-white border border-cyan-400/50 hover:bg-white/20 transition duration-300"
-                >
-                  <option value="">All Status</option>
-                  <option value="ongoing">Ongoing</option>
-                  <option value="completed">Completed</option>
-                  <option value="planned">Planned</option>
-                </select>
+        {/* Filters */}
+        <div className="mb-8 bg-white/5 p-6 rounded-xl border border-white/10 backdrop-blur-sm">
+          <div className="flex flex-wrap justify-center items-center gap-4 text-center">
+            <select
+              name="status"
+              value={filters.status}
+              onChange={handleFilterChange}
+              className="p-3 rounded-lg bg-white/10 text-white border border-indigo-400/40"
+            >
+              <option value="">All Status</option>
+              <option value="ongoing">Ongoing</option>
+              <option value="completed">Completed</option>
+              <option value="planned">Planned</option>
+            </select>
 
-                
+            <input
+              type="text"
+              name="technology"
+              value={filters.technology}
+              onChange={handleFilterChange}
+              placeholder="Filter by technology…"
+              className="p-3 rounded-lg bg-white/10 text-white placeholder-white/50 border border-indigo-400/40"
+            />
 
-                {/* Search Filter */}
-                <input 
-                  type="text" 
-                  name="search" 
-                  value={filters.search} 
-                  onChange={handleFilterChange} 
-                  placeholder="Search projects..."
-                  className="p-2 rounded bg-white/10 text-white placeholder-white/50 border border-cyan-400/50 focus:ring-cyan-500 focus:border-cyan-500 transition duration-300 min-w-64"
-                />
+            <input
+              type="text"
+              name="search"
+              value={filters.search}
+              onChange={handleFilterChange}
+              placeholder="Search projects…"
+              className="p-3 rounded-lg bg-white/10 text-white placeholder-white/50 border border-indigo-400/40"
+            />
 
+            <select
+              name="ordering"
+              value={filters.ordering}
+              onChange={handleFilterChange}
+              className="p-3 rounded-lg bg-white/10 text-white border border-indigo-400/40"
+            >
+              <option value="-created_at">Newest First</option>
+              <option value="created_at">Oldest First</option>
+              <option value="name">Name A–Z</option>
+              <option value="-name">Name Z–A</option>
+            </select>
 
-
-
-                
-              </div>
-            </div>
-
-            {/* Glass Card Container */}
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20 transform transition-all duration-500 hover:shadow-cyan-500/20">
-              {/* Results Count */}
-              {!loading && !error && projects.length > 0 && (
-                <div className="text-center mb-6">
-                  <p className="text-cyan-300 text-lg">
-                    Showing {projects.length} project{projects.length !== 1 ? 's' : ''}
-                    {filters.status && ` • Status: ${filters.status}`}
-                    {filters.technology && ` • Technology: ${filters.technology}`}
-                  </p>
-                </div>
-              )}
-
-              {/* Dynamic Projects Grid */}
-              {content}
-              
-              {/* Pagination Controls */}
-              {totalPages > 1 && !loading && !error && projects.length > 0 && <PaginationControls />}
-            </div>
+            <button
+              onClick={clearFilters}
+              className="px-4 py-3 rounded-lg bg-white/10 text-white border border-white/20 hover:bg-white/20 transition"
+            >
+              Clear
+            </button>
           </div>
         </div>
-      </div>
-    </div>
-  )
-}
 
-export default Projects
+        {/* Grid + pagination */}
+        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20">
+          {grid}
+
+          {totalPages > 1 && !loading && !error && projects.length > 0 && (
+            <div className="flex justify-center items-center mt-12 gap-4">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1 || pageTransition}
+                className="px-6 py-3 bg-white/10 text-white rounded-lg disabled:opacity-50 hover:bg-white/20 transition"
+              >
+                Previous
+              </button>
+
+              <span
+                className={`text-white text-lg px-6 py-3 bg-white/5 rounded-lg transition ${
+                  pageTransition ? "opacity-70" : "opacity-100"
+                }`}
+              >
+                Page {currentPage} of {totalPages}
+              </span>
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages || pageTransition}
+                className="px-6 py-3 bg-white/10 text-white rounded-lg disabled:opacity-50 hover:bg-white/20 transition"
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Projects;

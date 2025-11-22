@@ -21,16 +21,16 @@ const ResourceCard = ({ title, description, icon, link, tags, delay, type }) => 
     >
       {/* Header with Icon and Type Badge */}
       <div className="flex items-start justify-between mb-4">
-        <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${getTypeColor(type)} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+        <div className={`w-12 h-12 rounded-xl bg-white flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
           <i className={`${icon} text-white text-lg`}></i>
         </div>
-        <span className={`px-3 py-1 rounded-full text-xs font-mont font-medium bg-gradient-to-r ${getTypeColor(type)} text-white`}>
+        <span className={`px-3 py-1 rounded-full text-xs font-mont font-medium bg-gray-600 text-white`}>
           {type}
         </span>
       </div>
 
       {/* Content */}
-      <h3 className="text-xl text-white font-playfair font-semibold mb-3 group-hover:text-cyan-200 transition-colors duration-300">
+      <h3 className="text-xl text-white font-mont font-semibold mb-3 group-hover:text-cyan-200 transition-colors duration-300">
         {title}
       </h3>
       <p className="text-white/70 font-mont text-sm leading-relaxed mb-4">
@@ -61,7 +61,7 @@ const ResourceSection = ({ title, description, resources, delay }) => {
   return (
     <div className="animate-on-scroll opacity-0" style={{ animationDelay: delay }}>
       <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
-        <h3 className="text-3xl text-white font-tiny font-semibold mb-3">
+        <h3 className="text-2xl text-white font-mont font-semibold mb-3">
           {title}
         </h3>
         <p className="text-white/70 font-mont mb-6 leading-relaxed">
@@ -167,23 +167,29 @@ const Resources = () => {
 
   const resourceCategories = [
     {
-      title: "Learning Paths",
+      title: "Curated Roadmaps",
       description: "Structured learning materials from beginner to advanced levels",
       resources: [
         { name: "Multimodal RAG", icon: "fas fa-play", link: "https://youtube.com/playlist?list=PLvo3m1r7r2piPyQy_pur-mwqSr6b7pWtL&si=3X_ToIrRKd3AulUC" },
-        { name: "Machine Learning Mastery", icon: "fas fa-chart-line", link: "https://www.youtube.com/watch?v=r67SfaiYaDI&pp=ygUKTUwgbWFzdGVyeQ%3D%3D" },
+       
         { name: "Reinforcement Learning", icon: "fas fa-brain", link: "https://www.youtube.com/playlist?list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ" },
-        { name: "RAG Resources", icon: "fas fa-language", link: "https://youtube.com/playlist?list=PLvo3m1r7r2pgMUp8Yr4iKupdD40UklPeH&si=MaQkTnbXadMWNjZD" }
+        { name: "Retrieval-Augmented Generation", icon: "fas fa-language", link: "https://youtube.com/playlist?list=PLvo3m1r7r2pgMUp8Yr4iKupdD40UklPeH&si=MaQkTnbXadMWNjZD" },
+        { name: "Python for AI/ML ", icon: "fab fa-python", link: "https://docs.google.com/document/d/1UjIByDBBL647BprLbMXlYxwfB9q15wbbeVpLy1-lXUM/edit?usp=sharing"},
       ]
     },
     {
-      title: "Development Tools",
-      description: "Essential software and libraries for AI development",
+      title: "Learning Sessions",
+      description: "Browse learning session contents and resources",
       resources: [
-        { name: "Python Data Science Stack", icon: "fab fa-python", link: "#" },
-        { name: "Jupyter Notebook Tutorials", icon: "fas fa-book", link: "#" },
-        { name: "Cloud AI Platforms", icon: "fas fa-cloud", link: "#" },
-        { name: "Version Control for ML", icon: "fab fa-git-alt", link: "https://www.youtube.com/watch?v=Ez8F0nW6S-w&pp=ygUPdmVyc2lvbiBjb250cm9s" }
+         { name: "Prerequisites for LS-1", icon: "fas fa-book", link: "https://docs.google.com/document/d/1gnSIXP3qWJIqtoZRHd6IzTkl-mtkvAB3NCh6H8SnL2w/edit?usp=sharing" },
+        { name: "LS-1: Building Blocks of LLMs(Resources)", icon: "fas fa-book", link: "https://docs.google.com/document/d/18xY_Su1sw1tooIgOVwi5iXS8ffdDrATTzSXTHfLyjPU/edit?usp=sharing" },
+        { name: "LS-1: Building Blocks of LLMs(Slides)", icon: "fas fa-book", link: "https://drive.google.com/drive/folders/1djArs-5V0HGa5Hpfd5vFBn9Y1XSM6Ae2" },
+       
+         { name: "Transformers cheatsheet", icon: "fas fa-book", link: "https://drive.google.com/drive/folders/1djArs-5V0HGa5Hpfd5vFBn9Y1XSM6Ae2" },
+        
+        
+        
+        
       ]
     },
    
@@ -191,14 +197,14 @@ const Resources = () => {
   ]
 
   return (
-    <div id="resources" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
+    <div id="resources" ref={containerRef} className="min-h-screen relative bg-black overflow-visible">
       {/* Background with parallax effect */}
-      <div className="absolute inset-0 bg-[#331e6b] z-0"></div>
+      <div className="absolute inset-0 bg-[#0e0e0eff] z-0"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent animate-pulse"></div>
-      <img 
-        className="w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s]"
-        src="images/landingimg.png" 
-        alt="Resources Background" 
+      <img
+        className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay transform scale-105 hover:scale-110 transition-transform duration-[3s] z-0"
+        src="images/landingimg.png"
+        alt="Resources Background"
         loading="lazy"
       />
 
@@ -210,12 +216,12 @@ const Resources = () => {
       </div>
       
       {/* Content */}
-      <div className="absolute inset-0 flex items-center justify-center py-20">
+      <div className="relative flex items-start justify-center py-12 z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {/* Main Title */}
             <div className="animate-on-scroll opacity-0 text-center mb-16">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-200 font-mont font-semibold mb-8 hover:scale-105 transition-transform duration-300">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-white bg-clip-text bg-gradient-to-r from-white to-amber-200 font-mont font-semibold mb-8 hover:scale-105 transition-transform duration-300">
                 Resources
               </h1>
               <p className="text-white/80 text-xl font-mont max-w-3xl mx-auto leading-relaxed">

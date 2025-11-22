@@ -12,6 +12,19 @@
   }
 }
 
+@layer components {
+  /* Site-wide heading utilities to ensure consistent sizes */
+  .site-h1 {
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-mont font-semibold;
+  }
+  .site-h2 {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-mont font-semibold;
+  }
+  .site-h3 {
+    @apply text-xl sm:text-xl md:text-2xl font-mont font-semibold;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 4rem;
@@ -122,6 +135,10 @@ body {
   position: relative;
   overflow: hidden;
 }
+html, body {
+  overflow-x: hidden;
+}
+
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -149,8 +166,8 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  /* Use block layout to avoid constraining page width on small screens */
+  display: block;
   min-width: 320px;
   min-height: 100vh;
 }

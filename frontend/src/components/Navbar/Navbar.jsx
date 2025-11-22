@@ -13,11 +13,15 @@ const Navbar = () => {
   const navItems = [
     { title: 'Home', id: 'home' },
     { title: 'About Us', id: 'about' },
+      { title: 'Faculty', id: 'faculty' },
     { title: 'Team', id: 'team' },
     { title: 'Projects', id: 'projects' },
-    { title: 'Resources', id: 'resources' },
     
-    // { title: 'Blogs', id: 'blogs' }, // Blogs section is currently commented out due to unavailability of blogs
+    { title: 'Resources', id: 'resources' },
+         { title: 'Blogs', id: 'blogs' },
+    {title: 'Gallery', id: 'gallery' },
+    
+
     { title: 'Contact Us', id: 'contact' },
   ]
 
@@ -53,7 +57,7 @@ const Navbar = () => {
             </div>
 
            
-            <div className="md:hidden">
+            <div className=" translate-x-10 md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="p-2 rounded-full text-gray-200 hover:text-white hover:bg-white/5 focus:outline-none transition-all duration-200 font-mont"

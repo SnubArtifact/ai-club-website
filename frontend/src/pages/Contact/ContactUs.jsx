@@ -41,7 +41,8 @@ const ContactUs = () => {
   return (
     <div id="contact" ref={containerRef} className="min-h-screen relative bg-black overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-[#31157a] z-0"></div>
+      <div className="absolute inset-0 bg-[#0e0e0eff] z-0"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent animate-pulse"></div>
       <img 
         className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
         src="images/landingimg.png" 
@@ -53,8 +54,8 @@ const ContactUs = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             {/* Main Title */}
-            <div className="animate-on-scroll opacity-0 text-center mb-12">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200 font-young font-bold mb-8">
+            <div className="animate-on-scroll opacity-0  text-center mb-12">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200  hover:scale-105 transition-all duration-300 font-mont  font-semibold mb-8">
                 Contact Us
               </h1>
               <p className="text-white/80 text-xl font-mont">
@@ -67,7 +68,7 @@ const ContactUs = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Contact Form */}
                 <div>
-                  <h3 className="text-2xl text-white font-playfair font-semibold mb-6">Send Message</h3>
+                  <h3 className="text-2xl text-white font-mont font-semibold mb-6">Send Message</h3>
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                       <input 
@@ -103,7 +104,7 @@ const ContactUs = () => {
                     </div>
                     <button 
                       type="submit"
-                      className="w-full bg-gradient-to-r from-violet-600 to-purple-700 text-white font-young font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105"
+                      className="w-full bg-gray-600 text-white font-mont font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105"
                     >
                       Send Message
                     </button>
@@ -112,10 +113,10 @@ const ContactUs = () => {
 
                 {/* Contact Info */}
                 <div>
-                  <h3 className="text-2xl text-white font-young font-semibold mb-6">Contact Info</h3>
+                  <h3 className="text-2xl text-white font-mont font-semibold mb-6">Contact Info</h3>
                   <div className="space-y-4">
                     <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                      <div className="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center">
                         <span className="text-white">📍</span>
                       </div>
                       <div>
@@ -125,7 +126,7 @@ const ContactUs = () => {
                     </div>
 
                     <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                      <div className="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center">
                         <span className="text-white">📧</span>
                       </div>
                       <div>
@@ -135,21 +136,25 @@ const ContactUs = () => {
                     </div>
 
                     <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                      <div className="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center">
                         <span className="text-white">🌐</span>
                       </div>
                       <div>
                         <p className="text-white font-mont font-medium">Social Media</p>
                         <div className="flex gap-3 mt-1">
-                          <a href="#" className="text-white/80 hover:text-white transition-colors">
+                          <a href="https://www.linkedin.com/company/ai-club-bitsp/" className="text-white/80 hover:text-white transition-colors">
                             <i className="fab fa-linkedin text-lg"></i>
                           </a>
-                          <a href="#" className="text-white/80 hover:text-white transition-colors">
+                          <a href="https://www.instagram.com/aiclub.bitsp/" className="text-white/80 hover:text-white transition-colors">
                             <i className="fab fa-instagram text-lg"></i>
                           </a>
-                          <a href="#" className="text-white/80 hover:text-white transition-colors">
-                            <i className="fab fa-github text-lg"></i>
+                          <a href="https://x.com/AI_ClubBPPC" className="text-white/80 hover:text-white transition-colors">
+                            <i className="fab fa-x text-lg"></i>
                           </a>
+                          {/* <a href="#" className="text-white/80 hover:text-white transition-colors">
+                            <i className="fab fa-github text-lg"></i>
+                          </a> */} 
+                          {/* Waiting for official github */}
                         </div>
                       </div>
                     </div>
