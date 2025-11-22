@@ -392,24 +392,33 @@ const formattedMembers = allMembers.map(member => {
           ))}
         </div>
 
-        {/* Carousel Indicators */}
-        {totalPages > 1 && (
-          <div className="flex justify-center mt-8 space-x-3">
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index}
-                onClick={() => goToPage(index)}
-                onMouseEnter={() => setAutoPlay(false)}
-                onMouseLeave={() => setAutoPlay(true)}
-                className={`w-10 h-3 rounded-full transition-all duration-300 ${
-                  currentPage === index
-                    ? 'bg-indigo-400 w-12' 
-                    : 'bg-white/30 hover:bg-white/50'
-                }`}
-              />
-            ))}
-          </div>
-        )}
+{/* Carousel Indicators */}
+<div className="
+  mt-8 
+  max-w-full 
+  overflow-x-auto 
+  no-scrollbar-mobile   /* NEW */
+  px-4 
+  touch-pan-x           /* smooth touch scroll */
+  scroll-smooth 
+">
+  <div className="flex gap-3 w-max mx-auto">
+    {Array.from({ length: totalPages }, (_, index) => (
+      <button
+        key={index}
+        onClick={() => goToPage(index)}
+        onMouseEnter={() => setAutoPlay(false)}
+        onMouseLeave={() => setAutoPlay(true)}
+        className={`w-10 h-3 rounded-full flex-shrink-0 transition-all duration-300 ${
+          currentPage === index
+            ? "bg-indigo-400 w-12"
+            : "bg-white/30 hover:bg-white/50"
+        }`}
+      />
+    ))}
+  </div>
+</div>
+
       </div>
     );
   }
