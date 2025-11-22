@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const Founder = () => {
+const Faculty = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -135,4 +135,4 @@ const Founder = () => {
   );
 };
 
-export default Founder; 
+export default Faculty; 
