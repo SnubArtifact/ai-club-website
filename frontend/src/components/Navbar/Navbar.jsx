@@ -13,13 +13,15 @@ const Navbar = () => {
   const navItems = [
     { title: 'Home', id: 'home' },
     { title: 'About Us', id: 'about' },
+      { title: 'Faculty', id: 'faculty' },
     { title: 'Team', id: 'team' },
     { title: 'Projects', id: 'projects' },
     
     { title: 'Resources', id: 'resources' },
+         { title: 'Blogs', id: 'blogs' },
     {title: 'Gallery', id: 'gallery' },
     
-    // { title: 'Blogs', id: 'blogs' }, // Blogs section is currently commented out due to unavailability of blogs
+
     { title: 'Contact Us', id: 'contact' },
   ]
 
