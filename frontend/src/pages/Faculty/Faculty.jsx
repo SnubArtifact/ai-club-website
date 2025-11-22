@@ -39,16 +39,17 @@ const Faculty = () => {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-5xl mx-auto">
-            
-            {/* Title */}
-            <div className="animate-on-scroll opacity-0 text-center mb-12">
-              <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200 hover:scale-105 transition-all duration-300 font-mont font-semibold mb-6">
-                Faculty in Charge
-              </h1>
-            </div>
+<div className="relative z-10 min-h-screen pt-10 pb-20">
+  <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-5xl mx-auto">
+
+      {/* Title */}
+      <div className="animate-on-scroll opacity-0 text-center mb-12">
+        <h1 className="text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200 hover:scale-105 transition-all duration-300 font-mont font-semibold mb-6">
+          Faculty in Charge
+        </h1>
+      </div>
+
 
             {/* Founder Card */}
             <div className="animate-on-scroll opacity-0 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20">
