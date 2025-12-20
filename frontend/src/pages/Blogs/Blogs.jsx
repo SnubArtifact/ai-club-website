@@ -3,6 +3,77 @@ import React, { useState } from "react";
 const ALL_BLOGS = [
   {
     id: 1,
+    title: "The Guide to starting AI/ML",
+    excerpt:
+      "Hey everyone! This is just a small, friendly guide to help you dip your toes into the world of AI and Machine Learning during the break.",
+    image: "https://unsplash.com/photos/a-sign-with-a-question-mark-and-a-question-mark-drawn-on-it-OAsF0QMRWlA",
+    author: "AI Club BITS Pilani",
+    readTime: "5 min read",
+    date: "2025-12-20",
+    category: "Resources",
+    tags: ["AI", "Resources", "Guide", "ML"],
+    content: `
+Important Note: The goal here isn't to turn you into a PhD researcher overnight. We just want to help you understand the basics so you don't feel lost later on. Think of this as looking under the hood of a car, you don't need to be a mechanic, but it helps to know what an engine looks like.
+
+1. Python: Just the Basics
+Many of you might not be familiar with Python yet. Don't panic. You don't need to master it; you just need to be able to "speak" it a little bit.
+I suggest spending just 5–6 days on the fundamentals. Don't worry about memorizing every single syntax rule (nobody does that, not even the pros). Focus on the logic.
+What to focus on:
+Data Structures: Primitive types (numbers), Strings, Arrays/Lists.
+Flow Control: Conditionals (if, else) and Loops (for, while).
+Classes: Just the very simple basics of how objects work.
+Then, look at the NumPy & Pandas : Once you get the syntax, you need to learn the tools we actually use for data.
+NumPy: Python is slow at math. NumPy makes it fast. Learn how to make an array (matrix) and do basic math with it.
+Pandas: Think of this as "Excel on steroids" for programmers. Learn how to load a CSV file and look at the rows 
+
+Resources:
+https://www.youtube.com/watch?v=K5KVEU3aaeQ&t=2s
+https://www.youtube.com/watch?v=r-uOLxNrNk8
+If you don't like video lectures then - https://www.kaggle.com/learn
+Tip: Python is super intuitive. If you get stuck or see something new, just ask ChatGPT or Google it. The goal is to learn how to think and write logic, not to become a walking dictionary.
+
+2. Read what is Statistical learning
+while you are learning python (or if you are not comfortable then after learning), please read the PDF we are sharing.
+It is short, sweet, and easy to follow. It will explain what "learning from data" actually means. You’ll quickly realize that Machine Learning isn't magic, it’s just using math and data to make better guesses than a human could. IF you are too lazy to read it just give PDF to ChatGPT and ask to teach you but please go through it especially the Bias vs Variance concept
+After learning about models, move on to how to evaluate it , evaluation is not always about accuracy. A model can score high and still be useless. (Why? find out yourself). Read about model evaluation and how to judge a model properly. 
+
+Read - Accuracy & precision , confusion matrix. 	
+
+3. Neural Network Basics
+Now for the cool stuff. Once you’ve read the PDF, it’s time to understand Neural Networks.
+Watch: The 3blue1brown Neural Network playlist on YouTube. It is the gold standard visual, simple, and beautiful.
+Play: Fidget around with TensorFlow Playground. It lets you see a network learn in real-time.
+Also go through this lecture - Learning - Lecture 4 - CS50's Introduction to Artificial Intelligence with Python 2020
+
+4. Build One Tiny Model (The Challenge)
+Once you get the concept, try building a "Digit Recognizer" (using the MNIST dataset). It’s the "Hello World" of AI.
+Here is the catch:
+Try to code this without using PyTorch or TensorFlow.
+I know, that sounds harder. But libraries like PyTorch make things "too easy" by hiding the magic inside a black box. If you build it from scratch using just Python and NumPy, you will actually understand what is happening.
+Try to manually code:
+Feed Forward: Passing the values through the network.
+Backpropagation: Fixing the wrong outputs.
+Updates: changing the weights again and again.
+Evaluation (This not optional): Refer back to Part 2 and evaluate your model (accuracy , precision confusion matrix, F1 score etc) 
+
+Note - it is okay if your model does not perform well , It is okay if your code is messy. It is okay if it breaks. You will learn 10x more from this than from watching a tutorial.
+
+5. If You Still Have Time...
+(Seriously, though, why do you have so much time? Go touch some grass or enjoy your break!)
+But if you are feeling extra curious, you can look up these terms just to see what they are used for:
+CNNs: Great for images. Basics of CNNs 
+RNNs / LSTMs: Great for text and sequences. 
+Transformer : The OGs. Attention is all you need
+You don't need to master these. Just know they exist so you aren't confused when you hear the acronyms later.
+
+6. Final Advice
+Keep it simple. Learn enough Python to write the logic. Understand that models are just math trying to learn from mistakes.
+Take your time. Do not stress. Just start and be curious.
+
+`
+  },
+  {
+    id: 3,
     title: "AI in Sports: How Machine Learning Is Transforming the Sporting World",
     excerpt:
       "AI is revolutionizing training, scouting, refereeing, injury prediction, and fan experience across cricket, football, tennis, basketball, athletics, and more.",
