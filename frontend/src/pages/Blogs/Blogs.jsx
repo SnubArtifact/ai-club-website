@@ -6,7 +6,7 @@ const ALL_BLOGS = [
     title: "The Guide to starting AI/ML",
     excerpt:
       "Hey everyone! This is just a small, friendly guide to help you dip your toes into the world of AI and Machine Learning during the break.",
-    image: "https://unsplash.com/photos/a-sign-with-a-question-mark-and-a-question-mark-drawn-on-it-OAsF0QMRWlA",
+    image: "/images/ai.png",
     author: "AI Club BITS Pilani",
     readTime: "5 min read",
     date: "2025-12-20",

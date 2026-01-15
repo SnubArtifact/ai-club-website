@@ -5,14 +5,14 @@ const Landing = () => {
   const [showArrow, setShowArrow] = useState(true);
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
   // ⭐ NEW STATE: To track cursor position
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 }); 
-  
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+
 
   useEffect(() => {
     const handleScroll = () => {
       setShowArrow(window.scrollY <= 100);
     };
-    
+
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -53,12 +53,12 @@ const Landing = () => {
       date: "Nov 8-9, 2025",
       time: "10:00 AM - 10:00 AM (24 Hours)",
       location: "Online",
-      comments:"Problem statement will be released offline.",
+      comments: "Problem statement will be released offline.",
       type: "Hackathon",
-      liveUpdates:"https://x.com/AI_ClubBPPC",
+      liveUpdates: "https://x.com/AI_ClubBPPC",
       icon: "fas fa-code",
       link: 'https://docs.google.com/forms/d/1r2F9ML4yp_feyO7YgHyUQ2ALJhQYdfLNa721Sp2Gxkc/edit?ts=6908ff00',
-      logo: "images/netapp-logo.png", 
+      logo: "images/netapp-logo.png",
       prizes: "Exciting prizes + PPI Opportunity for top performers",
       eligibility: "BITS Pilani Students (UG+PG)"
     },
@@ -82,12 +82,12 @@ const Landing = () => {
     <>
       <Navbar />
       {/* Set base background to black and apply CSS variables for spotlight effect */}
-      <div 
-        id="home" 
+      <div
+        id="home"
         className="min-h-screen w-full relative overflow-visible bg-black"
         style={{ '--x': `${mousePosition.x}%`, '--y': `${mousePosition.y}%` }}
       >
-        
+
         {/* ⭐ NEW: Spotlight Overlay */}
         {/* This creates the radial gradient anchored to the cursor position */}
         <div className="bg-spotlight-overlay absolute inset-0 z-10 transition-colors duration-500"></div>
@@ -96,18 +96,18 @@ const Landing = () => {
             but if you want to keep them behind the spotlight, you can adjust their z-index.
             For now, let's keep it simple and black.
         */}
-        
+
         {/* Professional Events Carousel (z-index 40 ensures it's above the spotlight overlay) */}
-  <div className="hidden md:block absolute top-1/2 left-1/2 transform translate-x-1/2 -translate-y-[45%] z-40 w-full max-w-md px-4">
-          <div 
+        <div className="hidden md:block absolute top-1/2 left-1/2 transform translate-x-1/2 -translate-y-[45%] z-40 w-full max-w-md px-4">
+          <div
             key={currentEvent.id} // Key change forces component re-mount for animation
-            className="animate-fadeInRight animation-delay-1s" 
+            className="animate-fadeInRight animation-delay-1s"
           >
             {/* VIBRANT ACCENT CARD */}
             <div className="event-card-attention rounded-xl overflow-hidden 
                           transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 transform hover:-translate-y-3 hover:scale-[1.03]">
-              
-              {/* Event Card Content (left untouched) */}
+
+              {/* Event Card Content (left untouched)
               <div className="bg-gray-700 px-5 py-4 border-b border-purple-700">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
@@ -122,37 +122,36 @@ const Landing = () => {
               </div>
 
               <div className="bg-white p-5 relative">
-                {/* Event Type Badge */}
-                <span className={`inline-flex items-center px-3 py-1 text-sm font-semibold font-mont rounded-full shadow-sm mb-3 ${
-                  currentEvent.type === 'Workshop' 
+                    //Event Type Badge 
+                <span className={`inline-flex items-center px-3 py-1 text-sm font-semibold font-mont rounded-full shadow-sm mb-3 ${currentEvent.type === 'Workshop'
                     ? 'bg-red-100 text-red-700'
                     : currentEvent.type === 'Competition'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'bg-green-100 text-green-700'
-                }`}>
+                      ? 'bg-blue-100 text-blue-700'
+                      : 'bg-green-100 text-green-700'
+                  }`}>
                   <i className={`${currentEvent.icon} mr-2 text-xs`}></i>
                   {currentEvent.type}
                 </span>
 
-                {/* Event Title */}
+                // Event Title 
                 <div className='flex gap-4'>
-                    <div className="w-11 h-11 bg-white rounded-lg -translate-y-2 flex items-center justify-center p-1">
-                      <img 
-                        src="images/netapp2.svg"
-                        alt="NetApp Logo" 
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                <h4 className="text-2xl font-extrabold text-gray-900 font-mont leading-tight mb-4">
-                  {currentEvent.title}
-                </h4>
+                  <div className="w-11 h-11 bg-white rounded-lg -translate-y-2 flex items-center justify-center p-1">
+                    <img
+                      src="images/netapp2.svg"
+                      alt="NetApp Logo"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <h4 className="text-2xl font-extrabold text-gray-900 font-mont leading-tight mb-4">
+                    {currentEvent.title}
+                  </h4>
                 </div>
-                
 
-                {/* Event Details */}
+
+                // Event Details 
                 <div className="space-y-4 mb-5 border-t border-b border-gray-200 py-4">
-                  
-                  {/* Date & Time */}
+
+                  // Date & Time 
                   <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
                     <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors mt-0.5">
                       <i className="fas fa-clock text-black text-xs"></i>
@@ -162,27 +161,27 @@ const Landing = () => {
                       <div className="text-sm text-gray-600 font-mont">{currentEvent.time}</div>
                     </div>
                   </div>
-                  
-                  {/* Location */}
+
+                  // Location 
                   <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
                     <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors mt-0.5">
                       <i className="fas fa-map-marker-alt text-black text-xs"></i>
                     </div>
                     <div className='column'>
-                    <div className="text-sm text-gray-800 font-mont font-semibold">{currentEvent.location}</div>
-                    <div className="text-sm text-gray-600 font-mont ">{currentEvent.comments}</div>
+                      <div className="text-sm text-gray-800 font-mont font-semibold">{currentEvent.location}</div>
+                      <div className="text-sm text-gray-600 font-mont ">{currentEvent.comments}</div>
                     </div>
                   </div>
 
-                 
-                  
-                    
-                       
-                     
-                      
-                  
 
-                  {/* Prizes Section */}
+
+
+
+
+
+
+
+                 // Prizes Section 
                   <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
                     <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-yellow-200 transition-colors mt-0.5">
                       <i className="fas fa-trophy text-black text-xs"></i>
@@ -193,7 +192,7 @@ const Landing = () => {
                     </div>
                   </div>
 
-                  {/* Eligibility Section */}
+                  // Eligibility Section 
                   <div className="flex items-start space-x-3 group cursor-default hover:bg-gray-50 p-2 rounded transition-colors duration-200">
                     <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-blue-200 transition-colors mt-0.5">
                       <i className="fas fa-user-graduate text-black text-xs"></i>
@@ -205,11 +204,11 @@ const Landing = () => {
                   </div>
                 </div>
 
-                {/* Single, Primary Action Button */}
+                // Single, Primary Action Button 
                 <div className="mt-6">
-                  <a 
-                    href={currentEvent.link} 
-                    target="_blank" 
+                  <a
+                    href={currentEvent.link}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="w-full bg-gray-600 text-white font-extrabold py-4 px-4 rounded-lg
                             hover:gray-800 transition-all duration-300
@@ -221,19 +220,19 @@ const Landing = () => {
                   </a>
                 </div>
                 <a
-                href={currentEvent.liveUpdates}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute top-3 right-3 text-sm text-purple-600 font-mont font-semibold hover:underline"
-              >
-                Live Updates <i className="fas fa-external-link-alt ml-1 text-xs"></i>
+                  href={currentEvent.liveUpdates}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute top-3 right-3 text-sm text-purple-600 font-mont font-semibold hover:underline"
+                >
+                  Live Updates <i className="fas fa-external-link-alt ml-1 text-xs"></i>
                 </a>
               </div>
 
-              {/* Carousel Controls */}
+             // Carousel Controls 
               <div className="px-5 py-3 border-t border-gray-200 flex items-center justify-between bg-gray-100">
-                {/* Prev Button */}
-                <button 
+                // Prev Button 
+                <button
                   onClick={prevEvent}
                   className="w-8 h-8 bg-white border border-gray-300 rounded-full flex items-center justify-center
                             hover:bg-gray-200 transition-all duration-200 text-gray-700 group hover:shadow-md"
@@ -241,30 +240,29 @@ const Landing = () => {
                   <i className="fas fa-chevron-left text-xs group-hover:-translate-x-0.5 transition-transform duration-200"></i>
                 </button>
 
-                {/* Dot Indicators */}
+                // Dot Indicators 
                 <div className="flex space-x-1.5">
                   {upcomingEvents.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => goToEvent(index)}
-                      className={`w-1 h-1 rounded-full transition-all duration-300 ${
-                        index === currentEventIndex 
+                      className={`w-1 h-1 rounded-full transition-all duration-300 ${index === currentEventIndex
                           ? 'bg-gray-600 scale-100 shadow-md '
                           : 'bg-gray-400 hover:bg-gray-500'
-                      }`}
+                        }`}
                     />
                   ))}
                 </div>
 
-                {/* Next Button */}
-                <button 
+                // Next Button 
+                <button
                   onClick={nextEvent}
                   className="w-8 h-8 bg-white border border-gray-300 rounded-full flex items-center justify-center
                             hover:bg-gray-200 transition-all duration-200 text-gray-700 group hover:shadow-md"
                 >
                   <i className="fas fa-chevron-right text-xs group-hover:translate-x-0.5 transition-transform duration-200"></i>
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -273,7 +271,7 @@ const Landing = () => {
         <div className=" translate-y-1/2 relative z-20 py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl ml-0 sm:ml-20 space-y-8">
-              
+
               {/* Main heading */}
               <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.2s' }}>
                 <h1 className=" site-h1 bg-clip-text bg-gradient-to-r from-white via-purple-200 to-indigo-200 font-nabla hover:scale-105 transition-transform duration-500 animate-text-shadow-pulse">
@@ -291,7 +289,7 @@ const Landing = () => {
               {/* Description */}
               <div className="animate-fadeInUp opacity-0" style={{ animationDelay: '0.6s' }}>
                 <p className="text-base sm:text-lg md:text-2xl text-white/85 font-mont max-w-2xl leading-relaxed">
-                  Pioneering the future of artificial intelligence through innovation, 
+                  Pioneering the future of artificial intelligence through innovation,
                   collaboration, and cutting-edge research.
                 </p>
               </div>
@@ -325,10 +323,10 @@ const Landing = () => {
         </div>
 
         {/* Animated Arrow */}
-        <div 
+        <div
           className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-500 z-20 ${ // z-20 keeps it above spotlight
             showArrow ? 'opacity-100' : 'opacity-0'
-          }`}
+            }`}
           onClick={scrollToAbout}
         >
           <div className="cursor-pointer group">
